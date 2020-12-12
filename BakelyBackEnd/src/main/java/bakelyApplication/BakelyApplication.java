@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BakelyApplication {
 
-	// test commit for git connection
+	// test2 commit for git connection
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BakelyApplication.class, args);

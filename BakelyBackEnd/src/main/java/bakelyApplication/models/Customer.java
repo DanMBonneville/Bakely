@@ -13,7 +13,6 @@ public class Customer {
 	private String firstName;
 	private String lastName;
 	private String address;
-	private String check;
 
 	public Customer() {
 	}
@@ -48,13 +47,5 @@ public class Customer {
 	
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String getCheck() {
-		return check;
-	}
-
-	public void setCheck(String check) {
-		this.check = check;
 	}
 }

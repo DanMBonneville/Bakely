@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\containers",
+    "\\src\\containers\\SignUp",
+    "\\src\\containers\\SignUp\\ShefSignUp",
+    "\\src\\hoc",
+    "\\src\\hoc\\errorHandler",
+    "\\src\\shared",
+    "\\src\\store",
+    "\\src\\store\\actions",
+    "\\src\\store\\reducers"
+  ],
+  "SelectedNode": "\\src\\store\\actions\\signUp.js",
+  "PreviewInSolutionExplorer": false
+}

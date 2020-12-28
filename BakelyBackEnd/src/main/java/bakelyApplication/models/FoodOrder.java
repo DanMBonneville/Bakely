@@ -13,31 +13,26 @@ public class FoodOrder {
 	@Id
 	@GeneratedValue( strategy= GenerationType.AUTO )
 	private int id;
-	private Order order;
-	private FoodOrder foodOrder;
+	private int orderNumber;
+	private int foodId;
 	
 	public int getId() {
 		return id;
 	}
-	
-	public Order getOrder() {
-		return order;
+	public void setId(int orderNumber) {
+		this.orderNumber = orderNumber;
 	}
-	
-	public FoodOrder getFoodOrder() {
-		return foodOrder;
+	public int getOrderNumber() {
+		return orderNumber;
 	}
-	
-	public void setId(int id) {
-		this.id = id;
+	public void setOrderNumber(int orderNumber) {
+		this.orderNumber = orderNumber;
 	}
-	
-	public void setOrder(Order order) {
-		this.order = order;
+	public int getFoodId() {
+		return foodId;
 	}
-	
-	public void setFoodOrder(FoodOrder foodOrder) {
-		this.foodOrder = foodOrder;
+	public void setFoodId(int foodId) {
+		this.foodId = foodId;
 	}
 
 }

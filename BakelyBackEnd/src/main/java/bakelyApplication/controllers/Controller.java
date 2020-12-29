@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import bakelyApplication.models.Customer;
 import bakelyApplication.models.Shef;
 import bakelyApplication.service.Service;
 import bakelyApplication.view.View;
@@ -31,14 +32,14 @@ public class Controller {
 	
 	@RequestMapping(path = "/shef-sign-up/add", method = RequestMethod.POST)
 	public Shef addShef(@RequestBody Shef newShef) {
-		System.out.println("Posting a new Shef...");
 		service.addShef(newShef);
-		
-	//	URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-	//	.path("/{id}").buildAndExpand(createdShef.getId()).toUri();
-		
-		// return the location of the created resource
 		return newShef;
+	}
+	
+	@RequestMapping(path = "/sign-up/add", method = RequestMethod.POST)
+	public Customer addCustomer(@RequestBody Customer newCustomer) {
+		service.addCustomer(newCustomer);
+		return newCustomer;
 	}
 	
 }

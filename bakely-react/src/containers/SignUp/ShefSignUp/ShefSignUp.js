@@ -143,5 +143,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(errorHandler(ShefSignUp, axios));
-
-// error handler needs to be dealt with

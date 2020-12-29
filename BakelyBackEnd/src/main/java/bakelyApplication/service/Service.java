@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import bakelyApplication.data.CustomerJpaRepository;
 import bakelyApplication.data.ShefJpaRepository;
 import bakelyApplication.models.Shef;
+import bakelyApplication.models.Customer;
 
 @Component
 public class Service {
@@ -16,9 +17,15 @@ public class Service {
 	@Autowired
 	ShefJpaRepository shefRepository;
 	
+	@Autowired
+	CustomerJpaRepository customerJpaRepository;
+	
 	public Shef addShef(Shef newShef) {
 		return shefRepository.save(newShef);
 	}
 	
+	public Customer addCustomer(Customer newCustomer) {
+		return customerJpaRepository.save( newCustomer );
+	}
 	
 }

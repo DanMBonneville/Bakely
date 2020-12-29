@@ -24,10 +24,27 @@ export const shefSignUpStart = () => {
 	}
 }
 
+export const customerSignUpSuccess = (formData) => {
+    return {
+        type: actionTypes.CUSTOMER_SIGN_UP_SUCCESS,
+        shefData: formData
+    }
+}
+
+export const customerSignUpFail = (error) => {
+    return {
+        type: actionTypes.CUSTOMER_SIGN_UP_FAIL
+    }
+}
+
+export const customerSignUpStart = () => {
+    return {
+        type: actionTypes.CUSTOMER_SIGN_UP_START
+    }
+}
+
 // add token here
 export const shefSignUp = (newShef) => {
-    console.log("preparing to post new shef to the server: ");
-    console.log(newShef);
     return dispatch => {
         dispatch(shefSignUpStart());
         axios.post('/shef-sign-up/add', newShef.shefData)
@@ -39,6 +56,23 @@ export const shefSignUp = (newShef) => {
             .catch(error => {
                 console.log(error.data);
                 dispatch(shefSignUpFail(error));
+            });
+    };
+};
+
+// add token here too
+export const customerSignUp = (newCustomer) => {
+    return dispatch => {
+        dispatch(customerSignUpStart());
+        axios.post('/sign-up/add', newCustomer.customerData)
+            .then(response => {
+                // potentially pass response.data.name as a param for an id later
+                console.log("Success response: " + response.data)
+                dispatch(customerSignUpSuccess(newCustomer));
+            })
+            .catch(error => {
+                console.log(error.data);
+                dispatch(customerSignUpFail(error));
             });
     };
 };

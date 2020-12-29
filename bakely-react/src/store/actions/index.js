@@ -1,3 +1,4 @@
 export {
-    shefSignUp
+    shefSignUp,
+    customerSignUp
 } from './signUp';

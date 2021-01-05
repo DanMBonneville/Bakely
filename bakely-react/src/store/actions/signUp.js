@@ -18,7 +18,6 @@ export const shefSignUpFail = (error) => {
 
 //set loading to true for the spinner
 export const shefSignUpStart = () => {
-    console.log("shefSignUpStart");
     return {
         type: actionTypes.SHEF_SIGN_UP_START
 	}

@@ -13,6 +13,7 @@ public class FoodOrder {
 	@Id
 	@GeneratedValue( strategy= GenerationType.AUTO )
 	private int id;
+	
 	private int orderNumber;
 	private int foodId;
 	

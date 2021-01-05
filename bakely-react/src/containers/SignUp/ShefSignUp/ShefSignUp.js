@@ -8,7 +8,7 @@ import Input from '../../../components/UI/Input/Input';
 import errorHandler from '../../../hoc/errorHandler/errorHandler';
 
 import * as actions from '../../../store/actions/index';
-import { updateObject } from '../../../shared/utility';
+import { updateObject, checkValidity } from '../../../shared/utility';
 import axios from '../../../axios-instance';
 
 class ShefSignUp extends Component {
@@ -21,7 +21,12 @@ class ShefSignUp extends Component {
                     type: 'email',
                     placeholder: 'Your E-Mail'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
             },
             fisrtName: {
                 elementType: 'input',
@@ -29,7 +34,12 @@ class ShefSignUp extends Component {
                     type: 'text',
                     placeholder: 'Your First Name'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
             },
             lastName: {
                 elementType: 'input',
@@ -37,7 +47,12 @@ class ShefSignUp extends Component {
                     type: 'text',
                     placeholder: 'Your Last Name'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
             },
             zipCode: {
                 elementType: 'input',
@@ -45,7 +60,12 @@ class ShefSignUp extends Component {
                     type: 'text',
                     placeholder: 'ZIP code'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
             },
             phoneNumber: {
                 elementType: 'input',
@@ -53,7 +73,12 @@ class ShefSignUp extends Component {
                     type: 'text',
                     placeholder: 'Your Phone Number'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
             },
             password: {
                 elementType: 'input',
@@ -61,7 +86,12 @@ class ShefSignUp extends Component {
                     type: 'password',
                     placeholder: 'Password'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
             }
         },
         formIsValid: true
@@ -82,20 +112,19 @@ class ShefSignUp extends Component {
 
     // update and validate the form as things are typed
     inputChangedHandler = (event, inputIdentifier) => {
-        //check validity in this object
         const updatedFormElement = updateObject(this.state.signUpForm[inputIdentifier], {
-            value: event.target.value
-            // valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
-            // touched: true
+            value: event.target.value,
+            valid: checkValidity(event.target.value, this.state.signUpForm[inputIdentifier].validation),
+            touched: true
         });
         const updatedShefForm = updateObject(this.state.signUpForm, {
             [inputIdentifier]: updatedFormElement
         });
 
-        // let formIsValid = true;
-        // for (let inputIdentifier in updatedOrderForm) {
-        //    formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
-        // }
+        let formIsValid = true;
+        for (let inputIdentifier in updatedShefForm) {
+            formIsValid = updatedShefForm[inputIdentifier].valid && formIsValid;
+        }
         this.setState({ signUpForm: updatedShefForm }); 
     }
 
@@ -108,7 +137,7 @@ class ShefSignUp extends Component {
             });
         }
         let form = (
-            <form onSubmit={this.submitHandler}>
+            <form onSubmit={this.submitHandler} className={ classes.SignUpForm }>
                 {formElementsArray.map(formElement => (
                     <Input
                         key={formElement.id}

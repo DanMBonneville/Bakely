@@ -7,10 +7,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import bakelyApplication.authorization.JwtUserDetails;
+
 @Entity
 @Table(name = "Customers")
-public class Customer {
+public class Customer extends JwtUserDetails {
 	
+	public Customer(Long id, String username, String password, String role) {
+		super(id, username, password, role);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "serial")

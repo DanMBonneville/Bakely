@@ -30,8 +30,16 @@ public class JwtUserDetails implements UserDetails {
 
     this.authorities = authorities;
   }
+  
+  // added this to satisfy JwtDetailsService
+  public JwtUserDetails(Long id, String username, String password,  List<SimpleGrantedAuthority> authorities) {
+	    this.id = id;
+	    this.username = username;
+	    this.password = password;
+	    this.authorities = authorities;
+	  }
 
-  @JsonIgnore
+@JsonIgnore
   public Long getId() {
     return id;
   }

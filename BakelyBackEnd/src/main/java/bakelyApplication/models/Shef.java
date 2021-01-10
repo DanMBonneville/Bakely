@@ -7,10 +7,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import bakelyApplication.authorization.JwtUserDetails;
+
 @Entity
 @Table(name = "Shefs")
-public class Shef {
+public class Shef extends JwtUserDetails{
 	
+	public Shef(Long id, String username, String password, String role) {
+		super(id, username, password, role);
+	}
+
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "serial")

@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 import bakelyApplication.authorization.JwtTokenUtil;
 import bakelyApplication.authorization.JwtUserDetails;
 
-//@RestController
-//@CrossOrigin(origins="http://localhost:4200")
+@RestController
+@CrossOrigin(origins="http://localhost:4200")
 public class JwtAuthenticationRestController {
 
   @Value("${jwt.http.request.header}")
@@ -43,9 +43,9 @@ public class JwtAuthenticationRestController {
   @RequestMapping(value = "${jwt.get.token.uri}", method = RequestMethod.POST)
   public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtTokenRequest authenticationRequest)
       throws AuthenticationException {
-
+	System.out.println("caught value: " + authenticationRequest.getUsername() + " is the userName");
     authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-
+    
     final UserDetails userDetails = jwtInMemoryUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
     final String token = jwtTokenUtil.generateToken(userDetails);

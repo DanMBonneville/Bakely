@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\store\\actions"
+    "\\src\\store",
+    "\\src\\store\\actions",
+    "\\src\\store\\reducers"
   ],
-  "SelectedNode": "\\src\\store",
+  "SelectedNode": "\\src\\containers",
   "PreviewInSolutionExplorer": false
 }

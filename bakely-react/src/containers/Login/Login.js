@@ -5,18 +5,18 @@ import { Redirect } from 'react-router-dom';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import classes from './Auth.css';
+import classes from './Login.css';
 import * as actions from '../../store/actions/index';
 import { updateObject, checkValidity } from '../../shared/utility';
 
-class Auth extends Component {
+class Login extends Component {
     state = {
         controls: {
             email: {
                 elementType: 'input',
                 elementConfig: {
                     type: 'email',
-                    placeholder: 'Mail Address'
+                    placeholder: 'E-Mail Address'
                 },
                 value: '',
                 validation: {
@@ -48,8 +48,9 @@ class Auth extends Component {
             this.props.onSetAuthRedirectPath();
         }
     }
-
+    // implement check validity shared method
     inputChangedHandler = (event, controlName) => {
+        console.log("input change");
         const updatedControls = updateObject(this.state.controls, {
             [controlName]: updateObject(this.state.controls[controlName], {
                 value: event.target.value,
@@ -61,8 +62,9 @@ class Auth extends Component {
     }
 
     submitHandler = (event) => {
+        console.log("after submit");
         event.preventDefault();
-        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
+        this.props.login(this.state.controls.email.value, this.state.controls.password.value);
     }
 
     render() {
@@ -106,10 +108,10 @@ class Auth extends Component {
         return (
             <div className={classes.Login}>
                 {authRedirect}
-                {errorMessage}
+                {errorMessage} 
                 <form onSubmit={this.submitHandler}>
                     {form}
-                    <Button btnType="Success">SUBMIT</Button>
+                    <Button btnType="Success">Login</Button>
                 </form>
             </div>
         );
@@ -121,16 +123,15 @@ const mapStateToProps = state => {
         loading: state.auth.loading,
         error: state.auth.error,
         isAuthenticated: state.auth.token !== null,
-        buildingBurger: state.burgerBuilder.building,
         authRedirectPath: state.auth.authRedirectPath
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
-        //onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
+        login: (email, password) => dispatch(actions.login(email, password)),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

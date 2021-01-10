@@ -8,6 +8,8 @@ import thunk from 'redux-thunk';
 import './index.css';
 import App from './App';
 import shefReducer from './store/reducers/shefReducer';
+import authReducer from './store/reducers/authReducer';
+
 // import registerServiceWorker from './registerServiceWorker';
 
 // For redux devtolls
@@ -15,7 +17,8 @@ import shefReducer from './store/reducers/shefReducer';
 // Then replace compose with composeEnhancers in the store const
 
 const rootReducer = combineReducers({
-    shef: shefReducer
+    shef: shefReducer,
+    auth: authReducer
 });
 
 const store = createStore(rootReducer, compose(

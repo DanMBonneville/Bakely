@@ -120,7 +120,7 @@ class ShefSignUp extends Component {
         const updatedShefForm = updateObject(this.state.signUpForm, {
             [inputIdentifier]: updatedFormElement
         });
-
+ 
         let formIsValid = true;
         for (let inputIdentifier in updatedShefForm) {
             formIsValid = updatedShefForm[inputIdentifier].valid && formIsValid;

@@ -8,11 +8,10 @@ export const loginStart = () => {
     };
 };
 
-export const loginSuccess = (token, userId) => {
+export const loginSuccess = (token) => {
     return {
         type: actionTypes.LOGIN_SUCCESS,
-        idToken: token,
-        userId: userId
+        token: token
     };
 };
 
@@ -26,7 +25,6 @@ export const loginFail = (error) => {
 export const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
-    localStorage.removeItem('userId');
     return {
         type: actionTypes.LOGOUT
     };
@@ -35,7 +33,7 @@ export const logout = () => {
 export const checkAuthTimeout = (expirationTime) => {
     return dispatch => {
         setTimeout(() => {
-            dispatch(logout());
+            //dispatch(logout());
         }, expirationTime * 1000);
     };
 };
@@ -54,16 +52,16 @@ export const login = (email, password) => {
         axios.post(url, postBody)
             .then(response => {
                 console.log("This is the response", response.data);
-                const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('expirationDate', expirationDate);
-                localStorage.setItem('username', response.data.localId);
+                // const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
+                // localstorage api is baked into the browser
+                // this isn't working, I might delet this later
+                localStorage.setItem('token', JSON.stringify(response.data.token));
+                // localStorage.setItem('expirationDate', expirationDate);
                 dispatch(loginSuccess(response));
-                //dispatch(checkAuthTimeout(response.data.expiresIn));
+                dispatch(checkAuthTimeout(response.data.expiresIn));
             })
             .catch(err => {
-                console.log("This was the error: ", err)
-                // dispatch(loginFail(err.response.data.error));
+                dispatch(loginFail(err.response.data.error));
             });
     };
 };

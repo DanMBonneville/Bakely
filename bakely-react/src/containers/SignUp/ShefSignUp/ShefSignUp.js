@@ -97,7 +97,6 @@ class ShefSignUp extends Component {
         formIsValid: true
     }
 
-    // Create object, place existing state in, dispatch
     submitHandler = ( event ) => {
         event.preventDefault();
         const formData = {};
@@ -110,18 +109,19 @@ class ShefSignUp extends Component {
         this.props.onShefSignUp(newShef);
     }
 
-    // update and validate the form as things are typed
     inputChangedHandler = (event, inputIdentifier) => {
+        // Create new object and verify per key stroke
         const updatedFormElement = updateObject(this.state.signUpForm[inputIdentifier], {
             value: event.target.value,
             valid: checkValidity(event.target.value, this.state.signUpForm[inputIdentifier].validation),
             touched: true
         });
+        // Attach new object to old form
         const updatedShefForm = updateObject(this.state.signUpForm, {
             [inputIdentifier]: updatedFormElement
         });
- 
         let formIsValid = true;
+        // update forms validity based on singular action
         for (let inputIdentifier in updatedShefForm) {
             formIsValid = updatedShefForm[inputIdentifier].valid && formIsValid;
         }
@@ -146,7 +146,7 @@ class ShefSignUp extends Component {
                         value={formElement.config.value} 
                         changed = {(event) => this.inputChangedHandler(event, formElement.id)} />
                 ))}
-                <Button btnType="Success" >Submit</Button>
+                <Button btnType="Success" disabled={this.state.formIsValid}>Submit</Button>
             </form>
         );
 

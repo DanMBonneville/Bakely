@@ -15,8 +15,7 @@ const loginStart = (state, action) => {
 
 const loginSuccess = (state, action) => {
     return updateObject(state, {
-        token: action.idToken,
-        username: action.username,
+        token: action.token,
         error: null,
         loading: false
     });
@@ -29,7 +28,7 @@ const loginFail = (state, action) => {
     });
 };
 
-const Logout = (state, action) => {
+const logout = (state, action) => {
     return updateObject(state, { token: null, username: null });
 };
 
@@ -42,7 +41,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.LOGIN_START: return loginStart(state, action);
         case actionTypes.LOGIN_SUCCESS: return loginSuccess(state, action);
         case actionTypes.LOGIN_FAIL: return loginFail(state, action);
-        case actionTypes.LOGOUT: return Logout(state, action);
+        case actionTypes.LOGOUT: return logout(state, action);
         case actionTypes.SET_AUTH_REDIRECT_PATH: return setAuthRedirectPath(state, action);
         default:
             return state;

@@ -8,4 +8,4 @@ export {
     checkAuthTimeout,
     setAuthRedirectPath,
     authCheckState
-} from './signInOut';
+} from './logInOut';

@@ -15,8 +15,9 @@ class App extends Component {
     render() {
 
         // to do -- lazy loading
-
+        console.log("The user is authenticated : ", this.props.isAuthenticated);
         let routes = (
+            
             <Switch>
                 <Route path="/shef-sign-up" component={ShefSignUp} />
                 <Route path="/cust-sign-up" component={CustSignUp} />

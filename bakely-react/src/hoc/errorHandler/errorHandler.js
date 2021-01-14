@@ -1,3 +1,5 @@
+// To be used with asyncronous method calls to the server
+
 import React, { Component } from 'react';
 
 import Modal from '../../components/UI/Modal/Modal';

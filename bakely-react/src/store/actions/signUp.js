@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-import axios from '../../axios-instance';
+import firebase from '../../firebase';
 
 export const shefSignUpSuccess = (formData) => {
     return {
@@ -42,11 +42,10 @@ export const customerSignUpStart = () => {
     }
 }
 
-// add token here
 export const shefSignUp = (newShef) => {
     return dispatch => {
         dispatch(shefSignUpStart());
-        axios.post('/shef-sign-up/add', newShef.shefData)
+        firebase.db.collection('bakers').add(newShef)
             .then(response => {
                 // potentially pass response.data.name as a param for an id later
                 console.log("Success response: " + response.data )
@@ -59,11 +58,10 @@ export const shefSignUp = (newShef) => {
     };
 };
 
-// add token here too
 export const customerSignUp = (newCustomer) => {
     return dispatch => {
         dispatch(customerSignUpStart());
-        axios.post('/sign-up/add', newCustomer.customerData)
+        firebase.db.collection('customers').add(newCustomer)
             .then(response => {
                 // potentially pass response.data.name as a param for an id later
                 console.log("Success response: " + response.data)

@@ -1,6 +1,12 @@
 import * as actionTypes from './actionTypes'
 import firebase from '../../firebase';
 
+export const signUpStart = () => {
+    return {
+        type: actionTypes.SIGN_UP_START
+    }
+}
+
 export const vendorSignUpSuccess = (formData) => {
     return {
         type: actionTypes.VENDOR_SIGN_UP_SUCCESS,
@@ -16,13 +22,6 @@ export const vendorSignUpFail = (error) => {
     }
 }
 
-//set loading to true for the spinner
-export const vendorSignUpStart = () => {
-    return {
-        type: actionTypes.VENDOR_SIGN_UP_START
-	}
-}
-
 export const customerSignUpSuccess = (formData) => {
     return {
         type: actionTypes.CUSTOMER_SIGN_UP_SUCCESS,
@@ -36,16 +35,30 @@ export const customerSignUpFail = (error) => {
     }
 }
 
-export const customerSignUpStart = () => {
-    return {
-        type: actionTypes.CUSTOMER_SIGN_UP_START
+export const signUp = (user, role) => {
+    return dispatch => {
+        dispatch(signUpStart());
+        firebase.auth()
+            .createUserWithEmailAndPassword(user.data.email, user.data.password)
+            .then(response => {
+                console.log("The response from create user with email and password is ", response);
+                const newUser = {...user};
+                delete newUser.password;
+                if(role === vendor){
+                    vendorSignUp(newUser);
+                }else if(role === customer){
+                    customerSignUp(newUser);
+                }
+            })
+            .catch(err => {
+                console.log("What should I do with this err? : ", err)
+            });
     }
 }
 
 export const vendorSignUp = (newVendor) => {
     return dispatch => {
-        dispatch(vendorSignUpStart());
-        firebase.db.collection('bakers').add(newVendor)
+        firebase.firestore.collection('vendors').add(newVendor)
             .then(response => {
                 // potentially pass response.data.name as a param for an id later
                 console.log("Success response: " + response.data )
@@ -61,7 +74,7 @@ export const vendorSignUp = (newVendor) => {
 export const customerSignUp = (newCustomer) => {
     return dispatch => {
         dispatch(customerSignUpStart());
-        firebase.db.collection('customers').add(newCustomer)
+        firebase.firestore.collection('customers').add(newCustomer)
             .then(response => {
                 // potentially pass response.data.name as a param for an id later
                 console.log("Success response: " + response.data)

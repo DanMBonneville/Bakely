@@ -11,7 +11,7 @@ const navigationItems = (props) => (
         {props.isLoggedIn
             ? <NavigationItem link="/logout">logout</NavigationItem>
             : <Auxiliary>
-                <NavigationItem link="/shef-sign-up">Bake with Us!</NavigationItem>
+                <NavigationItem link="/vendor-sign-up">Bake with Us!</NavigationItem>
                 <NavigationItem link="/login">login</NavigationItem>
                 <NavigationItem link="/cust-sign-up">Customer Sign up</NavigationItem>
              </Auxiliary>

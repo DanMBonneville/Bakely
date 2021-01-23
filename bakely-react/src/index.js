@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 import './index.css';
 import App from './App';
-import shefReducer from './store/reducers/shefReducer';
+import vendorReducer from './store/reducers/vendorReducer';
 import authReducer from './store/reducers/authReducer';
 import custReducer from './store/reducers/custReducer';
 
@@ -18,7 +18,7 @@ import custReducer from './store/reducers/custReducer';
 // Then replace compose with composeEnhancers in the store const
 
 const rootReducer = combineReducers({
-    shef: shefReducer,
+    vendor: vendorReducer,
     auth: authReducer,
     cust: custReducer
 });

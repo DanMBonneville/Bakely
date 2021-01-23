@@ -17,8 +17,8 @@ class App extends Component {
         console.log("The user is authenticated : ", this.props.isAuthenticated);
         let routes = (
             <Switch>
-                <Route path="/shef-sign-up" component={ShefSignUp} />
-                <Route path="/cust-sign-up" component={CustSignUp} />
+                <Route path="/vendor-sign-up" component={VendorSignUp} />
+                <Route path="/customer-sign-up" component={CustomerSignUp} />
                 <Route path="/login" component={Login} />
                 <Route path="/logout" component={Logout} />
                 <Route path="/" exact component={HomePage} />
@@ -38,12 +38,14 @@ class App extends Component {
 
 const mapStateToProps = state => {
     return {
+        // change this to accomidate firebase
         isAuthenticated: state.auth.token !== null
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        // firebase autosign up?
         onTryAutoSignup: () => dispatch(actions.authCheckState())
     };
 };

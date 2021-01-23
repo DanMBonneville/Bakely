@@ -1,32 +1,32 @@
 import * as actionTypes from './actionTypes'
 import firebase from '../../firebase';
 
-export const shefSignUpSuccess = (formData) => {
+export const vendorSignUpSuccess = (formData) => {
     return {
-        type: actionTypes.SHEF_SIGN_UP_SUCCESS,
-        shefData: formData
+        type: actionTypes.VENDOR_SIGN_UP_SUCCESS,
+        vendorData: formData
         // don't think we need to update the store right away after updating the backend
         // but if we did, it would go right here
     }
 }
 
-export const shefSignUpFail = (error) => {
+export const vendorSignUpFail = (error) => {
     return {
-        type: actionTypes.SHEF_SIGN_UP_FAIL
+        type: actionTypes.VENDOR_SIGN_UP_FAIL
     }
 }
 
 //set loading to true for the spinner
-export const shefSignUpStart = () => {
+export const vendorSignUpStart = () => {
     return {
-        type: actionTypes.SHEF_SIGN_UP_START
+        type: actionTypes.VENDOR_SIGN_UP_START
 	}
 }
 
 export const customerSignUpSuccess = (formData) => {
     return {
         type: actionTypes.CUSTOMER_SIGN_UP_SUCCESS,
-        shefData: formData
+        vendorData: formData
     }
 }
 
@@ -42,18 +42,18 @@ export const customerSignUpStart = () => {
     }
 }
 
-export const shefSignUp = (newShef) => {
+export const vendorSignUp = (newVendor) => {
     return dispatch => {
-        dispatch(shefSignUpStart());
-        firebase.db.collection('bakers').add(newShef)
+        dispatch(vendorSignUpStart());
+        firebase.db.collection('bakers').add(newVendor)
             .then(response => {
                 // potentially pass response.data.name as a param for an id later
                 console.log("Success response: " + response.data )
-                dispatch(shefSignUpSuccess(newShef));
+                dispatch(vendorSignUpSuccess(newVendor));
             })
             .catch(error => {
                 console.log(error.data);
-                dispatch(shefSignUpFail(error));
+                dispatch(vendorSignUpFail(error));
             });
     };
 };

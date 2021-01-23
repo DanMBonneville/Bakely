@@ -1,5 +1,5 @@
 export {
-    shefSignUp,
+    vendorSignUp,
     customerSignUp
 } from './signUp';
 export {

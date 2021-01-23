@@ -36,16 +36,15 @@ const setAuthRedirectPath = (state, action) => {
     return updateObject(state, { authRedirectPath: action.path })
 }
 
-const reducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.LOGIN_START: return loginStart(state, action);
         case actionTypes.LOGIN_SUCCESS: return loginSuccess(state, action);
         case actionTypes.LOGIN_FAIL: return loginFail(state, action);
         case actionTypes.LOGOUT: return logout(state, action);
         case actionTypes.SET_AUTH_REDIRECT_PATH: return setAuthRedirectPath(state, action);
-        default:
-            return state;
+        default: return state;
     }
 };
 
-export default reducer;
+export default authReducer;

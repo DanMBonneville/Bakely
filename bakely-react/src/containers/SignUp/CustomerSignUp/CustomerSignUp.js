@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import classes from "./CustSignUp.css";
+import classes from "./CustomerSignUp.css";
 
 import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
@@ -9,9 +9,8 @@ import errorHandler from '../../../hoc/errorHandler/errorHandler';
 
 import * as actions from '../../../store/actions/index';
 import { updateObject, checkValidity } from '../../../shared/utility';
-import axios from '../../../axios-instance';
 
-class ShefSignUp extends Component {
+class CustomerSignUp extends Component {
 
     state = {
         signUpForm: {
@@ -141,4 +140,4 @@ const mapDispatchToProps = dispatch => {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(errorHandler(ShefSignUp, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(errorHandler(CustomerSignUp, axios));

@@ -6,8 +6,8 @@ import Layout from "./hoc/Layout/Layout";
 import HomePage from "./containers/HomePage/HomePage";
 import Login from "./containers/Login/Login";
 import Logout from "./containers/Logout/Logout";
-import ShefSignUp from "./containers/SignUp/ShefSignUp/ShefSignUp";
-import CustSignUp from "./containers/SignUp/CustSignUp/CustSignUp";
+import VendorSignUp from "./containers/SignUp/VendorSignUp/VendorSignUp";
+import CustomerSignUp from "./containers/SignUp/CustomerSignUp/CustomerSignUp";
 
 import * as actions from "./store/actions/index";
 
@@ -16,7 +16,6 @@ class App extends Component {
         // to do -- lazy loading
         console.log("The user is authenticated : ", this.props.isAuthenticated);
         let routes = (
-
             <Switch>
                 <Route path="/shef-sign-up" component={ShefSignUp} />
                 <Route path="/cust-sign-up" component={CustSignUp} />

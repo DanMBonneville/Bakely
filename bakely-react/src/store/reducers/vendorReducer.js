@@ -3,29 +3,29 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
 
 const initialState = {
-	shefs: [],
+	vendors: [],
 	error: ''
 }
 
 const reducer = (state = initialState, action) => {
 	switch ( action.type ) {
-		case actionTypes.SHEF_SIGN_UP_SUCCESS: return shefSignUpSuccess(state, action);
-		case actionTypes.SHEF_SIGN_UP_FAIL: return shefSignUpFail(state);
+		case actionTypes.VENDOR_SIGN_UP_SUCCESS: return vendorSignUpSuccess(state, action);
+		case actionTypes.VENDOR_SIGN_UP_FAIL: return vendorSignUpFail(state);
 		default: return state;
 	}
 };
 
-const shefSignUpSuccess = (state, action) => {
+const vendorSignUpSuccess = (state, action) => {
 	// id maybe is included as the email
-	const newShef = updateObject(action.shefData);
+	const newVendor = updateObject(action.vendorData);
 	// old object with , updated properties 
 	return updateObject(state, {
-		shefs: state.shefs.concat(newShef),
+		vendors: state.vendors.concat(newVendor),
 		loading: false,
 	});
 }
 
-const shefSignUpFail = (state) => {
+const vendorSignUpFail = (state) => {
 	// Add a fail message here?
 	return updateObject(state, {
 		loading: false,

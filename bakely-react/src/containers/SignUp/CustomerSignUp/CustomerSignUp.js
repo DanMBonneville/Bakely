@@ -5,7 +5,6 @@ import classes from "./CustomerSignUp.css";
 
 import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
-import errorHandler from '../../../hoc/errorHandler/errorHandler';
 
 import * as actions from '../../../store/actions/index';
 import { updateObject, checkValidity } from '../../../shared/utility';
@@ -13,6 +12,7 @@ import { updateObject, checkValidity } from '../../../shared/utility';
 class CustomerSignUp extends Component {
 
     state = {
+        role: 'customer',
         signUpForm: {
             email: {
                 elementType: 'input',
@@ -73,7 +73,8 @@ class CustomerSignUp extends Component {
             formData[formElementIdentifier] = this.state.signUpForm[formElementIdentifier].value;
         }
         const newCustomer = {
-            customerData: formData
+            role: this.state.role,
+            data: formData
         }
         this.props.onCustomerSignUp(newCustomer);
     }
@@ -136,8 +137,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onCustomerSignUp: (newCustomer) => dispatch(actions.customerSignUp(newCustomer))
+        onCustomerSignUp: (newCustomer) => dispatch(actions.signUp(newCustomer))
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(errorHandler(CustomerSignUp, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerSignUp);

@@ -9,7 +9,7 @@ import './index.css';
 import App from './App';
 import vendorReducer from './store/reducers/vendorReducer';
 import authReducer from './store/reducers/authReducer';
-import custReducer from './store/reducers/custReducer';
+import customerReducer from './store/reducers/customerReducer';
 
 // import registerServiceWorker from './registerServiceWorker';
 
@@ -20,7 +20,7 @@ import custReducer from './store/reducers/custReducer';
 const rootReducer = combineReducers({
     vendor: vendorReducer,
     auth: authReducer,
-    cust: custReducer
+    cust: customerReducer
 });
 
 const store = createStore(rootReducer, compose(

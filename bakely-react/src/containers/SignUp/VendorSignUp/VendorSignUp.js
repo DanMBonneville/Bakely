@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import classes from "./ShefSignUp.css";
+import classes from "./VendorSignUp.css";
 
 import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
-import errorHandler from '../../../hoc/errorHandler/errorHandler';
 
 import * as actions from '../../../store/actions/index';
 import { updateObject, checkValidity } from '../../../shared/utility';
-import axios from '../../../axios-instance';
 
-class ShefSignUp extends Component {
+class VendorSignUp extends Component {
 
     state = {
+        role: 'vendor',
         signUpForm: {
             email: {
                 elementType: 'input',
@@ -103,10 +102,11 @@ class ShefSignUp extends Component {
         for (let formElementIdentifier in this.state.signUpForm) {
             formData[formElementIdentifier] = this.state.signUpForm[formElementIdentifier].value;
         }
-        const newShef = {
-            shefData: formData
+        const newVendor = {
+            role: this.state.role,
+            data: formData
         }
-        this.props.onShefSignUp(newShef);
+        this.props.onVendorSignUp(newVendor);
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
@@ -117,15 +117,15 @@ class ShefSignUp extends Component {
             touched: true
         });
         // Attach new object to old form
-        const updatedShefForm = updateObject(this.state.signUpForm, {
+        const updatedVendorForm = updateObject(this.state.signUpForm, {
             [inputIdentifier]: updatedFormElement
         });
         let formIsValid = true;
         // update forms validity based on singular action
-        for (let inputIdentifier in updatedShefForm) {
-            formIsValid = updatedShefForm[inputIdentifier].valid && formIsValid;
+        for (let inputIdentifier in updatedVendorForm) {
+            formIsValid = updatedVendorForm[inputIdentifier].valid && formIsValid;
         }
-        this.setState({ signUpForm: updatedShefForm }); 
+        this.setState({ signUpForm: updatedVendorForm }); 
     }
 
     render() {
@@ -152,7 +152,7 @@ class ShefSignUp extends Component {
 
         return (
             <div className={classes.signUpForm} >
-                <h4>Become a Professional Shef!</h4>
+                <h4>Become a Professional</h4>
                 {form}
             </div>
         );
@@ -167,8 +167,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onShefSignUp: (newShef) => dispatch(actions.shefSignUp(newShef))
+        onVendorSignUp: (newVendor) => dispatch(actions.signUp(newVendor))
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(errorHandler(ShefSignUp, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(VendorSignUp);

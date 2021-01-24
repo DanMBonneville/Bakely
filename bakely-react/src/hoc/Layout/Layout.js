@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import * as actions from '../../store/actions/index';
 import Auxiliary from '../Auxiliary/Auxiliary';
 import classes from './Layout.css';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
@@ -41,8 +42,14 @@ class Layout extends Component {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.auth.token !== null
+        isAuthenticated: state.auth.user !== null
     };
 };
 
-export default connect(mapStateToProps, null)(Layout);
+const mapDispatchToProps = dispatch => {
+    return {
+        checkAuth: () => dispatch(actions.authListener())
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

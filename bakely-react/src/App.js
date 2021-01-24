@@ -9,8 +9,6 @@ import Logout from "./containers/Logout/Logout";
 import VendorSignUp from "./containers/SignUp/VendorSignUp/VendorSignUp";
 import CustomerSignUp from "./containers/SignUp/CustomerSignUp/CustomerSignUp";
 
-import * as actions from "./store/actions/index";
-
 class App extends Component {
     render() {
         // to do -- lazy loading
@@ -39,14 +37,8 @@ class App extends Component {
 const mapStateToProps = state => {
     return {
         // change this to accomidate firebase
-        isAuthenticated: state.auth.token !== null
+        isAuthenticated: state.user !== null
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        // firebase autosign up?
-        onTryAutoSignup: () => dispatch(actions.authCheckState())
-    };
-};
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, null)(App));

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import fire from '../../firebase';
 
 import * as actionTypes from './actionTypes';
 
@@ -8,61 +8,29 @@ export const loginStart = () => {
     };
 };
 
-export const loginSuccess = (token) => {
+export const loginSuccess = (user) => {
     return {
         type: actionTypes.LOGIN_SUCCESS,
-        token: token
+        user: user
     };
 };
-
 export const loginFail = (error) => {
     return {
         type: actionTypes.LOGIN_FAIL,
         error: error
     };
 };
-
 export const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expirationDate');
     return {
-        type: actionTypes.LOGOUT
+        type: actionTypes.LOGOUT,
+        user: null
     };
 };
-
 export const checkAuthTimeout = (expirationTime) => {
     return dispatch => {
         setTimeout(() => {
             //dispatch(logout());
         }, expirationTime * 1000);
-    };
-};
-
-export const login = (email, password) => {
-    console.log("in actions folder reight before dispatching login start", email, password);
-    return dispatch => {
-        dispatch(loginStart());
-        let username = email;
-        const postBody = {
-            // read as the username on the server
-            username,
-            password
-        };
-        let url = 'http://localhost:8080/authenticate';
-        axios.post(url, postBody)
-            .then(response => {
-                console.log("This is the response", response.data);
-                // const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-                // localstorage api is baked into the browser
-                // this isn't working, I might delet this later
-                localStorage.setItem('token', JSON.stringify(response.data.token));
-                // localStorage.setItem('expirationDate', expirationDate);
-                dispatch(loginSuccess(response));
-                dispatch(checkAuthTimeout(response.data.expiresIn));
-            })
-            .catch(err => {
-                dispatch(loginFail(err.response.data.error));
-            });
     };
 };
 
@@ -73,20 +41,34 @@ export const setAuthRedirectPath = (path) => {
     };
 };
 
-export const authCheckState = () => {
-    return dispatch => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            dispatch(logout());
-        } else {
-            const expirationDate = new Date(localStorage.getItem('expirationDate'));
-            if (expirationDate <= new Date()) {
-                dispatch(logout());
-            } else {
-                const userId = localStorage.getItem('username');
-                dispatch(loginSuccess(token, userId));
-                dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
-            }
+export const authListener = () => {
+    fire.auth().onAuthStateChanged(user => {
+        return {
+            type: actionTypes.CHECK_AUTH_STATE,
+            user: user
         }
+    })
+}
+
+export const login = (email, password) => {
+    console.log("in actions folder reight before dispatching login start", email, password);
+    return dispatch => {
+        dispatch(loginStart());
+        fire.auth.signInWithEmailAndPassword(email, password)
+            .then(response => {
+                dispatch(loginSuccess(response));
+            })
+            .catch(err => {
+                switch(err.code){
+                    case 'auth/invalid-email':
+                    case 'auth/user-disabled':
+                    case 'auth/user-not-found':
+                    case 'auth/wrong-password': 
+                    default : 
+                        break;
+                }
+                dispatch(loginFail(err.response.data.error));
+            });
     };
 };
+

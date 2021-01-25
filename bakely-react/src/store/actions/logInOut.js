@@ -1,10 +1,34 @@
-import fire from '../../firebase';
+import { auth } from '../../firebase';
 
 import * as actionTypes from './actionTypes';
 
-export const loginStart = () => {
+export const login = (email, password) => {
+    console.log("in actions folder reight before dispatching login start", email, password);
+    return dispatch => {
+        dispatch(loadingStart());
+        auth.signInWithEmailAndPassword(email, password)
+            .then(userCredential => {
+                console.log("wiat, is there evan a response here?", userCredential);
+                dispatch(loginSuccess(userCredential.user));
+            })
+            .catch(err => {
+                console.log("error was", err.code);
+                switch (err.code) {
+                    case 'auth/invalid-email':
+                    case 'auth/user-disabled':
+                    case 'auth/user-not-found':
+                    case 'auth/wrong-password':
+                    default:
+                        break;
+                }
+                dispatch(loginFail(err.response.data.error));
+            });
+    };
+};
+
+export const loadingStart = () => {
     return {
-        type: actionTypes.LOGIN_START
+        type: actionTypes.LOADING_START
     };
 };
 
@@ -40,35 +64,23 @@ export const setAuthRedirectPath = (path) => {
         path: path
     };
 };
-
+export const loadingEnd = () => {
+    return {
+        type: actionTypes.LOADING_END
+    };
+}
 export const authListener = () => {
-    fire.auth().onAuthStateChanged(user => {
-        return {
-            type: actionTypes.CHECK_AUTH_STATE,
-            user: user
-        }
-    })
+    return dispatch => {
+        dispatch(loadingStart());
+        auth.onAuthStateChanged(user => {
+            dispatch(loadingEnd());
+            return {
+                type: actionTypes.CHECK_AUTH_STATE,
+                user: user
+            }
+        })
+    }
 }
 
-export const login = (email, password) => {
-    console.log("in actions folder reight before dispatching login start", email, password);
-    return dispatch => {
-        dispatch(loginStart());
-        fire.auth.signInWithEmailAndPassword(email, password)
-            .then(response => {
-                dispatch(loginSuccess(response));
-            })
-            .catch(err => {
-                switch(err.code){
-                    case 'auth/invalid-email':
-                    case 'auth/user-disabled':
-                    case 'auth/user-not-found':
-                    case 'auth/wrong-password': 
-                    default : 
-                        break;
-                }
-                dispatch(loginFail(err.response.data.error));
-            });
-    };
-};
+
 

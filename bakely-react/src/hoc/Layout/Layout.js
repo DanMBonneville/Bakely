@@ -12,6 +12,11 @@ class Layout extends Component {
         showSideDrawer: false
     }
 
+    componentDidMount () {
+        console.log("onTryAuto Sign Up is going in");
+        this.props.onTryAutoSignup();
+    }
+
     sideDrawerClosedHandler = () => {
         this.setState( { showSideDrawer: false } );
     }
@@ -23,6 +28,7 @@ class Layout extends Component {
     }
 
     render () {
+        console.log("user is logged in: ", this.props.isAuthenticated);
         return (
             <Auxiliary>
                 <Toolbar
@@ -42,13 +48,15 @@ class Layout extends Component {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.auth.user !== null
+        // change this to accomidate firebase
+        isAuthenticated: state.user !== null,
+        user: state.user
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        checkAuth: () => dispatch(actions.authListener())
+        onTryAutoSignup: () => dispatch(actions.authListener())
     };
 }
 

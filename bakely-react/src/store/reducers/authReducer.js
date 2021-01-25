@@ -10,8 +10,8 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.SIGN_UP_START: return signUpStart(state, action);
-        case actionTypes.LOGIN_START: return loginStart(state, action);
+        case actionTypes.LOADING_START: return loadingStart(state);
+        case actionTypes.LOADING_END: return loadingEnd(state)
         case actionTypes.LOGIN_SUCCESS: return loginSuccess(state, action);
         case actionTypes.LOGIN_FAIL: return loginFail(state, action);
         case actionTypes.LOGOUT: return logout(state, action);
@@ -21,13 +21,13 @@ const authReducer = (state = initialState, action) => {
     }
 };
 
-const signUpStart = (state, action) => {
+const loadingStart = (state, action) => {
     return updateObject(state, { error: null, loading: true });
 };
 
-const loginStart = (state, action) => {
-    return updateObject(state, { error: null, loading: true });
-};
+const loadingEnd = (state) => {
+    return updateObject(state, {loading: false})
+}
 
 const loginSuccess = (state, action) => {
     return updateObject(state, {
@@ -44,7 +44,7 @@ const loginFail = (state, action) => {
     });
 };
 
-const logout = (state, action) => {
+const logout = (state) => {
     return updateObject(state, { user: null});
 };
 

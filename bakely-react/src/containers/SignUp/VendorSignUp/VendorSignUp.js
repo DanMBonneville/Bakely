@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import classes from "./VendorSignUp.css";
 
 import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 
 import * as actions from '../../../store/actions/index';
 import { updateObject, checkValidity } from '../../../shared/utility';
@@ -149,10 +151,24 @@ class VendorSignUp extends Component {
                 <Button btnType="Success" disabled={this.state.formIsValid}>Submit</Button>
             </form>
         );
-
+        if (this.props.loading) {
+            form = <Spinner />
+        }
+        let errorMessage = null;
+        if (this.props.error) {
+            errorMessage = (
+                <p>{this.props.error.message}</p>
+            );
+        }
+        let authRedirect = null;
+        if (this.props.isAuthenticated) {
+            authRedirect = <Redirect to={this.props.authRedirectPath} />
+        }     
         return (
             <div className={classes.signUpForm} >
                 <h4>Become a Professional</h4>
+                {authRedirect}
+                {errorMessage} 
                 {form}
             </div>
         );

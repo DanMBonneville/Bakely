@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+//import * as actions from './store/actions/index';
+
 import Layout from "./hoc/Layout/Layout";
 import HomePage from "./containers/HomePage/HomePage";
 import Login from "./containers/Login/Login";
@@ -12,7 +14,6 @@ import CustomerSignUp from "./containers/SignUp/CustomerSignUp/CustomerSignUp";
 class App extends Component {
     render() {
         // to do -- lazy loading
-        console.log("The user is authenticated : ", this.props.isAuthenticated);
         let routes = (
             <Switch>
                 <Route path="/vendor-sign-up" component={VendorSignUp} />
@@ -26,7 +27,7 @@ class App extends Component {
 
         return (
             <div>
-                <Layout>
+                <Layout isAtuhenticated={this.props.isAuthenticated}>
                     {routes}
                 </Layout>
             </div>
@@ -36,9 +37,14 @@ class App extends Component {
 
 const mapStateToProps = state => {
     return {
-        // change this to accomidate firebase
-        isAuthenticated: state.user !== null
+        // isAuthenticated: typeof state.user !== 'undefined'
     };
 };
 
-export default withRouter(connect(mapStateToProps, null)(App));
+const mapDispatchToProps = dispatch => {
+    return {
+        //onTryAutoSignup: () => dispatch(actions.authListener())
+    };
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

@@ -29,6 +29,7 @@ class Layout extends Component {
 
     render () {
         console.log("user is logged in: ", this.props.isAuthenticated);
+        console.log("who it is: ", this.state.user);
         return (
             <Auxiliary>
                 <Toolbar
@@ -49,8 +50,8 @@ class Layout extends Component {
 const mapStateToProps = state => {
     return {
         // change this to accomidate firebase
-        isAuthenticated: state.user !== null,
-        user: state.user
+        isAuthenticated: state.auth.user !== null,
+        user: state.auth.user
     };
 };
 

@@ -48,7 +48,7 @@ const loginFail = (state, action) => {
 };
 
 const logout = (state) => {
-    return updateObject(state, { user: null});
+    return updateObject(state, { user: null });
 };
 
 const setAuthRedirectPath = (state, action) => {

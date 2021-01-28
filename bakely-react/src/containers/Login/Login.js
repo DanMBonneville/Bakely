@@ -96,10 +96,7 @@ class Login extends Component {
                 <p>{this.props.error.message}</p>
             );
         }
-        let authRedirect = null;
-        if (this.props.isAuthenticated) {
-            authRedirect = <Redirect to={this.props.authRedirectPath} />
-        }
+        let authRedirect = this.props.isAuthenticated ? <Redirect to={this.props.authRedirectPath} /> : null;
         return (
             <div className={classes.Login}>
                 {authRedirect}

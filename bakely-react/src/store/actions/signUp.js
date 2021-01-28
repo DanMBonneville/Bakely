@@ -1,6 +1,40 @@
 import * as actionTypes from './actionTypes'
 import { auth, db } from '../../firebase';
 
+export const signUp = (user) => {
+    return dispatch => {
+        dispatch(loadingStart());
+        auth.createUserWithEmailAndPassword(user.data.email, user.data.password)
+            .then( res => {
+                console.log("User created succesfully with response: ", res);
+                setPermissionsForUser(res.user.uid, user.role)
+                    .then( res => {
+                        const newUser = {...user};
+                        delete newUser.data.password;
+                        saveUserToDataBase(newUser)
+                    });
+            })
+            .catch(err => {
+                console.log("Error while creating user with Email and Password : ", err);
+                switch(err.code){
+                    case 'auth/email-already-in-use':
+                    case 'auth/invalid-email':
+                    case 'auth/operation-not-allowed':
+                    case 'auth/weak-password': 
+                    default : 
+                        break;
+                }
+            });
+        
+    }
+}
+
+function setPermissionsForUser(uid, role){
+    console.log("Setting permissions...");
+    const isVendor = (role === 'vendor');
+    return auth.setCustomUserClaims(uid, {vendor: isVendor});
+}
+
 function saveUserToDataBase(user){
     console.log("User data: ", user);
     if(user.role === 'vendor'){
@@ -38,26 +72,6 @@ function customerSignUp(newCustomer) {
     };
 };
 
-export const signUp = (user) => {
-    return dispatch => {
-        dispatch(loadingStart());
-        auth.createUserWithEmailAndPassword(user.data.email, user.data.password)
-            .catch(err => {
-                console.log("What should I do with this err? : ", err);
-                switch(err.code){
-                    case 'auth/email-already-in-use':
-                    case 'auth/invalid-email':
-                    case 'auth/operation-not-allowed':
-                    case 'auth/weak-password': 
-                    default : 
-                        break;
-                }
-            });
-        const newUser = {...user};
-        delete newUser.data.password;
-        saveUserToDataBase(newUser)
-    }
-}
 export const loadingStart = () => {
     return {
         type: actionTypes.LOADING_START

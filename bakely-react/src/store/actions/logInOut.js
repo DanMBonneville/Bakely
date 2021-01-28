@@ -8,7 +8,6 @@ export const login = (email, password) => {
         dispatch(loadingStart());
         auth.signInWithEmailAndPassword(email, password)
             .then(userCredential => {
-                console.log("wiat, is there evan a response here?", userCredential);
                 dispatch(loginSuccess(userCredential.user));
             })
             .catch(err => {
@@ -25,10 +24,15 @@ export const login = (email, password) => {
             });
     };
 };
-
 export const loadingStart = () => {
     return {
         type: actionTypes.LOADING_START
+    };
+};
+export const loginFail = (error) => {
+    return {
+        type: actionTypes.LOGIN_FAIL,
+        error: error
     };
 };
 
@@ -38,12 +42,7 @@ export const loginSuccess = (user) => {
         user: user
     };
 };
-export const loginFail = (error) => {
-    return {
-        type: actionTypes.LOGIN_FAIL,
-        error: error
-    };
-};
+
 export const logout = () => {
     return {
         type: actionTypes.LOGOUT,

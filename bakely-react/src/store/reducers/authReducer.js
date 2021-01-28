@@ -30,6 +30,8 @@ const loadingEnd = (state) => {
 }
 
 const loginSuccess = (state, action) => {
+    console.log("Login Successful");
+    console.log("What is the user", action.user)
     return updateObject(state, {
         user: action.user,
         error: null,
@@ -38,6 +40,7 @@ const loginSuccess = (state, action) => {
 };
 
 const loginFail = (state, action) => {
+    console.log("Login Failed");
     return updateObject(state, {
         error: action.error,
         loading: false

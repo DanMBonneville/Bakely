@@ -48,9 +48,13 @@ class Login extends Component {
             this.props.onSetAuthRedirectPath();
         }
     }
-    // implement check validity shared method
+
+    submitHandler = (event) => {
+        event.preventDefault();
+        this.props.login(this.state.controls.email.value, this.state.controls.password.value);
+    }
+
     inputChangedHandler = (event, controlName) => {
-        console.log("input change");
         const updatedControls = updateObject(this.state.controls, {
             [controlName]: updateObject(this.state.controls[controlName], {
                 value: event.target.value,
@@ -59,12 +63,6 @@ class Login extends Component {
             })
         });
         this.setState({ controls: updatedControls });
-    }
-
-    submitHandler = (event) => {
-        console.log("after submit");
-        event.preventDefault();
-        this.props.login(this.state.controls.email.value, this.state.controls.password.value);
     }
 
     render() {
@@ -87,7 +85,7 @@ class Login extends Component {
                 changed={(event) => this.inputChangedHandler(event, formElement.id)} />
         ));
         if (this.props.loading) {
-            console.log("Why is this laoding ", this.props.loading);
+            console.log("Login Loading...");
             form = <Spinner />
         }
         let errorMessage = null;

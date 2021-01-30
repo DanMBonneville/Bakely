@@ -98,6 +98,12 @@ class VendorSignUp extends Component {
         formIsValid: true
     }
 
+    componentDidMount() {
+        if (this.props.authRedirectPath !== '/') {
+            this.props.onSetAuthRedirectPath();
+        }
+    }
+
     submitHandler = ( event ) => {
         event.preventDefault();
         const formData = {};
@@ -177,13 +183,17 @@ class VendorSignUp extends Component {
 
 const mapStateToProps = state => {
     return {
-
+        loading: state.auth.loading,
+        error: state.auth.error,
+        isAuthenticated: state.auth.user !== null,
+        authRedirectPath: state.auth.authRedirectPath
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onVendorSignUp: (newVendor) => dispatch(actions.signUp(newVendor))
+        onVendorSignUp: (newVendor) => dispatch(actions.signUp(newVendor)),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
     };
 }
 

@@ -9,26 +9,15 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 	switch ( action.type ) {
-		case actionTypes.VENDOR_SIGN_UP_SUCCESS: return vendorSignUpSuccess(state, action);
-		case actionTypes.VENDOR_SIGN_UP_FAIL: return vendorSignUpFail(state);
+		case actionTypes.ADD_VENDOR: return addVendor(state, action);
 		default: return state;
 	}
 };
 
-const vendorSignUpSuccess = (state, action) => {
-	// id maybe is included as the email
-	const newVendor = updateObject(action.vendorData);
-	// old object with , updated properties 
+const addVendor = (state, action) => {
 	return updateObject(state, {
-		vendors: state.vendors.concat(newVendor),
-		loading: false,
-	});
-}
-
-const vendorSignUpFail = (state) => {
-	// Add a fail message here?
-	return updateObject(state, {
-		loading: false,
+		vendors: state.vendors.concat(action.newVendor),
+		error: ''
 	});
 }
 

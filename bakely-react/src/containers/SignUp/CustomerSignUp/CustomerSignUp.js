@@ -67,6 +67,12 @@ class CustomerSignUp extends Component {
         formIsValid: true
     }
 
+    componentDidMount() {
+        if (this.props.authRedirectPath !== '/') {
+            this.props.onSetAuthRedirectPath();
+        }
+    }
+
     submitHandler = (event) => {
         event.preventDefault();
         const formData = {};
@@ -147,12 +153,17 @@ class CustomerSignUp extends Component {
 
 const mapStateToProps = state => {
     return {
+        loading: state.auth.loading,
+        error: state.auth.error,
+        isAuthenticated: state.auth.user !== null,
+        authRedirectPath: state.auth.authRedirectPath
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onCustomerSignUp: (newCustomer) => dispatch(actions.signUp(newCustomer))
+        onCustomerSignUp: (newCustomer) => dispatch(actions.signUp(newCustomer)),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
     };
 }
 

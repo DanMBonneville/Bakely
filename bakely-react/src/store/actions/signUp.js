@@ -1,75 +1,97 @@
 import * as actionTypes from './actionTypes'
-import firebase from '../../firebase';
+import { auth, db } from '../../firebase';
 
-export const shefSignUpSuccess = (formData) => {
-    return {
-        type: actionTypes.SHEF_SIGN_UP_SUCCESS,
-        shefData: formData
-        // don't think we need to update the store right away after updating the backend
-        // but if we did, it would go right here
-    }
-}
-
-export const shefSignUpFail = (error) => {
-    return {
-        type: actionTypes.SHEF_SIGN_UP_FAIL
-    }
-}
-
-//set loading to true for the spinner
-export const shefSignUpStart = () => {
-    return {
-        type: actionTypes.SHEF_SIGN_UP_START
-	}
-}
-
-export const customerSignUpSuccess = (formData) => {
-    return {
-        type: actionTypes.CUSTOMER_SIGN_UP_SUCCESS,
-        shefData: formData
-    }
-}
-
-export const customerSignUpFail = (error) => {
-    return {
-        type: actionTypes.CUSTOMER_SIGN_UP_FAIL
-    }
-}
-
-export const customerSignUpStart = () => {
-    return {
-        type: actionTypes.CUSTOMER_SIGN_UP_START
-    }
-}
-
-export const shefSignUp = (newShef) => {
+/*
+    Section: asyncronous communication with firebase server
+*/
+export const signUp = (user) => {
+    console.log("User to sign up:", user);
     return dispatch => {
-        dispatch(shefSignUpStart());
-        firebase.db.collection('bakers').add(newShef)
+        dispatch(loadingStart());
+        auth.createUserWithEmailAndPassword(user.data.email, user.data.password)
+            .then(res => {
+                console.log("User created succesfully with response: ", res);
+                const newUser = { ...user };
+                delete newUser.data.password;
+                dispatch(saveUserToDataBase(newUser));
+            })
+            .catch(err => {
+                console.log("Error while creating user with Email and Password : ", err);
+                switch (err.code) {
+                    case 'auth/email-already-in-use':
+                    case 'auth/invalid-email':
+                    case 'auth/operation-not-allowed':
+                    case 'auth/weak-password':
+                    default:
+                        break;
+                }
+            });
+
+    }
+}
+export function saveUserToDataBase(user) {
+    return dispatch => {
+        console.log("User data: ", user);
+        if (user.role === 'vendor') {
+            dispatch(vendorSignUp(user));
+        } else if (user.role === 'customer') {
+            dispatch(customerSignUp(user));
+        } else {
+            console.log("User was not added to the database");
+        }
+    }
+}
+export function vendorSignUp(newVendor) {
+    return dispatch => {
+        db.collection('vendors').add(newVendor)
             .then(response => {
-                // potentially pass response.data.name as a param for an id later
-                console.log("Success response: " + response.data )
-                dispatch(shefSignUpSuccess(newShef));
+                console.log("Vendor signed up successfully:" + response.data);
+                dispatch(addVendor(newVendor));
+                dispatch(signUpSuccess(newVendor));
             })
             .catch(error => {
-                console.log(error.data);
-                dispatch(shefSignUpFail(error));
+                console.log("Error response", error.data);
+                dispatch(signUpFail(error));
+            });
+    };
+};
+export function customerSignUp(newCustomer) {
+    return dispatch => {
+        db.collection('customers').add(newCustomer)
+            .then(response => {
+                console.log("Customer signed up successfully:", response.data);
+                dispatch(signUpSuccess(newCustomer));
+            })
+            .catch(error => {
+                dispatch(signUpFail(error));
             });
     };
 };
 
-export const customerSignUp = (newCustomer) => {
-    return dispatch => {
-        dispatch(customerSignUpStart());
-        firebase.db.collection('customers').add(newCustomer)
-            .then(response => {
-                // potentially pass response.data.name as a param for an id later
-                console.log("Success response: " + response.data)
-                dispatch(customerSignUpSuccess(newCustomer));
-            })
-            .catch(error => {
-                console.log(error.data);
-                dispatch(customerSignUpFail(error));
-            });
+/*
+    Section: calls to reducers
+*/
+
+export const loadingStart = () => {
+    return {
+        type: actionTypes.LOADING_START
     };
 };
+export const addVendor = (newVendor) => {
+    return {
+        type: actionTypes.ADD_VENDOR,
+        newVendor: newVendor
+    }
+}
+export const signUpSuccess = (user) => {
+    return {
+        type: actionTypes.SIGN_UP_SUCCESS,
+        user: user
+    }
+}
+export const signUpFail = (error) => {
+    return {
+        type: actionTypes.SIGN_UP_FAIL,
+        error: error
+    }
+}

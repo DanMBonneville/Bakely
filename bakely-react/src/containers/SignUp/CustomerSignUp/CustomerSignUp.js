@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { Redirect } from 'react-router-dom';
 import classes from "./CustomerSignUp.css";
 
 import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
-import errorHandler from '../../../hoc/errorHandler/errorHandler';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 
 import * as actions from '../../../store/actions/index';
 import { updateObject, checkValidity } from '../../../shared/utility';
@@ -13,6 +13,7 @@ import { updateObject, checkValidity } from '../../../shared/utility';
 class CustomerSignUp extends Component {
 
     state = {
+        role: 'customer',
         signUpForm: {
             email: {
                 elementType: 'input',
@@ -66,6 +67,12 @@ class CustomerSignUp extends Component {
         formIsValid: true
     }
 
+    componentDidMount() {
+        if (this.props.authRedirectPath !== '/') {
+            this.props.onSetAuthRedirectPath();
+        }
+    }
+
     submitHandler = (event) => {
         event.preventDefault();
         const formData = {};
@@ -73,7 +80,8 @@ class CustomerSignUp extends Component {
             formData[formElementIdentifier] = this.state.signUpForm[formElementIdentifier].value;
         }
         const newCustomer = {
-            customerData: formData
+            role: this.state.role,
+            data: formData
         }
         this.props.onCustomerSignUp(newCustomer);
     }
@@ -119,10 +127,24 @@ class CustomerSignUp extends Component {
                 <Button btnType="Success" >Submit</Button>
             </form>
         );
-
+        if (this.props.loading) {
+            form = <Spinner />
+        }
+        let errorMessage = null;
+        if (this.props.error) {
+            errorMessage = (
+                <p>{this.props.error.message}</p>
+            );
+        }
+        let authRedirect = null;
+        if (this.props.isAuthenticated) {
+            authRedirect = <Redirect to={this.props.authRedirectPath} />
+        }           
         return (
             <div>
                 <h4>Sign Up, or continue as guest</h4>
+                {authRedirect}
+                {errorMessage} 
                 {form}
             </div>
         );
@@ -131,13 +153,18 @@ class CustomerSignUp extends Component {
 
 const mapStateToProps = state => {
     return {
+        loading: state.auth.loading,
+        error: state.auth.error,
+        isAuthenticated: state.auth.user !== null,
+        authRedirectPath: state.auth.authRedirectPath
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onCustomerSignUp: (newCustomer) => dispatch(actions.customerSignUp(newCustomer))
+        onCustomerSignUp: (newCustomer) => dispatch(actions.signUp(newCustomer)),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(errorHandler(CustomerSignUp, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerSignUp);

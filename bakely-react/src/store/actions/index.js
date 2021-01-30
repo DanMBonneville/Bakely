@@ -1,11 +1,10 @@
 export {
-    shefSignUp,
-    customerSignUp
+    signUp,
 } from './signUp';
 export {
-    login,
-    logout,
     checkAuthTimeout,
     setAuthRedirectPath,
-    authCheckState
+    login,
+    logout,
+    authListener
 } from './logInOut';

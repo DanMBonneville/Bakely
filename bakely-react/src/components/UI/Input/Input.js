@@ -20,23 +20,6 @@ const input = (props) => {
                 value={props.value}
                 onChange={props.changed} />;
             break;
-        /*
-         * no select area yet
-        case ('select'):
-            inputElement = (
-                <select
-                    className={inputClasses.join(' ')}
-                    value={props.value}
-                    onChange={props.changed}>
-                    {props.elementConfig.options.map(option => (
-                        <option key={option.value} value={option.value}>
-                            {option.displayValue}
-                        </option>
-                    ))}
-                </select>
-            );
-            break;
-            */
         default:
             inputElement = <input
                 className={inputClasses.join(' ')}
@@ -60,3 +43,21 @@ export default input;
 // value
 // changed (function)
 // label?
+
+/*
+         * no select area yet
+        case ('select'):
+            inputElement = (
+                <select
+                    className={inputClasses.join(' ')}
+                    value={props.value}
+                    onChange={props.changed}>
+                    {props.elementConfig.options.map(option => (
+                        <option key={option.value} value={option.value}>
+                            {option.displayValue}
+                        </option>
+                    ))}
+                </select>
+            );
+            break;
+            */

@@ -23,8 +23,54 @@
     height: 80%;
 }
 
-@media (max-width: 499px) {
-    .DesktopOnly {
-        display: none;
-    }
+input[type=text]{  
+    width: 100%;  
+    padding: 12px 40px; 
+    display: inline-block;  
+    border: 1px solid #ccc;  
+    border-radius: 60px;
+    box-sizing: border-box;  
+    outline: none;
+    z-index: 6;
+}  
+.input[type=text]:focus {
+    color: white;
+    background-color: #FA6400;
+}
+
+.inputWithIcon input[type="text"] {
+    padding-left: 40px;
+}
+.inputWithIcon {
+    position: relative; 
+    z-index: 5;
+    padding-left: 20px;
+    padding-right: 10px;
+}
+.inputWithIcon i{ 
+    position: absolute; 
+    left: 0; 
+    padding: 12px 28px;
+    color: #aaa;
+    transition: 0.3s;
+} 
+
+.block {
+    position: relative; 
+    z-index: 5;
+    display: block;
+    width: 60px;
+    height: 60%;
+    font-size: 20px;
+    cursor: pointer;
+    float: right;
+    outline: none;
+    border: 1px solid #ccc;  
+    border-radius: 60px;
+    background-color: #FA541C;
+}
+i { 
+    z-index: 300;
+    color: black;
+    transition: 0.3s;
 }

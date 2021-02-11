@@ -1,15 +1,17 @@
-.NavigationItems {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    height: 100%;
+.block {
+    position: relative; 
+    z-index: 5;
+    display: block;
+    width: 100%;
+    border: 1px solid grey;
+    padding: 20px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    outline: none;
 }
-
-@media (min-width: 500px) {
-    .NavigationItems {
-        flex-flow: row;
-    }
+i { 
+    z-index: 300;
+    color: black;
+    transition: 0.3s;
 }

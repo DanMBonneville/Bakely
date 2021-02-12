@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Container from '@material-ui/core/Container';
 
 import * as actions from '../../store/actions/index';
 import Auxiliary from '../Auxiliary/Auxiliary';
@@ -42,9 +43,9 @@ class Layout extends Component {
                     isLoggedIn={this.props.isAuthenticated}
                     open={this.state.showSideDrawer}
                     closed={this.sideDrawerClosedHandler} />
-                <main className={classes.Content}>
+                <Container maxWidth="md" className={classes.Content}>
                     {this.props.children}
-                </main>
+                </Container>
             </Auxiliary>
         )
     }

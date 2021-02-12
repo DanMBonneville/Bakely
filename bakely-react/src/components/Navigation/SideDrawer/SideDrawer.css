@@ -21,14 +21,6 @@
     outline: none;
 }
 
-@media (max-width: 600px) {
-    .SideDrawer {
-        display: none;
-        width: 30%;
-        color: blue;
-    }
-}
-
 .Open {
     transform: translateX(0);
 }

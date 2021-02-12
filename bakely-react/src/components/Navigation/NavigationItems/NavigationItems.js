@@ -24,32 +24,32 @@ import Grid from '@material-ui/core/Grid';
     //     }
     // </ul>
 
-
-
 const handleLink = (chosenLink) => {
     console.log("just Checking", chosenLink);
+    let path = "/";
     switch(chosenLink){
         // Bake only
-        case 'My_Kitchen': <Redirect to="/" />; 
+        case 'My_Kitchen': ; 
             break;
         // Eat only
-        case 'Home': <Redirect to="/" /> ;
+        case 'Home': path = "/" ;
             break;
-        case 'Payment': <Redirect to="/" /> ;
+        case 'Payment': path = "/" ;
             break;
         // sared
-        case 'Orders': <Redirect to="/" /> ;
+        case 'Orders': path = "/";
             break;
-        case 'Chat': <Redirect to="/" /> ;
+        case 'Chat': path = "/" ;
             break;
-        case 'Help': <Redirect to="/" /> ;
+        case 'Help': path = "/" ;
             break;
-        case 'Account': <Redirect to="/" /> ;
+        case 'Account': path = "/" ;
             break;
-        case 'Sign Out': <Redirect to="/" /> ;
+        case 'Sign_Out': path = "/logoutlogout" ;
             break;
-        default: <Redirect to="/" />;
+        default: path = "/";
     }
+    <Redirect to={path} />
 }
 
 const navigationItems = (props) => (
@@ -117,11 +117,6 @@ const navigationItems = (props) => (
     </Container>
 }
 </Auxiliary>
-
-
-
-
-
 
 );
 

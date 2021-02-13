@@ -17,7 +17,7 @@ class HomePage extends Component {
 
         return (
             <Container>
-                <Grid container justify="space-between" spacing={1}>
+                <Grid container justify="space-between" spacing={1} style={{textAlign: "center"}}>
                     <Grid item xs={12} md={5} lg={5} xl={5} sm={5}>
                         <div style ={{color:"black", textAlign:"left", fontSize:"2rem"}}>Homeade food,</div>
                         <div style={{textAlign:"left", fontSize:"2rem", marginBottom:"25px"}}> delivered.</div>
@@ -49,9 +49,9 @@ class HomePage extends Component {
                         <div className={classes.subMinorText}>Have it delivered to your door or pick it up yourself</div>
                     </Grid>
                 </Grid>
-                <Grid container spacing={1} style={{textAlign: "left"}}>
-                    <Grid item xs={5}>
-                        <div className={classes.headerText}>Why try Bakely?</div>
+                <Grid container spacing={1} style={{textAlign: "center"}}>
+                    <Grid item xs={12} md={5} lg={5} xl={5} sm={5}>
+                        <div className={classes.headerText} style={{fontSize:"1rem"}}>Why try Bakely?</div>
                         <div className={classes.minorText}>Explore new flavors</div>
                         <div className={classes.subMinorText}>Discover new and unique homeade food in your area</div>
                         <div className={classes.minorText}>Support local bakers</div>
@@ -59,16 +59,16 @@ class HomePage extends Component {
                         <div className={classes.minorText}>Great prices</div>
                         <div className={classes.subMinorText}>No restaurant upkeep, just delicious food</div>
                     </Grid>
-                    <Grid item xs={7}>
+                    <Grid item xs={12} md={7} lg={7} xl={7} sm={7}>
                         <img src={pixeltrue_meditation} width="80%" alt="Location" />
                     </Grid>
                 </Grid>
-                <Grid container spacing={1}>
-                    <Grid item xs={7}>
+                <Grid container spacing={1} style={{textAlign: "center"}}>
+                    <Grid item xs={12} md={7} lg={7} xl={7} sm={7}>
                         <img src={pixeltrue_plan_1} width="80%" alt="plan" />
                     </Grid>
-                    <Grid item xs={5} rowHeight={25}>
-                        <div className={classes.headerText}>Food safety</div>
+                    <Grid item xs={12} md={5} lg={5} xl={5} sm={5} rowHeight={25}>
+                        <div className={classes.headerText} style={{fontSize: "1rem;"}}>Food safety</div>
                         <div className={classes.subMinorText}>At Bakely, we’re serious about food safety. 
                             We are committed to ensuring that your food will always be safe to eat. 
                             All bakers have undergone food safety training and are compliant with the laws of their operating region. 
@@ -76,7 +76,7 @@ class HomePage extends Component {
                     </Grid>
                 </Grid>
                 <Grid container spacing={1} style={{textAlign: "center", paddingTop: "50px"}}>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} md={12} lg={12} xl={12} sm={12}>
                         <div className={classes.minorText}>Don’t enter your area code.</div>
                         <div className={classes.subMinorText} style={{paddingBottom: "0px"}}>This is definitely not reverse psychology...</div>
                         <div className={classes.inputWithIcon}>

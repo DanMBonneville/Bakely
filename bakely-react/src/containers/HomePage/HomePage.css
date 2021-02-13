@@ -6,7 +6,7 @@ input[type=text]{
     border-radius: 60px;
     box-sizing: border-box;  
     outline: none;
-    z-index: 4;
+    z-index: 6;
 }  
 .input[type=text]:focus {
     color: white;
@@ -19,6 +19,7 @@ input[type=text]{
 .inputWithIcon {
     position: relative; 
     z-index: 5;
+    padding-bottom: 50px;
 }
 .inputWithIcon i{ 
     position: absolute; 
@@ -28,15 +29,31 @@ input[type=text]{
     transition: 0.3s;
 } 
 
+.headerText{
+    font-size: 2vw;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
 .minorText{
-    font-size: 25px;
-    text-align: center; 
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
     color: black;
 }
 
 .subMinorText{
-    padding-top: 10px;
-    font-size: 15px;
-    text-align: center; 
+    padding-top: 12px;
+    padding-bottom: 30px;
+    font-size: 10px;
     color: black;
+    font-style: normal;
+    font-weight: normal;
+}
+
+img {
+    padding-top: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

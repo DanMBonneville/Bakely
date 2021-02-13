@@ -9,6 +9,8 @@ import pixeltrue_location from "../../assets/images/pixeltrue-location.png";
 import pixeltrue_meditation from "../../assets/images/pixeltrue-meditation.png";
 import pixeltrue_seo from "../../assets/images/pixeltrue-seo.png";
 import pixeltrue_special_deals from "../../assets/images/pixeltrue-special-deals.png";
+import pixeltrue_plan_1 from "../../assets/images/pixeltrue-plan-1.png";
+
 /*
 import { connect } from 'react-redux';
 
@@ -19,7 +21,6 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 */
 
 class HomePage extends Component {
-
 
     render() {
 
@@ -57,9 +58,42 @@ class HomePage extends Component {
                         <div className={classes.subMinorText}>Have it delivered to your door or pick it up yourself</div>
                     </Grid>
                 </Grid>
-                
-                
-               
+                <Grid container spacing={1} style={{textAlign: "left"}}>
+                    <Grid item xs={5}>
+                        <div className={classes.headerText}>Why try Bakely?</div>
+                        <div className={classes.minorText}>Explore new flavors</div>
+                        <div className={classes.subMinorText}>Discover new and unique homeade food in your area</div>
+                        <div className={classes.minorText}>Support local bakers</div>
+                        <div className={classes.subMinorText}>Help people keep doing what they love</div>
+                        <div className={classes.minorText}>Great prices</div>
+                        <div className={classes.subMinorText}>No restaurant upkeep, just delicious food</div>
+                    </Grid>
+                    <Grid item xs={7}>
+                        <img src={pixeltrue_meditation} width="80%" alt="Location" />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={1}>
+                    <Grid item xs={7}>
+                        <img src={pixeltrue_plan_1} width="80%" alt="plan" />
+                    </Grid>
+                    <Grid item xs={5} rowHeight={25}>
+                        <div className={classes.headerText}>Food safety</div>
+                        <div className={classes.subMinorText}>At Bakely, we’re serious about food safety. 
+                            We are committed to ensuring that your food will always be safe to eat. 
+                            All bakers have undergone food safety training and are compliant with the laws of their operating region. 
+                        </div>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={1} style={{textAlign: "center", paddingTop: "50px"}}>
+                    <Grid item xs={12}>
+                        <div className={classes.minorText}>Don’t enter your area code.</div>
+                        <div className={classes.subMinorText} style={{paddingBottom: "0px"}}>This is definitely not reverse psychology...</div>
+                        <div className={classes.inputWithIcon}>
+                            <input type="text" placeholder={"enter your address"} required/>
+                            <i class="fa fa-location-arrow" ></i>
+                        </div>
+                    </Grid>
+                </Grid>
             </Container>
             
         );

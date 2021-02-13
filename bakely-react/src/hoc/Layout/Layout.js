@@ -12,30 +12,33 @@ class Layout extends Component {
         showSideDrawer: false
     }
 
-    componentDidMount () {
+    componentDidMount() {
         console.log("onTryAuto Sign Up is going in");
         this.props.onTryAutoSignup();
     }
 
     sideDrawerClosedHandler = () => {
-        this.setState( { showSideDrawer: false } );
+        this.setState({ showSideDrawer: false });
     }
 
     sideDrawerToggleHandler = () => {
-        this.setState( ( prevState ) => {
+        this.setState((prevState) => {
             return { showSideDrawer: !prevState.showSideDrawer };
-        } );
+        });
     }
 
-    render () {
+    render() {
         console.log("user is logged in: ", this.props.isAuthenticated);
         console.log("who it is: ", this.state.user);
         return (
             <Auxiliary>
                 <Toolbar
                     isLoggedIn={this.props.isAuthenticated}
-                    drawerToggleClicked={this.sideDrawerToggleHandler} />
+                    drawerToggleClicked={this.sideDrawerToggleHandler} 
+                    sideDrawerOpen={this.showSideDrawer}
+                    />
                 <SideDrawer
+                    className={classes.sideDrawer}
                     isLoggedIn={this.props.isAuthenticated}
                     open={this.state.showSideDrawer}
                     closed={this.sideDrawerClosedHandler} />

@@ -141,6 +141,7 @@ class CustomerSignUp extends Component {
             authRedirect = <Redirect to={this.props.authRedirectPath} />
         }           
         return (
+            // change this with material ui, add phone number
             <div>
                 <h4>Sign Up, or continue as guest</h4>
                 {authRedirect}

@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
+import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
+import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './Login.css';
 import * as actions from '../../store/actions/index';
 import { updateObject, checkValidity } from '../../shared/utility';
+
+import Container from '@material-ui/core/Container';
 
 class Login extends Component {
     state = {
@@ -96,14 +100,18 @@ class Login extends Component {
         }
         let authRedirect = this.props.isAuthenticated ? <Redirect to={this.props.authRedirectPath} /> : null;
         return (
-            <div className={classes.Login}>
-                {authRedirect}
-                {errorMessage} 
-                <form onSubmit={this.submitHandler}>
-                    {form}
-                    <Button btnType="Success">Login</Button>
-                </form>
-            </div>
+            // clean this up with Material UI
+            <Auxiliary>
+                {/* <Backdrop show/> */}
+                <Container disableGutters maxWidth={'xs'} className={classes.Login} >
+                    {authRedirect}
+                    {errorMessage}
+                    <form onSubmit={this.submitHandler}>
+                        {form}
+                        <Button btnType="Success">Login</Button>
+                    </form>
+                </Container>
+            </Auxiliary>
         );
     }
 }

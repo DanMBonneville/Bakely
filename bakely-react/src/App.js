@@ -27,7 +27,7 @@ class App extends Component {
 
         return (
             <div>
-                <Layout isAtuhenticated={this.props.isAuthenticated}>
+                <Layout isAuthenticated={this.props.isAuthenticated}>
                     {routes}
                 </Layout>
             </div>
@@ -37,7 +37,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
     return {
-        // isAuthenticated: typeof state.user !== 'undefined'
+        //isAuthenticated: typeof state.user !== 'undefined'
     };
 };
 

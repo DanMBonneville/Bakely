@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-
+import { Redirect } from 'react-router-dom';
 
 import classes from './SideDrawer.css';
-
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import NavigationItems from '../NavigationItems/NavigationItems';
-import Login from '../../../containers/Login/Login';
 import Backdrop from '../../UI/Backdrop/Backdrop';
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
@@ -21,6 +20,7 @@ const sideDrawer = ( props ) => {
         borderBottom: '1px solid black'
     }
 
+    const [redirect, setRedirect] = useState(null);
     const [isBakeOptions, setIsBakeOptions] = useState(false);
     const [eatStyle, setEatStyle] = useState(onStyle);
     const [bakeStyle, setBakeStyle] = useState(offStyle);
@@ -36,6 +36,11 @@ const sideDrawer = ( props ) => {
         setIsBakeOptions(true);
     }
 
+    function goToSignIn(e){
+        e.preventDefault();
+        setRedirect(<Redirect to={'/login'} />) 
+    }
+
     let attachedClasses = [classes.SideDrawer, classes.Close];
     if (props.open) {
         attachedClasses = [classes.SideDrawer, classes.Open];
@@ -43,12 +48,13 @@ const sideDrawer = ( props ) => {
 
     return (
         <Auxiliary>
+            {redirect}
             <Backdrop show={props.open} clicked={props.closed}/>
             <Container disableGutters maxWidth={'xs'} className={attachedClasses.join(' ')}>
                 {props.isLoggedIn ? 
-                <Auxiliary>
-                    {/* //TODO ternary expression for if a user is a customer and not a baker */}
-                    <Grid container spacing={0} className={classes.userOption}>
+                <Auxiliary className={classes.drawerWrapper}>
+                    {/* //TODO  ternary expression for if a user is a customer and not a baker */}
+                    <Grid container spacing={0} >
                         <Grid item xs={6}>
                             <button style={eatStyle} onClick={setEatItems} className={classes.block}> Eat </button>
                         </Grid>
@@ -63,7 +69,14 @@ const sideDrawer = ( props ) => {
                     </Grid>
                 </Auxiliary>:
                 // unimplimented
-                <Login />
+                <Auxiliary className={classes.drawerWrapper}>
+                    <Grid container spacing={2} onClick={props.closed} >
+                        <Grid item xs={12} >
+                            <button onClick={goToSignIn} className={classes.signIn}> Sign in </button>
+                        </Grid>
+                    </Grid>
+                </Auxiliary>
+                
                 }
             </Container>
         </Auxiliary>

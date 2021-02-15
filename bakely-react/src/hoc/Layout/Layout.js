@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Container from '@material-ui/core/Container';
 
 import * as actions from '../../store/actions/index';
+import HamburgerMenu from '../../components/Navigation/SideDrawer/HamburgerMenu/HamburgerMenu';
 import Auxiliary from '../Auxiliary/Auxiliary';
 import classes from './Layout.css';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
@@ -32,19 +34,19 @@ class Layout extends Component {
         console.log("who it is: ", this.state.user);
         return (
             <Auxiliary>
-                <Toolbar
-                    isLoggedIn={this.props.isAuthenticated}
+                <HamburgerMenu 
                     drawerToggleClicked={this.sideDrawerToggleHandler} 
-                    sideDrawerOpen={this.showSideDrawer}
-                    />
+                    sideDrawerOpen={this.state.showSideDrawer}
+                />
+                <Toolbar />
                 <SideDrawer
                     className={classes.sideDrawer}
                     isLoggedIn={this.props.isAuthenticated}
                     open={this.state.showSideDrawer}
                     closed={this.sideDrawerClosedHandler} />
-                <main className={classes.Content}>
+                <Container maxWidth="md" className={classes.Content}>
                     {this.props.children}
-                </main>
+                </Container>
             </Auxiliary>
         )
     }

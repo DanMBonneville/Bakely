@@ -8,6 +8,7 @@ export const login = (email, password) => {
         dispatch(loadingStart());
         auth.signInWithEmailAndPassword(email, password)
             .then(userCredential => {
+                // Make sure the user is added here
                 dispatch(loginSuccess(userCredential.user));
             })
             .catch(err => {

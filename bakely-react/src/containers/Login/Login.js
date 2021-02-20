@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
@@ -110,6 +110,7 @@ class Login extends Component {
                         {form}
                         <Button btnType="Success">Login</Button>
                     </form>
+                    <p>New to Bakely? <NavLink to={'/customer-sign-up'}>Create an account</NavLink></p>
                 </Container>
             </Auxiliary>
         );

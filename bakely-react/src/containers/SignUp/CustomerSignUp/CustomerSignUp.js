@@ -85,8 +85,7 @@ class CustomerSignUp extends Component {
         }
         this.props.onCustomerSignUp(newCustomer);
     }
-
-    // abstract this form?
+    
     // update and validate the form as things are typed
     inputChangedHandler = (event, inputIdentifier) => {
         //check validity in this object

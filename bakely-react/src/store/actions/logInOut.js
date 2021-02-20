@@ -1,4 +1,4 @@
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 
 import * as actionTypes from './actionTypes';
 
@@ -8,20 +8,23 @@ export const login = (email, password) => {
         dispatch(loadingStart());
         auth.signInWithEmailAndPassword(email, password)
             .then(userCredential => {
-                // Make sure the user is added here
+                console.log(userCredential);
+                const userData = db.collection("users").doc(email).get();
+                console.log("This is the userData", userData);
                 dispatch(loginSuccess(userCredential.user));
             })
             .catch(err => {
                 console.log("error was", err.code);
+                let message = '';
                 switch (err.code) {
-                    case 'auth/invalid-email':
-                    case 'auth/user-disabled':
-                    case 'auth/user-not-found':
-                    case 'auth/wrong-password':
+                    case 'auth/invalid-email': message = 'invalid-email';
+                    case 'auth/user-disabled': message = 'user-disabled';
+                    case 'auth/user-not-found': message = 'user-not-found';
+                    case 'auth/wrong-password': message = 'wrong-password';
                     default:
                         break;
                 }
-                dispatch(loginFail(err.response.data.error));
+                dispatch(loginFail(message));
             });
     };
 };

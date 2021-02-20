@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import classes from './SideDrawer.css';
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
@@ -9,21 +9,18 @@ import Backdrop from '../../UI/Backdrop/Backdrop';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
-
 const sideDrawer = ( props ) => {
 
-    // used to switch styles based on user options
+    const [isBakeOptions, setIsBakeOptions] = useState(false);
+    const [eatStyle, setEatStyle] = useState(onStyle);
+    const [bakeStyle, setBakeStyle] = useState(offStyle);
+
     const onStyle = {
         borderBottom: '4px solid black'
     }
     const offStyle = {
         borderBottom: '1px solid black'
     }
-
-    const [redirect, setRedirect] = useState(null);
-    const [isBakeOptions, setIsBakeOptions] = useState(false);
-    const [eatStyle, setEatStyle] = useState(onStyle);
-    const [bakeStyle, setBakeStyle] = useState(offStyle);
 
     function setEatItems() {
         setEatStyle(onStyle);
@@ -37,8 +34,7 @@ const sideDrawer = ( props ) => {
     }
 
     function goToSignIn(e){
-        e.preventDefault();
-        setRedirect(<Redirect to={'/login'} />) 
+        props.history.push('/login'); 
     }
 
     let attachedClasses = [classes.SideDrawer, classes.Close];
@@ -48,7 +44,6 @@ const sideDrawer = ( props ) => {
 
     return (
         <Auxiliary>
-            {redirect}
             <Backdrop show={props.open} clicked={props.closed}/>
             <Container disableGutters maxWidth={'xs'} className={attachedClasses.join(' ')}>
                 {props.isLoggedIn ? 
@@ -68,11 +63,10 @@ const sideDrawer = ( props ) => {
                         </Grid>
                     </Grid>
                 </Auxiliary>:
-                // unimplimented
                 <Auxiliary className={classes.drawerWrapper}>
                     <Grid container spacing={2} onClick={props.closed} >
                         <Grid item xs={12} >
-                            <button onClick={goToSignIn} className={classes.signIn}> Sign in </button>
+                            <button onClick={goToSignIn} className={classes.signIn}> Login </button>
                         </Grid>
                     </Grid>
                 </Auxiliary>
@@ -83,4 +77,4 @@ const sideDrawer = ( props ) => {
     );
 };
 
-export default sideDrawer;
+export default withRouter(sideDrawer);

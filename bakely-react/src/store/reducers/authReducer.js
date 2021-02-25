@@ -23,15 +23,10 @@ const authReducer = (state = initialState, action) => {
         default: return state;
     }
 };
-const loadingStart = (state) => {
-    return updateObject(state, { error: null, loading: true });
-};
-const loadingEnd = (state) => {
-    return updateObject(state, {loading: false})
-}
+const loadingStart = (state) => {return updateObject(state, { error: null, loading: true })};
+const loadingEnd = (state) => {return updateObject(state, {loading: false})}
 const login = (state, action) => {
-    console.log("Login Successful");
-    console.log("What is the user", action.user)
+    console.log("Login Successful", action.user);
     return updateObject(state, {
         user: action.user,
         loginError: null,

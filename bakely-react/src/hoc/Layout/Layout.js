@@ -15,8 +15,7 @@ class Layout extends Component {
     }
 
     componentDidMount() {
-        console.log("onTryAuto Sign Up is going in");
-        this.props.onTryAutoSignup();
+        this.props.onAuthStateChanged();
     }
 
     sideDrawerClosedHandler = () => {
@@ -62,7 +61,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onTryAutoSignup: () => dispatch(actions.authListener())
+        onAuthStateChanged: () => dispatch(actions.authListener())
     };
 }
 

@@ -1,17 +1,18 @@
 .SideDrawer {
     position: fixed;
     height: 100%;
+    width: 26px;
     left: 0;
     top: 0;
     background-color: #EAEAEA;
     z-index: 200;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     transition: transform 0.3s ease-out;
 }
 
 .block {
     display: block;
-    width: 100%;
+    width: 50%;
     border: 1px solid grey;
     padding: 14px 28px;
     font-size: 16px;

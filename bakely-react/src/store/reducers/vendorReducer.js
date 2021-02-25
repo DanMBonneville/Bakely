@@ -3,6 +3,13 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
 
 const initialState = {
+	vendorData: {
+		pictureRef: '',
+		ratingRef: '',
+		menuId: '',
+		availability: '',
+		currentOrderRef: ''
+	},
 	vendors: [],
 	error: ''
 }

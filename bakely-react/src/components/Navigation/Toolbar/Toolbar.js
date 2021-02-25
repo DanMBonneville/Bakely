@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Logo from '../../Logo/Logo';
 import classes from './Toolbar.css';
 
 
@@ -9,12 +9,13 @@ function handleLink(){
 
 const toolbar = (props) => (
     <header className={classes.Toolbar}>
+        <Logo />
         <div className={classes.inputWithIcon}>
             <input type="text" placeholder={"Search"} required/>
-            <i class="fa fa-search" ></i>
+            <i className="fa fa-search" ></i>
         </div>
         <button className={classes.block} onClick={() => handleLink()}>
-            <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+            <i className="fa fa-shopping-cart" aria-hidden="true"></i></button>
     </header>
 );
 

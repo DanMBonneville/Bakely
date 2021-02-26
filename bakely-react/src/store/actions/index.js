@@ -1,13 +1,12 @@
 export {
-    signUp,
-} from './signUp';
-export {
-    checkAuthTimeout,
-    setAuthRedirectPath,
     login,
     logout,
+    signUp,
+    checkAuthTimeout,
+    setAuthRedirectPath,
     authListener
-} from './logInOut';
+} from './auth';
 export {
     createStripeSession
 } from './checkOut';
+

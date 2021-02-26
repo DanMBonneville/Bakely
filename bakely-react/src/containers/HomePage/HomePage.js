@@ -19,9 +19,9 @@ class HomePage extends Component {
             <Container>
                 <Grid container justify="space-between" spacing={1} style={{textAlign: "center"}}>
                     <Grid item xs={12} md={5} lg={5} xl={5} sm={5}>
-                        <div style ={{color:"black", textAlign:"left", fontSize:"2rem"}}>Homeade food,</div>
-                        <div style={{textAlign:"left", fontSize:"2rem", marginBottom:"25px"}}> delivered.</div>
-                        <div style ={{color:"black", textAlign:"center", fontSize:"12px"}}>Explore home restaurants in your area</div>
+                        <div style ={{color:"black", fontSize:"2rem", textAlign:"left"}}>Homeade food,</div>
+                        <div style={{fontSize:"2rem", marginBottom:"25px", textAlign:"left"}}> delivered.</div>
+                        <div style ={{color:"black", fontSize:"12px", textAlign:"center", }}>Explore home restaurants in your area</div>
                         <div className={classes.inputWithIcon}>
                             <input type="text" placeholder={"enter your address"} required/>
                             <i className="fa fa-location-arrow" ></i>
@@ -67,8 +67,8 @@ class HomePage extends Component {
                     <Grid item xs={12} md={7} lg={7} xl={7} sm={7}>
                         <img src={pixeltrue_plan_1} width="80%" alt="plan" />
                     </Grid>
-                    <Grid item xs={12} md={5} lg={5} xl={5} sm={5} rowHeight={25}>
-                        <div className={classes.headerText} style={{fontSize: "1rem;"}}>Food safety</div>
+                    <Grid item xs={12} md={5} lg={5} xl={5} sm={5}>
+                        <div className={classes.headerText} style={{fontSize: "1rem"}}>Food safety</div>
                         <div className={classes.subMinorText}>At Bakely, we’re serious about food safety. 
                             We are committed to ensuring that your food will always be safe to eat. 
                             All bakers have undergone food safety training and are compliant with the laws of their operating region. 
@@ -81,7 +81,7 @@ class HomePage extends Component {
                         <div className={classes.subMinorText} style={{paddingBottom: "0px"}}>This is definitely not reverse psychology...</div>
                         <div className={classes.inputWithIcon}>
                             <input type="text" placeholder={"enter your address"} required/>
-                            <i class="fa fa-location-arrow" ></i>
+                            <i className="fa fa-location-arrow" ></i>
                         </div>
                     </Grid>
                 </Grid>

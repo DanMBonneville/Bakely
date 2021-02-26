@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import 'firebase/firestore';
-
+// change to a refference
 var firebaseConfig = {
     apiKey: "AIzaSyDiNj7-21to6pADvUoVfy_PfqqWj0mR7c4",
     authDomain: "bakely-server.firebaseapp.com",

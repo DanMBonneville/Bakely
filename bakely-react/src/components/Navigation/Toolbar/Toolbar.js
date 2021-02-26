@@ -1,6 +1,7 @@
 import React from 'react';
 import Logo from '../../Logo/Logo';
 import classes from './Toolbar.css';
+import HamburgerMenu from '../SideDrawer/HamburgerMenu/HamburgerMenu';
 
 
 function handleLink(){
@@ -9,6 +10,10 @@ function handleLink(){
 
 const toolbar = (props) => (
     <header className={classes.Toolbar}>
+        <HamburgerMenu 
+            drawerToggleClicked={props.drawerToggleClicked} 
+            sideDrawerOpen={false}
+        />
         <Logo />
         <div className={classes.inputWithIcon}>
             <input type="text" placeholder={"Search"} required/>

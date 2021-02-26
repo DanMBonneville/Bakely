@@ -6,6 +6,7 @@ import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import Backdrop from '../../UI/Backdrop/Backdrop';
 
+import Drawer from '@material-ui/core/Drawer';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
@@ -42,7 +43,7 @@ const sideDrawer = ( props ) => {
     return (
         <Auxiliary>
             <Backdrop show={props.open} clicked={props.closed}/>
-            <Container disableGutters className={attachedClasses.join(' ')}>
+            <div className={attachedClasses.join(' ')}>
                 {props.isLoggedIn ? 
                 <Auxiliary >
                     {/* //TODO  ternary expression for if a user is a customer and not a baker */}
@@ -68,7 +69,7 @@ const sideDrawer = ( props ) => {
                     </Grid>
                 </Auxiliary>
                 }
-            </Container>
+            </div>
         </Auxiliary>
     );
 };

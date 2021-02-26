@@ -8,3 +8,6 @@ export {
     logout,
     authListener
 } from './logInOut';
+export {
+    createStripeSession
+} from './checkOut';

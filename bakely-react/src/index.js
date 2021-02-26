@@ -10,6 +10,7 @@ import App from './App';
 import vendorReducer from './store/reducers/vendorReducer';
 import authReducer from './store/reducers/authReducer';
 import customerReducer from './store/reducers/customerReducer';
+import checkoutReducer from './store/reducers/checkoutReducer';
 
 // import registerServiceWorker from './registerServiceWorker';
 
@@ -20,7 +21,8 @@ import customerReducer from './store/reducers/customerReducer';
 const rootReducer = combineReducers({
     vendor: vendorReducer,
     auth: authReducer,
-    cust: customerReducer
+    cust: customerReducer,
+    checkout: checkoutReducer
 });
 
 const store = createStore(rootReducer, compose(

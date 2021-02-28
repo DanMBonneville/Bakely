@@ -29,7 +29,7 @@ class Layout extends Component {
 
     render() {
         console.log("user is logged in: ", this.props.isAuthenticated);
-        console.log("who it is: ", this.state.user);
+        console.log("who it is: ", this.props.userData);
         return (
             <Auxiliary>
                 <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
@@ -48,9 +48,9 @@ class Layout extends Component {
 
 const mapStateToProps = state => {
     return {
-        // change this to accomidate firebase
         isAuthenticated: state.auth.user !== null,
-        user: state.auth.user
+        user: state.auth.user,
+        userData: state.cust.userData
     };
 };
 

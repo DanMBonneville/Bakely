@@ -48,7 +48,7 @@ export const addVendor = (newVendor) => {
         newVendor: newVendor
     }
 };
-export const checkUserAuth = (user) => {
+export const setCurrentUserAuth = (user) => {
     return {
         type: actionTypes.CHECK_AUTH_STATE,
         user: user
@@ -73,9 +73,12 @@ export const setAuthRedirectPath = (path) => {
 */
 export const login = (user) => {
     return dispatch => {
+    // add granted authorities
+    console.log("Actions, logging in: ", user);
     dispatch(loadingStart);
-    db.collection("users").doc(user.UID).get()
+    db.collection("users").doc(user.user.uid).get()
         .then( userData => {
+            console.log("This is the user data after fecth:", userData);
             if(!userData.exists){
                 dispatch(signUp(user));
             } else{
@@ -90,16 +93,15 @@ export const login = (user) => {
 }
 export const signUp = (user) => {
     console.log("User to sign up to firestore:", user);
-    const userData = setUpUserData(user);
+    const userData = setUpUserData(user, "customer");
     return dispatch => {
-        db.collection('users').doc(user.UID).set(userData)
+        db.collection('users').doc(user.user.uid).set(userData)
             .then(() => {
                 console.log("Customer signed up successfully");
                 dispatch(signUpSuccess(user));
                 dispatch(setCurrentUserData(userData));
             })
             .catch(error => {
-                console.log("error adding user to the database", error);
                 dispatch(signUpFail(error));
             });
     };
@@ -107,7 +109,7 @@ export const signUp = (user) => {
 export const logout = () => {
     return dispatch => {
         dispatch(loadingStart());
-        auth.signOut().then(() => {
+        auth().signOut().then(() => {
             dispatch(logoutSuccess());
         });
     }
@@ -115,10 +117,19 @@ export const logout = () => {
 export const authListener = () => {
     return dispatch => {
         dispatch(loadingStart());
-        auth.onAuthStateChanged(user => {
-            console.log("user called on auth changed:", user);
-            dispatch(loadingEnd());
-            dispatch(checkUserAuth(user));
+        auth().onAuthStateChanged(authUser => {
+            console.log("user called on auth changed:", authUser);
+            if(authUser){
+                db.collection('users').doc(authUser.uid).get().then(user => {
+                    dispatch(setCurrentUserData(user.data()));
+                    dispatch(setCurrentUserAuth(authUser));
+                    dispatch(loadingEnd());
+                });
+            } else {
+                //dispatch(setCurrentUserData(""));
+                dispatch(setCurrentUserAuth(authUser));
+                dispatch(loadingEnd());
+            }
         })
     }
 }
@@ -127,7 +138,7 @@ export const authListener = () => {
 *  helper methods
 */
 
-const setUpUserData = (user) => {
+const setUpUserData = (user, role = null) => {
     const email = user.user.email;
     const names = user.user.displayName.split(" ");
     return {
@@ -135,6 +146,7 @@ const setUpUserData = (user) => {
         firstName: names[0],
         LastName: names[names.length-1],
         address: '',
-        stripeLink: ''
+        stripeLink: '',
+        role: role
     }
 }

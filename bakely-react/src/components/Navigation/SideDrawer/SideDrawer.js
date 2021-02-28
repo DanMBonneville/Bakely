@@ -6,8 +6,6 @@ import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import Backdrop from '../../UI/Backdrop/Backdrop';
 
-import Drawer from '@material-ui/core/Drawer';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
 const sideDrawer = ( props ) => {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
-import { signInWith } from '../../firebase';
+import { auth } from '../../firebase';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import * as actions from '../../store/actions/index';
 
@@ -14,9 +14,9 @@ class Login extends Component {
     uiConfig = {
         singInFlow: "popup",
         signInOptions: [
-            signInWith.EmailAuthProvider.PROVIDER_ID,
-            signInWith.GoogleAuthProvider.PROVIDER_ID,
-            signInWith.FacebookAuthProvider.PROVIDER_ID
+            auth.EmailAuthProvider.PROVIDER_ID,
+            auth.GoogleAuthProvider.PROVIDER_ID,
+            auth.FacebookAuthProvider.PROVIDER_ID
         ],
         callbacks: {
             signInSuccessWithAuthResult: (user) => {
@@ -31,7 +31,6 @@ class Login extends Component {
     }
 
     render() {
-        console.log("customedfghjr:", this.props.customer);
         let errorMessage = null;
         if (this.props.error) {
             errorMessage = (
@@ -43,13 +42,13 @@ class Login extends Component {
                 <Container disableGutters maxWidth={'xs'}>
                     {errorMessage}
                     {this.props.isAuthenticated ?
-                    <Grid item xs={12}>
+                    <Grid xs={12}>
                         <div style ={{color:"black", fontSize:"2rem", textAlign:"left"}}>Welcome back,</div>
                         <div style={{fontSize:"2rem", marginBottom:"25px", textAlign:"left"}}>{this.props.customer.firstName}</div>
                     </Grid>
                     :<StyledFirebaseAuth 
                         uiConfig={this.uiConfig} 
-                        firebaseAuth={signInWith()}
+                        firebaseAuth={auth()}
                     />}
                 </Container>
             </Auxiliary>

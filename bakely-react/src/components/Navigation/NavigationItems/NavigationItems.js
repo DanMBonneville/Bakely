@@ -21,7 +21,7 @@ const navigationItems = (props) => {
         // Eat only
         case 'Home': path = "/";
             break;
-        case 'Payment': path = "/";
+        case 'Payment': path = "/checkout";
             break;
         // sared
         case 'Orders': path = "/";

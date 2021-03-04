@@ -1,30 +1,27 @@
-import { Stripe } from '../../firebase';
 import { auth, db } from '../../firebase';
-
+//import Stripe from 'stripe';
 import * as actionTypes from './actionTypes';
 
+const STRIPE_PUBLISHABLE_KEY = 'pk_test_51ILi2SDaQgsm4ztYtijcHsltKu6gNMVrjrHiwubwYDibixx2BKSxzrlpOZID5iBoNTDf8MQrpvNZYcgkW1SNpop600C81GkYoA';
+
 export const createStripeSession = (email, password)  => {
-    const user = db.collection('users').where('email', '==', email).get()[0].then( (() => user.stripeAccount ? user.stripeAccount : 'acct_1IODhWJIqj2eXYKr'));
+    const user = db.collection('users').where('email', '==', email).get().then((dbObj) => { return dbObj.stripeAccount ? dbObj.stripeAccount : 'acct_1IODhWJIqj2eXYKr' });
+    console.log(user);
 
         return dispatch => {
         dispatch(loadingStart());
-        auth.signInWithEmailAndPassword(email, password)
-            .then(userCredential => {
-                // Make sure the user is added here
-                dispatch(loginSuccess(userCredential.user));
-            })
-            .catch(err => {
-                console.log("error was", err.code);
-                switch (err.code) {
-                    case 'auth/invalid-email':
-                    case 'auth/user-disabled':
-                    case 'auth/user-not-found':
-                    case 'auth/wrong-password':
-                    default:
-                        break;
-                }
-                dispatch(loginFail(err.response.data.error));
-            });
+        /*const stripe = new Stripe(STRIPE_PUBLISHABLE_KEY);
+        const elements = stripe.elements();
+        const cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+        cardElement.on('change', ({ error }) => {
+        const displayError = document.getElementById('error-message');
+        if (error) {
+            displayError.textContent = error.message;
+        } else {
+            displayError.textContent = '';
+        }
+        });*/
     };
 };
 export const loadingStart = () => {

@@ -10,6 +10,7 @@ import Login from "./containers/Login/Login";
 import Logout from "./containers/Logout/Logout";
 import VendorSignUp from "./containers/SignUp/VendorSignUp/VendorSignUp";
 import CustomerSignUp from "./containers/SignUp/CustomerSignUp/CustomerSignUp";
+import Checkout from "./containers/Checkout/Checkout";
 
 class App extends Component {
     render() {
@@ -20,6 +21,7 @@ class App extends Component {
                 <Route path="/customer-sign-up" component={CustomerSignUp} />
                 <Route path="/login" component={Login} />
                 <Route path="/logout" component={Logout} />
+                <Route path="/checkout" component={Checkout} />
                 <Route path="/" exact component={HomePage} />
                 <Redirect to="/" />
             </Switch>

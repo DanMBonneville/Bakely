@@ -1,0 +1,15 @@
+.block {
+    position: relative; 
+    z-index: 5;
+    display: block;
+    width: 60px;
+    height: 60%;
+    font-size: 20px;
+    cursor: pointer;
+    padding-right: 13px;
+    float: right;
+    outline: none;
+    border: 1px solid #ccc;  
+    border-radius: 60px;
+    background-color: #FA541C;
+}

@@ -28,13 +28,12 @@ class Layout extends Component {
     }
 
     render() {
-        console.log("user is logged in: ", this.props.isAuthenticated);
-        console.log("who it is: ", this.props.userData);
         return (
             <Auxiliary>
                 <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
                 <SideDrawer
                     className={classes.sideDrawer}
+                    userData={this.props.userData}
                     isLoggedIn={this.props.isAuthenticated}
                     open={this.state.showSideDrawer}
                     closed={this.sideDrawerClosedHandler} />
@@ -48,7 +47,7 @@ class Layout extends Component {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.auth.user !== null,
+        isAuthenticated: state.auth.user ? true : false,
         user: state.auth.user,
         userData: state.cust.userData
     };

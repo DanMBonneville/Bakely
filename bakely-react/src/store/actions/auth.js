@@ -69,16 +69,14 @@ export const setAuthRedirectPath = (path) => {
 };
 
 /*
-    Section: asyncronous communication with firebase server
+*
+*  Section: asyncronous communication with firebase server
 */
 export const login = (user) => {
     return dispatch => {
-    // add granted authorities
-    console.log("Actions, logging in: ", user);
     dispatch(loadingStart);
     db.collection("users").doc(user.user.uid).get()
         .then( userData => {
-            console.log("This is the user data after fecth:", userData);
             if(!userData.exists){
                 dispatch(signUp(user));
             } else{
@@ -86,20 +84,15 @@ export const login = (user) => {
                 dispatch(loginSuccess(user));
             }
         })
-        .catch( err => {
-            console.log("This is the error: ", err);
-        })
     }
 }
 export const signUp = (user) => {
-    console.log("User to sign up to firestore:", user);
-    const userData = setUpUserData(user, "customer");
     return dispatch => {
+        const userData = setUpUserData(user, "customer");
         db.collection('users').doc(user.user.uid).set(userData)
             .then(() => {
-                console.log("Customer signed up successfully");
-                dispatch(signUpSuccess(user));
                 dispatch(setCurrentUserData(userData));
+                dispatch(signUpSuccess(user));
             })
             .catch(error => {
                 dispatch(signUpFail(error));
@@ -118,26 +111,24 @@ export const authListener = () => {
     return dispatch => {
         dispatch(loadingStart());
         auth().onAuthStateChanged(authUser => {
-            console.log("user called on auth changed:", authUser);
             if(authUser){
                 db.collection('users').doc(authUser.uid).get().then(user => {
-                    dispatch(setCurrentUserData(user.data()));
+                    if(user){ dispatch(setCurrentUserData(user.data())); }
                     dispatch(setCurrentUserAuth(authUser));
                     dispatch(loadingEnd());
                 });
             } else {
-                //dispatch(setCurrentUserData(""));
-                dispatch(setCurrentUserAuth(authUser));
+                dispatch(setCurrentUserData(""));
+                dispatch(setCurrentUserAuth(""));
                 dispatch(loadingEnd());
             }
-        })
+        });
     }
 }
 
 /*
 *  helper methods
 */
-
 const setUpUserData = (user, role = null) => {
     const email = user.user.email;
     const names = user.user.displayName.split(" ");

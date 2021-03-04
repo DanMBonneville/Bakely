@@ -6,7 +6,6 @@ import { auth } from '../../firebase';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import * as actions from '../../store/actions/index';
 
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Container';
 
 class Login extends Component {
@@ -20,15 +19,12 @@ class Login extends Component {
         ],
         callbacks: {
             signInSuccessWithAuthResult: (user) => {
-                console.log('sign in successful with response', user);
                 this.props.login(user);
             }
         }
     }
-
-    componentDidMount() {
-        this.props.onAuthStateChanged();
-    }
+    // https://firebaseopensource.com/projects/firebase/firebaseui-web-react/#firebaseauth-vs-styledfirebaseauth
+    // clean this up with this link
 
     render() {
         let errorMessage = null;
@@ -39,18 +35,16 @@ class Login extends Component {
         }
         return (
             <Auxiliary>
-                <Container disableGutters maxWidth={'xs'}>
                     {errorMessage}
-                    {this.props.isAuthenticated ?
+                    {this.props.isAuthenticated && this.props.customer ?
                     <Grid xs={12}>
                         <div style ={{color:"black", fontSize:"2rem", textAlign:"left"}}>Welcome back,</div>
                         <div style={{fontSize:"2rem", marginBottom:"25px", textAlign:"left"}}>{this.props.customer.firstName}</div>
-                    </Grid>
-                    :<StyledFirebaseAuth 
+                    </Grid>:
+                    <StyledFirebaseAuth 
                         uiConfig={this.uiConfig} 
                         firebaseAuth={auth()}
                     />}
-                </Container>
             </Auxiliary>
         );
     }
@@ -60,15 +54,14 @@ const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
         error: state.auth.error,
-        isAuthenticated: state.auth.user !== null,
+        isAuthenticated: state.auth.user ? true : false,
         customer: state.cust.userData
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        login: (user) => dispatch(actions.login(user)),
-        onAuthStateChanged: () => dispatch(actions.authListener())
+        login: (user) => dispatch(actions.login(user))
     };
 };
 

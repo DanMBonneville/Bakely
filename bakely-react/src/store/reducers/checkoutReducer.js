@@ -12,8 +12,8 @@ const checkoutReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.GET_CHECKOUT_SESSION: return createSession(state);
         case actionTypes.INITIALIZE_CHECKOUT_SESSION: return initializeSession(state, action);
-        case actionTypes.CHECKOUT_CONFIRMED: confirmCheckout(state);
-        case actionTypes.CANCEL_CHECKOUT: checkoutCancelled(state);
+        case actionTypes.CHECKOUT_CONFIRMED: return confirmCheckout(state);
+        case actionTypes.CANCEL_CHECKOUT: return checkoutCancelled(state);
         default: return state;
     }
 };
@@ -24,7 +24,7 @@ const createSession = (state) => {
     return updateObject(state, { error: null, loading: true });
 };
 
-const confirmCheckout = (state) => {
+const confirmCheckout = (state, action) => {
     return updateObject(state, { sessionId: null, invoiceNumber: action.invoiceNumber, loading: false });
 };
 const checkoutCancelled = (state) => {

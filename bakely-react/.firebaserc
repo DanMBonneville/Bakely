@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "bakely-server",
+    "bakely": "bakely-server"
+  }
+}

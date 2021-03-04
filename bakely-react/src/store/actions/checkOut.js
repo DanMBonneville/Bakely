@@ -1,12 +1,12 @@
 import { Stripe } from '../../firebase';
-import { db } from '../../firebase';
+import { auth, db } from '../../firebase';
 
 import * as actionTypes from './actionTypes';
 
-export const createStripeSession = (email) => {
-    const user = await db.collection('users').where('email', '==', email).get()[0];
-    const stripeAccount = user.stripeAccount ?? 'acct_1IODhWJIqj2eXYKr';
-    return dispatch => {
+export const createStripeSession = (email, password)  => {
+    const user = db.collection('users').where('email', '==', email).get()[0].then( (() => user.stripeAccount ? user.stripeAccount : 'acct_1IODhWJIqj2eXYKr'));
+
+        return dispatch => {
         dispatch(loadingStart());
         auth.signInWithEmailAndPassword(email, password)
             .then(userCredential => {

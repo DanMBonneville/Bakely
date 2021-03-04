@@ -24,7 +24,7 @@ const authReducer = (state = initialState, action) => {
     }
 };
 const loadingStart = (state) => {return updateObject(state, { error: null, loading: true })};
-const loadingEnd = (state) => {return updateObject(state, {loading: false})}
+const loadingEnd = (state) => {return updateObject(state, {loading: false, stripeSetUp: true})}
 const login = (state, action) => {
     console.log("Login Successful", action.user);
     return updateObject(state, {

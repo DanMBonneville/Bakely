@@ -2,28 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
 import './index.css';
 import App from './App';
-import vendorReducer from './store/reducers/vendorReducer';
-import authReducer from './store/reducers/authReducer';
-import customerReducer from './store/reducers/customerReducer';
+import rootReducer from './store/reducers';
 
 // import registerServiceWorker from './registerServiceWorker';
 
 // For redux devtolls
-// const composeEnhancers = (process.env.NODE_ENV === 'development') ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
-// Then replace compose with composeEnhancers in the store const
-
-const rootReducer = combineReducers({
-    vendor: vendorReducer,
-    auth: authReducer,
-    cust: customerReducer
-});
-
-const store = createStore(rootReducer, compose(
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunk)
 ));
 

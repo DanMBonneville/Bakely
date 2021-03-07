@@ -10,6 +10,7 @@ export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
 
 export const SET_CURRENT_USER_DATA = 'SET_CURRENT_USER_DATA'; 
 
+export const UPDATE_ROLE = "UPDATE_ROLE";
 export const ADD_VENDOR = 'ADD_VENDOR';
 
 

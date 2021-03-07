@@ -23,8 +23,6 @@ class Login extends Component {
             }
         }
     }
-    // https://firebaseopensource.com/projects/firebase/firebaseui-web-react/#firebaseauth-vs-styledfirebaseauth
-    // clean this up with this link
 
     render() {
         let errorMessage = null;

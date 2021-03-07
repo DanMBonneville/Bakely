@@ -23,7 +23,7 @@ const navigationItems = (props) => {
             break;
         case 'Payment': path = "/";
             break;
-        // sared
+        // shared
         case 'Orders': path = "/";
             break;
         case 'Chat': path = "/";

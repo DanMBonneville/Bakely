@@ -1,4 +1,8 @@
 export {
+    loadingStart,
+    loadingEnd
+} from './general';
+export {
     login,
     logout,
     signUp,
@@ -6,3 +10,6 @@ export {
     setAuthRedirectPath,
     authListener
 } from './auth';
+export {
+    setUserRole
+} from './user';

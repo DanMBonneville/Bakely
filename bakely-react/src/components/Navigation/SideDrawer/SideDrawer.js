@@ -65,6 +65,7 @@ const sideDrawer = ( props ) => {
                             <NavigationItems close={props.closed} isBakeOptions={isBakeOptions} className={classes.block} />
                         </Grid>
                     </Grid>
+                    <a href={"/toggle-user-role"}>Toggle Customer vs non customer</a>
                 </Auxiliary>:
                 <Auxiliary >
                     <Grid container spacing={2} onClick={props.closed} >
@@ -81,7 +82,7 @@ const sideDrawer = ( props ) => {
 
 const mapStateToProps = state => {
     return {
-        customer: state.cust.userData
+        customer: state.user.userData
     };
 };
 

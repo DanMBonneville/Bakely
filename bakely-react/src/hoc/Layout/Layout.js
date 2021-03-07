@@ -49,7 +49,7 @@ const mapStateToProps = state => {
     return {
         isAuthenticated: state.auth.user ? true : false,
         user: state.auth.user,
-        userData: state.cust.userData
+        userData: state.user.userData
     };
 };
 

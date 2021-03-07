@@ -10,19 +10,25 @@ const asyncLogin = asyncComponent(()=> {
     return import("./containers/Login/Login");
 });
 
+const asyncUserRoleToggle = asyncComponent(()=> {
+    console.log("asycn vendor toggle");
+    return import("./containers/VendorSignUp/VendorSignUp");
+});
+
 class App extends Component {
     render() {
         let routes = (
             <Switch>
                 <Route path="/login" component={asyncLogin} />
                 <Route path="/logout" component={Logout} />
+                <Route path="/toggle-user-role" component={asyncUserRoleToggle} />
                 <Route path="/" exact component={HomePage} />
                 <Redirect to="/" />
             </Switch>
         );
         return (
             <div>
-                <Layout isAuthenticated={this.props.isAuthenticated}>
+                <Layout>
                     {routes}
                 </Layout>
             </div>

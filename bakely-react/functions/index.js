@@ -62,10 +62,12 @@ exports.createStripePayment = functions.firestore
     const { amount, currency, payment_method } = snap.data();
     try {
       // Look up the Stripe customer id.
-      const customer = (await snap.ref.parent.parent.get()).data().customer_id;
+      const dbObj = (await snap.ref.parent.parent.get()).data();
+      const customer = dbObj.customer_id;
       // Create a charge using the pushId as the idempotency key
       // to protect against double charges.
       const idempotencyKey = context.params.pushId;
+      const connectedAccount = dbObj.connectedAccount;
       const payment = await stripe.paymentIntents.create(
         {
           amount,

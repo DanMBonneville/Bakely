@@ -2,17 +2,12 @@
     background-color: transparent;
     border: none;
     color: white;
+    backGround-color: black;
+    border-radius: 45px;
     outline: none;
     cursor: pointer;
-    font: inherit;
-    padding: 10px;
-    margin: 10px;
+    padding: 12px;
     font-weight: bold;
-}
-
-.Button:first-of-type {
-    margin-left: 0;
-    padding-left: 0;
 }
 
 .Success {

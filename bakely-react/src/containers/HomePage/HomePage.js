@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
+import classes from './HomePage.css';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import classes from './HomePage.css';
 import pixeltrue_healthy_eating from "../../assets/images/pixeltrue-healthy-eating.png";
 import pixeltrue_location from "../../assets/images/pixeltrue-location.png";
 import pixeltrue_meditation from "../../assets/images/pixeltrue-meditation.png";
@@ -10,11 +10,8 @@ import pixeltrue_seo from "../../assets/images/pixeltrue-seo.png";
 import pixeltrue_special_deals from "../../assets/images/pixeltrue-special-deals.png";
 import pixeltrue_plan_1 from "../../assets/images/pixeltrue-plan-1.png";
 
-
 class HomePage extends Component {
-
     render() {
-
         return (
             <Container>
                 <Grid container justify="space-between" spacing={1} style={{textAlign: "center"}}>

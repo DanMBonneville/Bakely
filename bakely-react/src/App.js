@@ -9,10 +9,14 @@ import Logout from "./containers/Logout/Logout";
 const asyncLogin = asyncComponent(()=> {
     return import("./containers/Login/Login");
 });
-
 const asyncUserRoleToggle = asyncComponent(()=> {
-    console.log("asycn vendor toggle");
     return import("./containers/VendorSignUp/VendorSignUp");
+});
+const asyncVendorMenu = asyncComponent(()=> {
+    return import("./containers/VendorMenu/VendorMenu");
+});
+const asyncVendorAddMenuItem = asyncComponent(()=> {
+    return import("./containers/VendorMenu/VendorAddMenuItem/VendorAddMenuItem");
 });
 
 class App extends Component {
@@ -22,16 +26,16 @@ class App extends Component {
                 <Route path="/login" component={asyncLogin} />
                 <Route path="/logout" component={Logout} />
                 <Route path="/toggle-user-role" component={asyncUserRoleToggle} />
+                <Route path="/my_menu" component={asyncVendorMenu} />
+                <Route path="/vendor_add_menu_item" component={asyncVendorAddMenuItem} />
                 <Route path="/" exact component={HomePage} />
                 <Redirect to="/" />
             </Switch>
         );
         return (
-            <div>
-                <Layout>
-                    {routes}
-                </Layout>
-            </div>
+            <Layout>
+                {routes}
+            </Layout>
         );
     }
 }

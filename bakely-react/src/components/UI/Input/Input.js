@@ -13,13 +13,6 @@ const input = (props) => {
                 value={props.value}
                 onChange={props.changed} />;
             break;
-        case ('textarea'):
-            inputElement = <textarea
-                className={inputClasses.join(' ')}
-                {...props.elementConfig}
-                value={props.value}
-                onChange={props.changed} />;
-            break;
         default:
             inputElement = <input
                 className={inputClasses.join(' ')}
@@ -33,31 +26,6 @@ const input = (props) => {
             {inputElement}
         </div>
     );
-
 };
 
 export default input;
-
-// Make sure that form calling this has props:
-// elementType
-// value
-// changed (function)
-// label?
-
-/*
-         * no select area yet
-        case ('select'):
-            inputElement = (
-                <select
-                    className={inputClasses.join(' ')}
-                    value={props.value}
-                    onChange={props.changed}>
-                    {props.elementConfig.options.map(option => (
-                        <option key={option.value} value={option.value}>
-                            {option.displayValue}
-                        </option>
-                    ))}
-                </select>
-            );
-            break;
-            */

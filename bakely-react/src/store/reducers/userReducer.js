@@ -11,6 +11,7 @@ const initialState = {
 		stripeLink: '',
 		role: ''
 	},
+	foodItems: [],
 	recentOrders: [],
 	favorites: [],
 	error: ''

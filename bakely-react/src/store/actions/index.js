@@ -11,5 +11,6 @@ export {
     authListener
 } from './auth';
 export {
+    addMenuItem,
     setUserRole
 } from './user';

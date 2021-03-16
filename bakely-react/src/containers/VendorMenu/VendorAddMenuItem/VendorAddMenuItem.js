@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import connect from 'redux';
 import * as classes from './VendorAddMenuItem.css';
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import Button from '../../../components/UI/Button/Button';
@@ -15,7 +16,11 @@ class VendorAddMenuItem extends Component {
             price: null
         },
         addItemForm: {
-            name: {
+            image: {
+                image: null,
+                valid: false,
+            },
+            title: {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
@@ -52,12 +57,23 @@ class VendorAddMenuItem extends Component {
         }
     };
 
+    addNewMenuItem = (event) => {
+        event.preventDefault();
+  
+        let formData = {};
+        formData['image'] = this.state.addItemForm.image;
+        formData['title'] = this.state.addItemForm.title.value;
+        formData['description'] = this.state.addItemForm.description.value;
+        formData['price'] = this.state.addItemForm.price;
+
+        this.props.onAddMenuItem(formData);
+    }
+
     // change check validity file
     validateInput = (event, inputIdentifier) => {
-        console.log("Making sure that this works well ", event);
         const updatedFormElement = updateObject(this.state.addItemForm[inputIdentifier], {
             value: event.target.value,
-            //valid: checkValidity(event.target.value, this.state.addItemForm[inputIdentifier].validation),
+            valid: checkValidity(event.target.value, this.state.addItemForm[inputIdentifier].validation),
             touched: true
         });
         const updatedForm = updateObject(this.state.addItemForm, {
@@ -69,6 +85,7 @@ class VendorAddMenuItem extends Component {
             formIsValid = updatedForm[inputIdentifier].valid && formIsValid;
         }
         this.setState({addItemForm: updatedForm, formIsValid: formIsValid});
+
     };
 
     render() {
@@ -105,6 +122,18 @@ class VendorAddMenuItem extends Component {
     }
 };
 
-export default VendorAddMenuItem;
+const mapStateToProps = state => {
+    return {
+        
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddMenuItem: (formData) => dispatch(actions.addMenuItem(formData))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(VendorAddMenuItem);
 
 // next step: add further stuff with upload flow https://www.youtube.com/watch?v=8r1Pb6Ja90o&t=753s&ab_channel=HongLy

@@ -12,12 +12,18 @@ export const updateRole = (role) => {
     }
 }
 
+export const 
+
+export const addMenuItem = () => {
+    return dispatch => {
+        dispatch(loadingStart);
+        // add connection here
+    }
+}
+
 export const setUserRole = (user, role) => {
     return dispatch => {
-        console.log("What is this user: ", user);
-        console.log("What is the role: ", role);
         dispatch(loadingStart);
-        console.log("this is the uid", user.uid);
         db.collection("users").doc(user.uid).update({
             role: role
         }).then(

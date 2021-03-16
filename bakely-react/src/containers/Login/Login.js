@@ -53,7 +53,7 @@ const mapStateToProps = state => {
         loading: state.auth.loading,
         error: state.auth.error,
         isAuthenticated: state.auth.user ? true : false,
-        customer: state.cust.userData
+        customer: state.user.userData
     };
 };
 

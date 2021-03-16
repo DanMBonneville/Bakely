@@ -10,7 +10,6 @@ const initialState = {
 		availability: '',
 		currentOrderRef: ''
 	},
-	vendors: [],
 	error: ''
 }
 
@@ -20,12 +19,5 @@ const reducer = (state = initialState, action) => {
 		default: return state;
 	}
 };
-
-const addVendor = (state, action) => {
-	return updateObject(state, {
-		vendors: state.vendors.concat(action.newVendor),
-		error: ''
-	});
-}
 
 export default reducer;

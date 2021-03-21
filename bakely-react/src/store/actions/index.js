@@ -11,6 +11,9 @@ export {
     authListener
 } from './auth';
 export {
+    createStripeSession
+} from './checkOut';
+export {
     setUserRole
 } from './user';
 export {

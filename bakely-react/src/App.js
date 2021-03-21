@@ -5,7 +5,7 @@ import asyncComponent from './hoc/asyncComponent/asyncComponent';
 import Layout from "./hoc/Layout/Layout";
 import HomePage from "./containers/HomePage/HomePage";
 import Logout from "./containers/Logout/Logout";
-
+import Checkout from "./containers/Checkout/Checkout";
 const asyncLogin = asyncComponent(()=> {
     return import("./containers/Login/Login");
 });
@@ -22,6 +22,7 @@ class App extends Component {
             <Switch>
                 <Route path="/login" component={asyncLogin} />
                 <Route path="/logout" component={Logout} />
+                <Route path="/checkout" component={Checkout} />
                 <Route path="/toggle-user-role" component={asyncUserRoleToggle} />
                 <Route path="/my_menu" component={asyncVendorMenu} />
                 <Route path="/" exact component={HomePage} />

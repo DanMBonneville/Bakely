@@ -42,12 +42,6 @@ export const setCurrentUserData = (userData) => {
         userData: userData
     }
 }
-export const addVendor = (newVendor) => {
-    return {
-        type: actionTypes.ADD_VENDOR,
-        newVendor: newVendor
-    }
-};
 export const setCurrentUserAuth = (user) => {
     return {
         type: actionTypes.CHECK_AUTH_STATE,

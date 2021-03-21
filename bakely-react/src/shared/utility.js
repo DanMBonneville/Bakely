@@ -5,6 +5,7 @@ export const updateObject = (oldObject, updatedProperties) => {
     };
 };
 
+// Add more rules here eventually
 export const checkValidity = (value, rules) => {
     let isValid = true;
     if (!rules) {
@@ -33,5 +34,11 @@ export const checkValidity = (value, rules) => {
         isValid = pattern.test(value) && isValid
     }
 
+    if (rules.imageType) {
+        isValid = value.type.includes(rules.imageType);
+    }
+    console.log(
+        "element is valid", isValid
+    );
     return isValid;
 }

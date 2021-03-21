@@ -3,29 +3,20 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
 
 const initialState = {
-	vendorData: {
-		pictureRef: '',
-		ratingRef: '',
-		menuId: '',
-		availability: '',
-		currentOrderRef: ''
-	},
-	vendors: [],
-	error: ''
+	vendors: []
 }
 
 const reducer = (state = initialState, action) => {
 	switch ( action.type ) {
-		case actionTypes.ADD_VENDOR: return addVendor(state, action);
+		case actionTypes.GET_VENDORS: return getVendors(state, action);
 		default: return state;
 	}
 };
 
-const addVendor = (state, action) => {
-	return updateObject(state, {
-		vendors: state.vendors.concat(action.newVendor),
-		error: ''
-	});
+const getVendors = (state, action) => {
+	return updateObject(state, { 
+		vendors: action.vendors 
+	})
 }
 
 export default reducer;

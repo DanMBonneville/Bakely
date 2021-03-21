@@ -1,6 +1,6 @@
 export {
     loadingStart,
-    loadingEnd
+    loadingEnd,
 } from './general';
 export {
     login,
@@ -13,3 +13,7 @@ export {
 export {
     setUserRole
 } from './user';
+export {
+    addEditFoodItem,
+    setAllFoodItems
+} from './food';

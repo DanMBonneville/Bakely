@@ -11,6 +11,12 @@ const initialState = {
 		stripeLink: '',
 		role: ''
 	},
+	vendorData: {
+		pictureRef: '',
+		ratingRef: '',
+		availability: '',
+		currentOrderRef: ''
+	},
 	foodItems: [],
 	recentOrders: [],
 	favorites: [],

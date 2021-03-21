@@ -1,6 +1,6 @@
 export {
     loadingStart,
-    loadingEnd
+    loadingEnd,
 } from './general';
 export {
     login,
@@ -11,6 +11,9 @@ export {
     authListener
 } from './auth';
 export {
-    addMenuItem,
     setUserRole
 } from './user';
+export {
+    addEditFoodItem,
+    setAllFoodItems
+} from './food';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
-import asyncComponent from './hoc/asyncComponent/asyncComponent';
 
+import asyncComponent from './hoc/asyncComponent/asyncComponent';
 import Layout from "./hoc/Layout/Layout";
 import HomePage from "./containers/HomePage/HomePage";
 import Logout from "./containers/Logout/Logout";
@@ -15,9 +15,6 @@ const asyncUserRoleToggle = asyncComponent(()=> {
 const asyncVendorMenu = asyncComponent(()=> {
     return import("./containers/VendorMenu/VendorMenu");
 });
-const asyncVendorAddMenuItem = asyncComponent(()=> {
-    return import("./containers/VendorMenu/VendorAddMenuItem/VendorAddMenuItem");
-});
 
 class App extends Component {
     render() {
@@ -27,7 +24,6 @@ class App extends Component {
                 <Route path="/logout" component={Logout} />
                 <Route path="/toggle-user-role" component={asyncUserRoleToggle} />
                 <Route path="/my_menu" component={asyncVendorMenu} />
-                <Route path="/vendor_add_menu_item" component={asyncVendorAddMenuItem} />
                 <Route path="/" exact component={HomePage} />
                 <Redirect to="/" />
             </Switch>

@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import VendorMenuItem from '../../components/FoodItems/VendorMenuItem/VendorMenuItem';
-import Button from '../../components/UI/Button/Button';
-
 import Grid from '@material-ui/core/Grid';
-import { Redirect } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+
+import VendorMenuItem from '../../components/FoodItems/VendorMenuItem/VendorMenuItem';
+import Modal from '../../components/UI/Modal/Modal';
+import VendorAddEditMenuItem from '../../components/FoodItems/VendorAddEditMenuItem/VendorAddEditMenuItem';
+
+import * as actions from '../../store/actions/index';
 
 class VendorMenu extends Component {
 
@@ -24,24 +27,33 @@ class VendorMenu extends Component {
 
     render() {
         let menuItems = [];
-        for(let footItem in this.state.foodItems){
+        for(let footItem in this.props.foodItems){
             menuItems.push(
-            <Grid item xs={12}>
-                <VendorMenuItem {...footItem} />
-            </Grid>);
+                <Grid item xs={12}>
+                    <VendorMenuItem {...footItem} />
+                </Grid>
+            );
         }
-        let redirect = null;
-        if(this.state.addingAnItem){
-            redirect = <Redirect to={"/vendor_add_menu_item"} />
-        }
+        console.log("These are the menu items: ", menuItems);
         return (
             <Grid container spacing={0}>
-                {redirect}
+                <Modal show={this.state.addingAnItem}>
+                    <VendorAddEditMenuItem
+                        isEditing={false}
+                        user={this.props.user}
+                        onAddEditMenuItem={(formData) => this.props.onAddEditFoodItem(formData)}
+                    />
+                </Modal>
                 <Grid item xs={12}>
                     <div style={{'color': 'black'}}>My Menu</div>
-                </Grid>{menuItems}
+                </Grid>
+                {menuItems}
                 <Grid item xs={12}>
-                    <Button clicked={this.addAnItem}> Add an item + </Button>
+                    <Button 
+                        onClick={this.addAnItem}
+                        variant="outlined"
+                        color={"secondary"}
+                    >Add an item + </Button>
                 </Grid>
             </Grid>
         );
@@ -51,13 +63,17 @@ class VendorMenu extends Component {
 const mapStateToProps = state => {
     return {
         //schedule: state.vendor.schedule,
-        footItems: state.user.foodItems
+        footItems: state.food.foodItems,
+        user: state.auth.user,
+        loading: state.auth.loading,
+        error: state.auth.error,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        
+        // change to add/edit
+        onAddEditFoodItem: (formData) => dispatch(actions.addEditFoodItem(formData))
     };
 }
 

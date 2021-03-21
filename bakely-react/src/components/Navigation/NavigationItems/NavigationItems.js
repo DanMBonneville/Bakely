@@ -16,7 +16,7 @@ const navigationItems = (props) => {
     let path = "/";
     switch (chosenLink) {
         // Bake only
-        case 'My_Kitchen': ;
+        case 'My_Menu': path = 'my_menu';
             break;
         // Eat only
         case 'Home': path = "/";
@@ -46,8 +46,8 @@ const navigationItems = (props) => {
                 <Container disableGutters onClick={props.close}>
                     <Grid container spacing={0}>
                         <Grid item xs={12}>
-                            <button className={classes.block} onClick={() => handleLink('My_Kitchen')}>
-                                <i className="fa fa-cutlery" aria-hidden="true"></i> My Kitchen</button>
+                            <button className={classes.block} onClick={() => handleLink('My_Menu')}>
+                                <i className="fa fa-cutlery" aria-hidden="true"></i> My Menu</button>
                         </Grid>
                         <Grid item xs={12} >
                             <button className={classes.block} onClick={() => handleLink('Orders')}>

@@ -1,5 +1,10 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/storage';
+import 'firebase/auth';
+// TODO: add messaging on the cloud?
+import 'firebase/messaging';  
+import 'firebase/functions';
 
 var firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,5 +18,6 @@ var firebaseConfig = {
 
 export const fire = firebase.initializeApp(firebaseConfig);
 
+export const storage = firebase.storage();
 export const db = firebase.firestore();
 export const auth = firebase.auth;

@@ -15,6 +15,7 @@ class Layout extends Component {
 
     componentDidMount() {
         this.props.onAuthStateChanged();
+        this.props.setAllFoodItems();
     }
 
     sideDrawerClosedHandler = () => {
@@ -55,7 +56,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuthStateChanged: () => dispatch(actions.authListener())
+        onAuthStateChanged: () => dispatch(actions.authListener()),
+        setAllFoodItems: () => dispatch(actions.setAllFoodItems())
     };
 }
 

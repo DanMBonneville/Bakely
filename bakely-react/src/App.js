@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
-import asyncComponent from './hoc/asyncComponent/asyncComponent';
 
+import asyncComponent from './hoc/asyncComponent/asyncComponent';
 import Layout from "./hoc/Layout/Layout";
 import HomePage from "./containers/HomePage/HomePage";
 import Logout from "./containers/Logout/Logout";
@@ -9,10 +9,11 @@ import Checkout from "./containers/Checkout/Checkout";
 const asyncLogin = asyncComponent(()=> {
     return import("./containers/Login/Login");
 });
-
 const asyncUserRoleToggle = asyncComponent(()=> {
-    console.log("asycn vendor toggle");
     return import("./containers/VendorSignUp/VendorSignUp");
+});
+const asyncVendorMenu = asyncComponent(()=> {
+    return import("./containers/VendorMenu/VendorMenu");
 });
 
 class App extends Component {
@@ -23,16 +24,15 @@ class App extends Component {
                 <Route path="/logout" component={Logout} />
                 <Route path="/checkout" component={Checkout} />
                 <Route path="/toggle-user-role" component={asyncUserRoleToggle} />
+                <Route path="/my_menu" component={asyncVendorMenu} />
                 <Route path="/" exact component={HomePage} />
                 <Redirect to="/" />
             </Switch>
         );
         return (
-            <div>
-                <Layout>
-                    {routes}
-                </Layout>
-            </div>
+            <Layout>
+                {routes}
+            </Layout>
         );
     }
 }

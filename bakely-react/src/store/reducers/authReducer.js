@@ -29,16 +29,14 @@ const login = (state, action) => {
     console.log("Login Successful", action.user);
     return updateObject(state, {
         user: action.user,
-        loginError: null,
-        loading: false
+        loginError: null
     });
 };
 const loginFail = (state, action) => {
     console.log("Login Failed");
     return updateObject(state, {
         user: null,
-        loginError: action.error,
-        loading: false
+        loginError: action.error
     });
 };
 const logout = (state) => {
@@ -47,16 +45,14 @@ const logout = (state) => {
 const signUpCustomer = (state, action) => {
     return updateObject(state, {
         user: action.user,
-        singUpError: null,
-        loading: false
+        singUpError: null
     });
 }
 const signUnFail = (state, action) => {
     console.log("Login Failed");
     return updateObject(state, {
         user: null,
-        signUpError: action.error,
-        loading: false
+        signUpError: action.error
     });
 }
 

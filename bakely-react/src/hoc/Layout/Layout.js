@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 
 import * as actions from '../../store/actions/index';
-import HamburgerMenu from '../../components/Navigation/SideDrawer/HamburgerMenu/HamburgerMenu';
 import Auxiliary from '../Auxiliary/Auxiliary';
 import classes from './Layout.css';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
@@ -29,17 +28,12 @@ class Layout extends Component {
     }
 
     render() {
-        console.log("user is logged in: ", this.props.isAuthenticated);
-        console.log("who it is: ", this.state.user);
         return (
             <Auxiliary>
-                <HamburgerMenu 
-                    drawerToggleClicked={this.sideDrawerToggleHandler} 
-                    sideDrawerOpen={this.state.showSideDrawer}
-                />
-                <Toolbar />
+                <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
                 <SideDrawer
                     className={classes.sideDrawer}
+                    userData={this.props.userData}
                     isLoggedIn={this.props.isAuthenticated}
                     open={this.state.showSideDrawer}
                     closed={this.sideDrawerClosedHandler} />
@@ -53,9 +47,9 @@ class Layout extends Component {
 
 const mapStateToProps = state => {
     return {
-        // change this to accomidate firebase
-        isAuthenticated: state.auth.user !== null,
-        user: state.auth.user
+        isAuthenticated: state.auth.user ? true : false,
+        user: state.auth.user,
+        userData: state.user.userData
     };
 };
 

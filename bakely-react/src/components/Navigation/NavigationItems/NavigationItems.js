@@ -23,7 +23,7 @@ const navigationItems = (props) => {
             break;
         case 'Payment': path = "/checkout";
             break;
-        // sared
+        // shared
         case 'Orders': path = "/";
             break;
         case 'Chat': path = "/";
@@ -47,27 +47,27 @@ const navigationItems = (props) => {
                     <Grid container spacing={0}>
                         <Grid item xs={12}>
                             <button className={classes.block} onClick={() => handleLink('My_Kitchen')}>
-                                <i class="fa fa-cutlery" aria-hidden="true"></i> My Kitchen</button>
+                                <i className="fa fa-cutlery" aria-hidden="true"></i> My Kitchen</button>
                         </Grid>
                         <Grid item xs={12} >
                             <button className={classes.block} onClick={() => handleLink('Orders')}>
-                                <i class="fa fa-bookmark-o" aria-hidden="true"></i> Orders</button>
+                                <i className="fa fa-bookmark-o" aria-hidden="true"></i> Orders</button>
                         </Grid>
                         <Grid item xs={12} >
                             <button className={classes.block} onClick={() => handleLink('Chat')}>
-                                <i class="fa fa-comments-o" aria-hidden="true"></i> Chat</button>
+                                <i className="fa fa-comments-o" aria-hidden="true"></i> Chat</button>
                         </Grid>
                         <Grid item xs={12} >
                             <button className={classes.block} onClick={() => handleLink('Help')}>
-                                <i class="fa fa-question-circle" aria-hidden="true"></i> Help</button>
+                                <i className="fa fa-question-circle" aria-hidden="true"></i> Help</button>
                         </Grid>
                         <Grid item xs={12} >
                             <button className={classes.block} onClick={() => handleLink('Account')}>
-                                <i class="fa fa-user" aria-hidden="true"></i> Account</button>
+                                <i className="fa fa-user" aria-hidden="true"></i> Account</button>
                         </Grid>
                         <Grid item xs={12} >
                             <button className={classes.block} onClick={() => handleLink('Sign_Out')}>
-                                <i class="fa fa-sign-out" aria-hidden="true"></i> Sign Out</button>
+                                <i className="fa fa-sign-out" aria-hidden="true"></i> Sign Out</button>
                         </Grid>
                     </Grid>
                 </Container> :

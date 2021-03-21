@@ -38,15 +38,8 @@ class Login extends Component {
                     <Grid xs={12}>
                         <div style ={{color:"black", fontSize:"2rem", textAlign:"left"}}>Welcome back,</div>
                         <div style={{fontSize:"2rem", marginBottom:"25px", textAlign:"left"}}>{this.props.customer.firstName}</div>
-<<<<<<< HEAD
-                        <div style={{color:"black", fontSize: "1rem", textAlign:"left"}}>Add a card...</div>
-                        
-                    </Grid>
-                    :<StyledFirebaseAuth 
-=======
                     </Grid>:
                     <StyledFirebaseAuth 
->>>>>>> 4534a86b9c3beae44bdc7695623c05565cc311dd
                         uiConfig={this.uiConfig} 
                         firebaseAuth={auth()}
                     />}

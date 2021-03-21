@@ -25,7 +25,7 @@ class Checkout extends Component {
 >
                 <Grid item xs={2} md={2} lg={2} xl={2} sm={2} >
                     <img onClick={() => this.props.createStripeSession(this.state.user.email)} src={stripe_connect} width="90%" alt="Healthy living" style={{float: "center"}}></img>
-                </Grid> 
+1                </Grid> 
                 </Grid>
             </Container>
         );

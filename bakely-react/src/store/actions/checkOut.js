@@ -1,27 +1,14 @@
-import { auth, db } from '../../firebase';
+import { auth } from '../../firebase';
 //import Stripe from 'stripe';
 import * as actionTypes from './actionTypes';
 
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_51ILi2SDaQgsm4ztYtijcHsltKu6gNMVrjrHiwubwYDibixx2BKSxzrlpOZID5iBoNTDf8MQrpvNZYcgkW1SNpop600C81GkYoA';
+//const STRIPE_PUBLISHABLE_KEY = 'pk_test_51ILi2SDaQgsm4ztYtijcHsltKu6gNMVrjrHiwubwYDibixx2BKSxzrlpOZID5iBoNTDf8MQrpvNZYcgkW1SNpop600C81GkYoA';
 
 export const createStripeSession = (email, password)  => {
-    const user = db.collection('users').where('email', '==', email).get().then((dbObj) => { return dbObj.stripeAccount ? dbObj.stripeAccount : 'acct_1IODhWJIqj2eXYKr' });
-    console.log(user);
-
         return dispatch => {
-        dispatch(loadingStart());
-        /*const stripe = new Stripe(STRIPE_PUBLISHABLE_KEY);
-        const elements = stripe.elements();
-        const cardElement = elements.create('card');
-        cardElement.mount('#card-element');
-        cardElement.on('change', ({ error }) => {
-        const displayError = document.getElementById('error-message');
-        if (error) {
-            displayError.textContent = error.message;
-        } else {
-            displayError.textContent = '';
-        }
-        });*/
+            console.log('called too soon');
+            window.location.href = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/home&client_id=ca_IxdJMFzUMp2nNiM0vZpFcgUNqYp9hR68&state=1abcdefghi'; 
+            return dispatch(loadingStart());
     };
 };
 export const loadingStart = () => {

@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-//import classes from './Checkout.css';
+import classes from './Checkout.css';
 
-import Button from '../../components/UI/Button/Button';
 import * as actions from '../../store/actions/index';
 
 class Checkout extends Component {
@@ -19,11 +18,18 @@ class Checkout extends Component {
     render () {
         return (
             <Container>
-                <Grid item xs={12} md={12} lg={12} xl={12} sm={12}>
-                <Button
-                    onClick={this.props.createStripeSession(this.state.user.email)}
-                >Checkout</Button>
+                <Grid
+  container
+  direction="row"
+  justify="center"
+>
+                <Grid item xs={2} md={2} lg={2} xl={2} sm={2} >
+                <button
+                    className={classes.block}
+                    onClick={() => this.props.createStripeSession(this.state.user.email)}
+                >Checkout</button>
                 </Grid> 
+                </Grid>
             </Container>
         );
     }

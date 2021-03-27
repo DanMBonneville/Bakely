@@ -35,10 +35,9 @@ export const checkValidity = (value, rules) => {
     }
 
     if (rules.imageType) {
-        isValid = value.type.includes(rules.imageType);
+        if(value.type){
+            isValid = value.type.includes(rules.imageType);
+        }
     }
-    console.log(
-        "element is valid", isValid
-    );
     return isValid;
 }

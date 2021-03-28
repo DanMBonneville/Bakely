@@ -24,5 +24,6 @@ export const GET_VENDORS = "GET_VENDORS";
 //food
 export const ADD_MENU_ITEM = "ADD_MENU_ITEM";
 export const SET_FOOD_ITEMS = "SET_FOOD_ITEMS";
+export const CLEAR_FOOD_ITEMS = "CLEAR_FOOD_ITEMS";
 
 

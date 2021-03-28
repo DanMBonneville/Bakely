@@ -129,7 +129,7 @@ const setUpUserData = (user, role = null) => {
     return {
         email: email,
         firstName: names[0],
-        LastName: names[names.length-1],
+        lastName: names[names.length-1],
         address: '',
         stripeLink: '',
         role: role

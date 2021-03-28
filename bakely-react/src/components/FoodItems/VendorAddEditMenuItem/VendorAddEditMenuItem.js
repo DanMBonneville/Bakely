@@ -11,9 +11,10 @@ import * as classes from './VendorAddEditMenuItem.css';
 
 const vendorAddEditMenuItem = (props) => {
 
-    const [image, setImage] = useState();
-    const [name, setName] = useState();
-    const [description, setDescription] = useState();
+    const [image, setImage] = useState("");
+    const [imagePreview, setImagePreview] = useState("");
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
 
     const [imageIsValid, setImageIsValid] = useState(props.isEditing);
@@ -23,12 +24,12 @@ const vendorAddEditMenuItem = (props) => {
     const [priceIsValid, setPriceIsValid] = useState(true);
     const [formIsValid, setFormIsValid] = useState(false);
 
-    // change check validity file
     const validateInput = (event, inputIdentifier) => {
         const value = inputIdentifier === "image" ? event.target.files[0] : event.target.value
         let rules = null;
         if (inputIdentifier === "image") {
             rules = { imageType: "image" };
+            setImagePreview(URL.createObjectURL(value));
             setImage(value);
             setImageIsValid(checkValidity(value, rules));
         }
@@ -53,13 +54,12 @@ const vendorAddEditMenuItem = (props) => {
     };
     const addNewMenuItem = (event) => {
         event.preventDefault();
-        console.log("This should be the uid,", props.user.uid);
         let formData = {
-            'title': name,
+            'foodName': name,
             'description': description,
             'price': price,
             'image': image,
-            'userId': props.user.uid
+            'userId': props.userId
         };
         // add this to props as well
         props.onAddEditMenuItem(formData);
@@ -68,9 +68,13 @@ const vendorAddEditMenuItem = (props) => {
     return (
         <Container>
             { props.isEditing ? <div className={classes.addMenuHeader}>Edit Item</div>
-            : <div className={classes.addMenuHeader}>Add Item to Menu</div> }
+                : <div className={classes.addMenuHeader}>Add Item to Menu</div>}
             <form onSubmit={this.addNewMenuItem}>
                 {/* https://www.youtube.com/watch?v=8r1Pb6Ja90o&t=753s&ab_channel=HongLy */}
+                {imagePreview ? <img src={imagePreview} alt={"upload not showing"}
+                    style={{
+                        'width': '80%'
+                    }} /> : null}
                 <input type="file" onChange={(e) => validateInput(e, "image")} />
                 <TextField
                     label="Name"

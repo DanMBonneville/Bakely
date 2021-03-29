@@ -8,6 +8,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_MENU_ITEM: return addFoodItemToStore(state, action);
+        case actionTypes.EDIT_MENU_ITEM: return editFoodItem(state, action);
         case actionTypes.CLEAR_FOOD_ITEMS: return clearFoodItems(state);
         default: return state;
     }
@@ -19,10 +20,19 @@ const addFoodItemToStore = (state, action) => {
         ...action.foodItemToAdd,
         foodId: action.foodId,
     };
+    newFoodList.push(newFoodItem);
+	return updateObject(state, { 
+		foodItems: newFoodList
+	})
+}
+
+const editFoodItem = (state, action) => {
+    let newFoodList = [...state.foodItems];
+    const newFoodItem = {...action.foodItemToAdd};
     let index = newFoodList.length > 0 ? 
-        newFoodList.findIndex(item => item.foodId === action.foodId): -1;
+        newFoodList.findIndex(item => item.foodId === newFoodItem.foodId): -1;
     if(index > -1){
-        newFoodList.splice(index, 0, newFoodItem);
+        newFoodList.splice(index, 1, newFoodItem);
     } else{
         newFoodList.push(newFoodItem);
     }

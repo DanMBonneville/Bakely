@@ -13,25 +13,29 @@ import * as actions from '../../store/actions/index';
 
 const classes = makeStyles((theme) => ({
     root: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around',
-      overflow: 'hidden',
-    //   backgroundColor: theme.palette.background.paper,
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+        //   backgroundColor: theme.palette.background.paper,
     },
     gridList: {
-      flexWrap: 'nowrap',
-      // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-      transform: 'translateZ(0)',
+        flexWrap: 'nowrap',
+        // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+        transform: 'translateZ(0)',
+        width: '100%'
     },
     title: {
-      color: theme.secondary,
+        color: theme.secondary,
     },
     titleBar: {
-      background:
-        'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+        background:
+            'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
     },
-  })
+    emptyListMessage: {
+        'height': '20px'
+    }
+})
 );
 
 class VendorMenu extends Component {
@@ -39,13 +43,17 @@ class VendorMenu extends Component {
     state = {
         //schedule: 
         foodItems: this.props.footItems,
-        addingEditingAnItem: false
+        addingEditingAnItem: false,
+        isEditing: false,
+        currentItem: null
     }
 
-    addAnItem = (e) => {
-        e.preventDefault();
+    addEditAnItem = (item, editingOrAdding) => {
+        console.log("Adding/editing ", item, editingOrAdding);
         this.setState({
-            addingEditingAnItem: true
+            addingEditingAnItem: true,
+            isEditing: editingOrAdding === "editing",
+            currentItem: item
         });
     }
 
@@ -54,7 +62,6 @@ class VendorMenu extends Component {
             addingEditingAnItem: false
         });
     }
-
     handleAddEditMenuItem = (formData) => {
         this.props.onAddEditFoodItem(formData);
         this.closeModal();
@@ -63,46 +70,53 @@ class VendorMenu extends Component {
     render() {
         const itemList = [];
         const author = this.props.userData.firstName + " " + this.props.userData.lastName;
-        this.props.foodItems.forEach( item => {
+        this.props.foodItems.forEach(item => {
             if (this.props.userId === item.userId) {
                 itemList.push(<VendorMenuItem
                     key={item.foodId}
                     item={item}
                     classes={classes}
                     author={author}
+                    onClick={() => { this.addEditAnItem(item, "editing") }}
                 />)
-            } 
+            }
         });
         return (
-            <Grid 
-                container 
-                spacing={2}
+            <Grid
+                container
+                spacing={1}
                 justify={"center"}
                 alignContent={"center"}
-                >
+            >
                 <Modal show={this.state.addingEditingAnItem} modalClosed={this.closeModal}>
                     <VendorAddEditMenuItem
-                        isEditing={false}
+                        currentItem={this.state.currentItem}
+                        isEditing={this.state.isEditing}
                         userId={this.props.userId}
                         onAddEditMenuItem={(formData) => this.handleAddEditMenuItem(formData)}
                     />
                 </Modal>
                 <Grid item xs={12}>
-                    <div style={{ 
+                    <div style={{
                         'color': 'black',
                         'textAlign': 'center'
                     }}>My Menu</div>
                 </Grid>
-                {/* className={classes.gridList} */}
-                <GridList cellHeight={260}>
-                    {itemList.length > 0 ? itemList: null}
-                </GridList>
-                <Grid item xs={6}>
-                    <Button
-                        onClick={this.addAnItem}
-                        variant="outlined"
-                        color={"secondary"}
-                    >Add an item + </Button>
+                <Grid item xs={12}>
+                    <GridList cellHeight={'auto'} cols={1} spacing={4} className={classes.gridList}>
+                        <Grid container justify="center">
+                            {itemList.length > 0 ? itemList : <div className={classes.emptyListMessage}>Show us what you got!</div>}
+                        </Grid>
+                    </GridList>
+                </Grid>
+                <Grid item xs={12}>
+                    <Grid container justify="center">
+                        <Button
+                            onClick={() => this.addEditAnItem(null, "adding")}
+                            variant="outlined"
+                            color={"secondary"}
+                        >Add an item +</Button>
+                    </Grid>
                 </Grid>
             </Grid>
         );

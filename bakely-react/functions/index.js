@@ -24,6 +24,23 @@ exports.createStripeCustomer = functions.auth.user().onCreate(async (user) => {
     });
     return;
   });
+
+  exports.handleTransaction = functions.https.onRequest(async (req, res) => {
+    let charge = null;
+    const data = req.body;
+    switch (data.transactionStatus) {
+      case 'COMPLETED':
+        charge = await captureCharge(data.chargeId)
+        break;
+      case 'SOME_INTERMEDIATE_STATUS':
+        charge = await capturePartialCharge(data.chargeId, {amount: data.partialCharge})
+        break;
+      default:
+        charge = await refundCharge(data.chargeId);
+    }
+    // perform further actions on `charge` such as saving to a collection or subcollection
+    admin.firestore().collection(`users/${data.customer.id}/charges`).doc(data.chargeId).set({...charge, status: data.transactionStatus});
+  });
 exports.authorizeStripe = functions.https.onRequest(async (req, res) => {
     const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -49,7 +66,7 @@ exports.authorizeStripe = functions.https.onRequest(async (req, res) => {
       }
   });
   
-  exports.preAuthorizeCharge = functions.https.onRequest(async (req, resp) => {
+  exports.preAuthorizeCharge = functions.https.onRequest((req, resp) => {
     const data = req.body;
     const percentageOfTransaction = 0.05; // percentage charge on a business for using the platform
     const application_fee_amount = Math.round((data.amount * percentageOfTransaction) * 100);
@@ -58,7 +75,7 @@ exports.authorizeStripe = functions.https.onRequest(async (req, res) => {
     const description = data.description;
   
     try {
-      const charge = await stripe.charges.create({
+      const charge = stripe.charges.create({
         customer: customer.stripe_customer_id,
         amount: cost,
         application_fee_amount,
@@ -261,3 +278,28 @@ function userFacingMessage(error) {
     : 'An error occurred, developers have been alerted';
 }
 
+async function captureCharge(chargeId) {
+  try {
+    return await stripe.charges.capture(chargeId);
+  } catch( err) {
+    throw err;
+  }
+}
+
+async function capturePartialCharge(chargeId, data) {
+  try {
+    if (data.amount) data.amount = Math.round(data.amount)
+    return stripe.charges.capture(chargeId, data);
+  } catch( err) {
+    throw err;
+  }
+}
+
+async function refundCharge(chargeId) {
+  try {
+    // you can choose to refund application_fee as well
+    stripe.refunds.create({ charge: chargeId, reverse_transfer: true, refund_application_fee: true });
+  } catch (err) {
+    throw err;
+  }
+}

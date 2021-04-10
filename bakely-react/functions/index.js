@@ -2,6 +2,9 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 const { Logging } = require('@google-cloud/logging');
+const express = require('express');
+const cors = require('cors');
+const app = express();
 const logging = new Logging({
   projectId: process.env.GCLOUD_PROJECT,
 });
@@ -21,7 +24,60 @@ exports.createStripeCustomer = functions.auth.user().onCreate(async (user) => {
     });
     return;
   });
-
+exports.authorizeStripe = functions.https.onRequest(async (req, res) => {
+    const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+          return res.status(422).json({ errors: errors.array() });
+      }
+  
+      const { authorizationCode } = req.body;
+      try {
+          const user = admin.firestore().collection('users').doc(req.user.uid).get();
+          if (user.exists) {
+              const resp = driverStripeAccount(authorizationCode);
+              if (resp.error) {
+                  return res.status(400).json({ error: resp.error_description });
+              }
+              // add the stripe account Id to the user record (integrated business)
+              await user.ref.update({ stripeLink: resp.stripe_user_id });
+              return res.json({ message: "Stripe Account Connection Completed." });
+          }
+          return res.status(400).json({ error: "User not found." });
+      } catch (err) {
+          console.error(err);
+          return res.status(400).json({ error: err.message });
+      }
+  });
+  
+  exports.preAuthorizeCharge = functions.https.onRequest(async (req, resp) => {
+    const data = req.body;
+    const percentageOfTransaction = 0.05; // percentage charge on a business for using the platform
+    const application_fee_amount = Math.round((data.amount * percentageOfTransaction) * 100);
+    const cost = Math.round(data.amount * 100);
+    const descriptor = 'Bakely';
+    const description = data.description;
+  
+    try {
+      const charge = await stripe.charges.create({
+        customer: customer.stripe_customer_id,
+        amount: cost,
+        application_fee_amount,
+        description,
+        statement_descriptor: descriptor,
+        currency: 'usd',
+        transfer_data: {
+          destination: data.accountId
+        },
+        metadata,
+        capture: false,
+        receipt_email: customer.email
+      });
+  
+      return charge;
+    } catch (err) {
+      reportError(err);
+    }
+  });
   exports.addPaymentMethodDetails = functions.firestore
   .document('/stripe_customers/{userId}/payment_methods/{pushId}')
   .onCreate(async (snap, context) => {
@@ -90,6 +146,20 @@ exports.createStripePayment = functions.firestore
       await reportError(error, { user: context.params.userId });
     }
   });
+  // confirm that the authorizationCode belongs to an account on our platform
+  async function driverStripeAccount(authorizationCode) {
+    const options = {
+        method: 'POST',
+        uri: functions.config().stripe.secret,
+        body: {
+            code: authorizationCode,
+            grant_type: 'authorization_code'
+        },
+        json: true
+    }
+    
+    return await Request(options)
+  }
 
 // [END chargecustomer]
 
@@ -190,3 +260,4 @@ function userFacingMessage(error) {
     ? error.message
     : 'An error occurred, developers have been alerted';
 }
+

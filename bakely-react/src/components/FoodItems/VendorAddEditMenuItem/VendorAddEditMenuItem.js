@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -11,31 +11,60 @@ import * as classes from './VendorAddEditMenuItem.css';
 
 const vendorAddEditMenuItem = (props) => {
 
-    const [image, setImage] = useState();
-    const [name, setName] = useState();
-    const [description, setDescription] = useState();
+    const [foodId, setFoodId] = useState(null);
+    const [image, setImage] = useState("");
+    const [imagePreview, setImagePreview] = useState("");
+    const [foodName, setfoodName] = useState("");
+    const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
 
     const [imageIsValid, setImageIsValid] = useState(props.isEditing);
-    const [nameIsValid, setNameIsValid] = useState(props.isEditing);
+    const [foodNameIsValid, setfoodNameIsValid] = useState(props.isEditing);
     const [descriptionIsValid, setDescriptionIsValid] = useState(props.isEditing);
     // true for now
     const [priceIsValid, setPriceIsValid] = useState(true);
     const [formIsValid, setFormIsValid] = useState(false);
 
-    // change check validity file
+    useEffect(()=>{
+        const item = props.currentItem;
+        if(item){
+            setFoodId(item.foodId);
+            setImagePreview(item.imageUrl);
+            setfoodName(item.foodName);
+            setDescription(item.description);
+            setPrice(item.price);
+            setImageIsValid(true);
+            setfoodNameIsValid(true);
+            setDescriptionIsValid(true);
+            setFormIsValid(true);
+        } else {
+            setFoodId(null);
+            setImagePreview("");
+            setfoodName("");
+            setDescription("");
+            setPrice("");
+            setFormIsValid("");
+            setImageIsValid(false);
+            setfoodNameIsValid(false);
+            setDescriptionIsValid(false);
+            setFormIsValid(false);
+        }
+    },[props.currentItem])
+
     const validateInput = (event, inputIdentifier) => {
-        const value = inputIdentifier === "image" ? event.target.files[0] : event.target.value
         let rules = null;
+        const value = inputIdentifier === "image" ? event.target.files[0] : event.target.value
+        if(!value) return;
         if (inputIdentifier === "image") {
             rules = { imageType: "image" };
+            setImagePreview(URL.createObjectURL(value));
             setImage(value);
             setImageIsValid(checkValidity(value, rules));
         }
-        else if (inputIdentifier === "name") {
+        else if (inputIdentifier === "foodName") {
             rules = { maxLength: "40" };
-            setName(value);
-            setNameIsValid(checkValidity(value, rules));
+            setfoodName(value);
+            setfoodNameIsValid(checkValidity(value, rules));
         }
         else if (inputIdentifier === "description") {
             rules = { maxLength: "160" };
@@ -49,17 +78,17 @@ const vendorAddEditMenuItem = (props) => {
             setPrice(value);
             setPriceIsValid(checkValidity(value, rules));
         }
-        setFormIsValid(imageIsValid && nameIsValid && descriptionIsValid && priceIsValid);
+        setFormIsValid(imageIsValid && foodNameIsValid && descriptionIsValid && priceIsValid);
     };
-    const addNewMenuItem = (event) => {
+    const saveMenuItem = (event) => {
         event.preventDefault();
-        console.log("This should be the uid,", props.user.uid);
         let formData = {
-            'title': name,
+            'foodId': foodId,
+            'foodName': foodName,
             'description': description,
             'price': price,
             'image': image,
-            'userId': props.user.uid
+            'userId': props.userId
         };
         // add this to props as well
         props.onAddEditMenuItem(formData);
@@ -68,21 +97,27 @@ const vendorAddEditMenuItem = (props) => {
     return (
         <Container>
             { props.isEditing ? <div className={classes.addMenuHeader}>Edit Item</div>
-            : <div className={classes.addMenuHeader}>Add Item to Menu</div> }
+                : <div className={classes.addMenuHeader}>Add Item to Menu</div>}
             <form onSubmit={this.addNewMenuItem}>
                 {/* https://www.youtube.com/watch?v=8r1Pb6Ja90o&t=753s&ab_channel=HongLy */}
-                <input type="file" onChange={(e) => validateInput(e, "image")} />
+                {imagePreview ? <img src={imagePreview} alt={"upload not showing"}
+                    style={{
+                        'width': '80%'
+                    }} /> : null}
+                <input type="file" defaultValue={props.image} onChange={(e) => validateInput(e, "image")} />
                 <TextField
-                    label="Name"
+                    helperText="Name"
+                    defaultValue={foodName}
                     fullWidth={true}
                     rows={1}
                     multiline
                     variant="outlined"
                     margin={'normal'}
-                    onChange={(e) => validateInput(e, "name")}>
+                    onChange={(e) => validateInput(e, "foodName")}>
                 </TextField>
                 <TextField
-                    label="Description"
+                    helperText="Description"
+                    defaultValue={description}
                     fullWidth={true}
                     rows={4}
                     multiline
@@ -96,8 +131,8 @@ const vendorAddEditMenuItem = (props) => {
                     className={classes.button}
                     startIcon={<SaveIcon />}
                     fullWidth={true}
-                    onClick={(e) => addNewMenuItem(e)}
-                >Add Item</Button>
+                    onClick={(e) => saveMenuItem(e)}
+                >Save Menu Item</Button>
             </form>
         </Container>
     );

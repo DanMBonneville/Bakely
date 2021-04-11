@@ -57,7 +57,7 @@ exports.authorizeStripe = functions.https.onRequest(async (req, res) => {
               }
               // add the stripe account Id to the user record (integrated business)
               await user.ref.update({ stripeLink: resp.stripe_user_id });
-              return res.json({ message: "Stripe Account Connection Completed." });
+              return res.redirect('http://localhost:3000/home');
           }
           return res.status(400).json({ error: "User not found." });
       } catch (err) {

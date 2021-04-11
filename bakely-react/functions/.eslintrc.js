@@ -20,6 +20,7 @@ module.exports = {
     'indent': 0,
     'eol-last': 0,
     'camelcase': 0,
+    'linebreak-style': 0,
     'require-jsdoc': ['error', {
       'require': {
           'FunctionDeclaration': false,

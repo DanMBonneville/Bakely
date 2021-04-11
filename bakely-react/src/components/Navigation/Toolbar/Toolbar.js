@@ -14,6 +14,7 @@ const toolbar = (props) => {
     }
     return (
     <header className={classes.Toolbar}>
+        {redirect}
         <HamburgerMenu 
             drawerToggleClicked={props.drawerToggleClicked} 
             sideDrawerOpen={false}

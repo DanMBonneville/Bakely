@@ -1,13 +1,10 @@
 import { auth } from '../../firebase';
-//import Stripe from 'stripe';
 import * as actionTypes from './actionTypes';
-
-//const STRIPE_PUBLISHABLE_KEY = 'pk_test_51ILi2SDaQgsm4ztYtijcHsltKu6gNMVrjrHiwubwYDibixx2BKSxzrlpOZID5iBoNTDf8MQrpvNZYcgkW1SNpop600C81GkYoA';
 
 export const createStripeSession = (email, password)  => {
         return dispatch => {
             console.log('called too soon');
-            window.location.href = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/home&client_id=ca_IxdJMFzUMp2nNiM0vZpFcgUNqYp9hR68&state=1abcdefghi'; 
+            window.location.href = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=https://us-central1-bakely-server.cloudfunctions.net/authorizeStripe&client_id=ca_IxdJMFzUMp2nNiM0vZpFcgUNqYp9hR68&state=1abcdefghi'; 
             return dispatch(loadingStart());
     };
 };

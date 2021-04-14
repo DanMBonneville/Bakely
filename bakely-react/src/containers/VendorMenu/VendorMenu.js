@@ -35,8 +35,7 @@ const classes = makeStyles((theme) => ({
     emptyListMessage: {
         'height': '20px'
     }
-})
-);
+}));
 
 class VendorMenu extends Component {
 
@@ -49,7 +48,6 @@ class VendorMenu extends Component {
     }
 
     addEditAnItem = (item, editingOrAdding) => {
-        console.log("Adding/editing ", item, editingOrAdding);
         this.setState({
             addingEditingAnItem: true,
             isEditing: editingOrAdding === "editing",
@@ -59,14 +57,18 @@ class VendorMenu extends Component {
 
     closeModal = () => {
         this.setState({
-            addingEditingAnItem: false
+            addingEditingAnItem: false,
+            currentItem: null
         });
     }
     handleAddEditMenuItem = (formData) => {
         this.props.onAddEditFoodItem(formData);
         this.closeModal();
     }
-
+    handleDeleteMenuItem = (foodId) => {
+        this.props.onDeleteFoodItem(foodId);
+        this.closeModal();
+    }
     render() {
         const itemList = [];
         const author = this.props.userData.firstName + " " + this.props.userData.lastName;
@@ -94,6 +96,7 @@ class VendorMenu extends Component {
                         isEditing={this.state.isEditing}
                         userId={this.props.userId}
                         onAddEditMenuItem={(formData) => this.handleAddEditMenuItem(formData)}
+                        onDeleteMenuItem={(foodId) => this.handleDeleteMenuItem(foodId)}
                     />
                 </Modal>
                 <Grid item xs={12}>
@@ -136,7 +139,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddEditFoodItem: (formData) => dispatch(actions.addEditFoodItem(formData))
+        onAddEditFoodItem: (formData) => dispatch(actions.addEditFoodItem(formData)),
+        onDeleteFoodItem: (foodId) => dispatch(actions.deleteFoodItem(foodId))
     };
 }
 

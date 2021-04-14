@@ -23,6 +23,13 @@ export const addFoodItemEditsToStore = (foodItem) => {
         foodItem: foodItem
     }
 }
+export const removeFoodItem = (foodId) => {
+    return {
+        type: actionTypes.REMOVE_MENU_ITEM,
+        foodId: foodId
+    }
+}
+
 // Asyncronous communication
 export const addItem = (item) => {
     return dispatch => {
@@ -55,14 +62,13 @@ export const addOrEditItem = (foodItem, url ) => {
 export const addEditFoodItem = (foodItem) => {
     return dispatch => {
         dispatch(loadingStart);
-        console.log("This is the object being passed into the add and edit food module:", foodItem);
         const image = foodItem.image;
         const imageRef = `${image.name}${foodItem.userId}`;
         storage.ref("images").child(imageRef).getDownloadURL().then((url) => {
             dispatch(addOrEditItem(foodItem,url));
         }).catch(() => {
             storage.ref(`images/${imageRef}`).put(image).on("state_changed", () => { },
-                error => { console.log(error) },
+                error => { console.log("storage ref error ", error) },
                 () => {
                     storage.ref("images").child(imageRef).getDownloadURL().then((url) => {
                         dispatch(addOrEditItem(foodItem,url));
@@ -70,6 +76,14 @@ export const addEditFoodItem = (foodItem) => {
                 }
             )
         });
+    }
+}
+
+export const deleteFoodItem = (foodId) => {
+    return dispatch => {
+        dispatch(loadingStart());
+        db.collection("foodItems").doc(foodId).delete();
+        dispatch(removeFoodItem(foodId));
     }
 }
 
@@ -85,10 +99,4 @@ export const setAllFoodItems = () => {
             console.log("Error in setting global food ", error);
         });
     };
-}
-
-export const getImageAndStore = () => {
-    return dispatch => {
-
-    }
 }

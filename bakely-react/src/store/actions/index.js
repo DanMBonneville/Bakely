@@ -15,5 +15,6 @@ export {
 } from './user';
 export {
     addEditFoodItem,
+    deleteFoodItem,
     setAllFoodItems
 } from './food';

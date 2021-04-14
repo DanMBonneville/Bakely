@@ -1,15 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Redirect} from 'react-router-dom';
 import Logo from '../../Logo/Logo';
 import classes from './Toolbar.css';
 import HamburgerMenu from '../SideDrawer/HamburgerMenu/HamburgerMenu';
 
 
-function handleLink(){
-    console.log("open shopping cart here");
-}
+const toolbar = (props) => {
+    const [redirect, setRedirect] = useState(null);
 
-const toolbar = (props) => (
+    const handleLink = () => {
+        let path = '/checkout';
+        setRedirect(<Redirect to={path} />);
+    }
+    return (
     <header className={classes.Toolbar}>
+        {redirect}
         <HamburgerMenu 
             drawerToggleClicked={props.drawerToggleClicked} 
             sideDrawerOpen={false}
@@ -22,6 +27,7 @@ const toolbar = (props) => (
         <button className={classes.block} onClick={() => handleLink()}>
             <i className="fa fa-shopping-cart" aria-hidden="true"></i></button>
     </header>
-);
+    )
+};
 
 export default toolbar;

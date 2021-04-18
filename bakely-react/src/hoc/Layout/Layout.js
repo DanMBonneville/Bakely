@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 
@@ -7,10 +8,13 @@ import Auxiliary from '../Auxiliary/Auxiliary';
 import classes from './Layout.css';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
+import SearchBar from '../../components/Navigation/SearchBar/SearchBar';
 
 class Layout extends Component {
     state = {
-        showSideDrawer: false
+        showSideDrawer: false,
+        showSearchBar: false,
+        goToSearchResults: false
     }
 
     componentDidMount() {
@@ -18,26 +22,40 @@ class Layout extends Component {
         this.props.setAllFoodItems();
     }
 
-    sideDrawerClosedHandler = () => {
-        this.setState({ showSideDrawer: false });
+    search(value) {
+        this.props.setSearchValue(value);
+        this.setState({ goToSearchResults: true });
+        this.closeSearchBar();
     }
 
-    sideDrawerToggleHandler = () => {
-        this.setState((prevState) => {
-            return { showSideDrawer: !prevState.showSideDrawer };
-        });
-    }
+    openSearchBar = () => { this.setState({ showSearchBar: true }) }
+    closeSearchBar = () => { this.setState({ showSearchBar: false }) }
+    openSideDrawer = () => { this.setState({ showSideDrawer: true }) }
+    closeSideDrawer = () => { this.setState({ showSideDrawer: false }) };
 
     render() {
+
+        const redirect = this.state.goToSearchResults ?
+            <Redirect to="searchResults" /> : null;
         return (
             <Auxiliary>
-                <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
+                {redirect}
+                <Toolbar
+                    openSideDrawer={this.openSideDrawer}
+                    openSearchBar={this.openSearchBar}
+                />
+                <SearchBar
+                    drawerToggleClicked={this.searchBarToggleHandler}
+                    search={(value) => this.search(value)}
+                    open={this.state.showSearchBar}
+                    closed={this.closeSearchBar}
+                />
                 <SideDrawer
                     className={classes.sideDrawer}
                     userData={this.props.userData}
                     isLoggedIn={this.props.isAuthenticated}
                     open={this.state.showSideDrawer}
-                    closed={this.sideDrawerClosedHandler} />
+                    closed={this.closeSideDrawer} />
                 <Container maxWidth="md" className={classes.Content}>
                     {this.props.children}
                 </Container>
@@ -57,8 +75,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onAuthStateChanged: () => dispatch(actions.authListener()),
-        setAllFoodItems: () => dispatch(actions.setAllFoodItems())
+        setAllFoodItems: () => dispatch(actions.setAllFoodItems()),
+        setSearchValue: (value) => dispatch(actions.setSearchValue(value))
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout));

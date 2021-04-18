@@ -4,9 +4,15 @@ import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import asyncComponent from './hoc/asyncComponent/asyncComponent';
 import Layout from "./hoc/Layout/Layout";
 import HomePage from "./containers/HomePage/HomePage";
-import Logout from "./containers/Logout/Logout";
+
 const asyncLogin = asyncComponent(()=> {
     return import("./containers/Login/Login");
+});
+const asyncLogout = asyncComponent(()=> {
+    return import("./containers/Logout/Logout");
+});
+const asyncSearchResults = asyncComponent(()=> {
+    return import("./containers/SearchResults/SearchResults");
 });
 const asyncUserRoleToggle = asyncComponent(()=> {
     return import("./containers/VendorSignUp/VendorSignUp");
@@ -23,7 +29,8 @@ class App extends Component {
         let routes = (
             <Switch>
                 <Route path="/login" component={asyncLogin} />
-                <Route path="/logout" component={Logout} />
+                <Route path="/logout" component={asyncLogout} />
+                <Route path="/searchResults" component={asyncSearchResults} />
                 <Route path="/checkout" component={asyncCheckout} />
                 <Route path="/toggle-user-role" component={asyncUserRoleToggle} />
                 <Route path="/my_menu" component={asyncVendorMenu} />

@@ -14,7 +14,8 @@ export {
     createStripeSession
 } from './checkOut';
 export {
-    setUserRole
+    setUserRole,
+    setSearchValue
 } from './user';
 export {
     addEditFoodItem,

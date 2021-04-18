@@ -1,6 +1,6 @@
 .HamburgerMenu {
     top: 13px;
     left: 20px;
-    z-index: 300;
+    z-index: 20;
     position: fixed;
 }

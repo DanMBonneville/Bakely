@@ -1,32 +1,38 @@
-import React, {useState} from 'react';
-import {Redirect} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+
 import Logo from '../../Logo/Logo';
 import classes from './Toolbar.css';
 import HamburgerMenu from '../SideDrawer/HamburgerMenu/HamburgerMenu';
 
-
 const toolbar = (props) => {
+
+    const checkoutPath = '/checkout';
+
     const [redirect, setRedirect] = useState(null);
 
-    const handleLink = () => {
-        let path = '/checkout';
+    const openSearchBar = () => {
+        props.openSearchBar();
+    }
+
+    const handleLink = (path) => {
         setRedirect(<Redirect to={path} />);
     }
+    
     return (
-    <header className={classes.Toolbar}>
-        {redirect}
-        <HamburgerMenu 
-            drawerToggleClicked={props.drawerToggleClicked} 
-            sideDrawerOpen={false}
-        />
-        <Logo />
-        <div className={classes.inputWithIcon}>
-            <input type="text" placeholder={"Search"} required/>
-            <i className="fa fa-search" ></i>
-        </div>
-        <button className={classes.block} onClick={() => handleLink()}>
-            <i className="fa fa-shopping-cart" aria-hidden="true"></i></button>
-    </header>
+        <header className={classes.Toolbar}>
+            {redirect}
+            <HamburgerMenu
+                openSideDrawer={props.openSideDrawer}
+                sideDrawerOpen={false}
+            />
+            <Logo />
+            <button className={classes.searchButton} onClick={() => openSearchBar()}>
+                <i className="fa fa-search" ></i>
+            </button>
+            <button className={classes.block} onClick={() => handleLink(checkoutPath)}>
+                <i className="fa fa-shopping-cart" aria-hidden="true"></i></button>
+        </header>
     )
 };
 

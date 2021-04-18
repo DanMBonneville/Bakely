@@ -5,9 +5,9 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import GridList from '@material-ui/core/GridList';
 
-import VendorMenuItem from '../../components/FoodItems/VendorMenuItem/VendorMenuItem';
+import VendorMenuItem from '../../components/VendorComponenets/VendorMenuItem/VendorMenuItem';
 import Modal from '../../components/UI/Modal/Modal';
-import VendorAddEditMenuItem from '../../components/FoodItems/VendorAddEditMenuItem/VendorAddEditMenuItem';
+import VendorAddEditMenuItem from '../../components/VendorComponenets/VendorAddEditMenuItem/VendorAddEditMenuItem';
 
 import * as actions from '../../store/actions/index';
 

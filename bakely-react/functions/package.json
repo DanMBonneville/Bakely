@@ -15,6 +15,7 @@
   "main": "index.js",
   "dependencies": {
     "@google-cloud/logging": "^9.1.0",
+    "express-validator": "^6.10.0",
     "firebase": "^8.3.3",
     "firebase-admin": "^9.2.0",
     "firebase-cli": "^1.2.0",

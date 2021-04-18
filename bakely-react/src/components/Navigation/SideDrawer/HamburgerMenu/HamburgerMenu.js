@@ -7,7 +7,7 @@ const hamburgerMenu = props => {
         <div className={classes.HamburgerMenu}>
             <HamburgerMenu
                 isOpen={props.sideDrawerOpen}
-                menuClicked={props.drawerToggleClicked}
+                menuClicked={props.openSideDrawer}
                 strokeWidth={1}
                 rotate={.5}
                 color='black'

@@ -1,0 +1,22 @@
+.SearchBar {
+    height: 100px;
+    width: 100%;
+    font-size: x-large;
+    position: relative;
+    left: 0;
+    top: 0;
+    background-color: #EAEAEA;
+    z-index: 40;
+    /* box-sizing: border-box; */
+    transition: transform 0.3s ease-out;
+}
+
+.Open {
+    transform: translateX(0);
+    z-index: 40;
+}
+
+.Close {
+    transform: translateX(-100%);
+    z-index: 40;
+}

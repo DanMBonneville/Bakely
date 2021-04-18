@@ -6,7 +6,7 @@ input[type=text]{
     border-radius: 60px;
     box-sizing: border-box;  
     outline: none;
-    z-index: 6;
+    z-index: 11;
 }  
 .input[type=text]:focus {
     color: white;
@@ -18,7 +18,7 @@ input[type=text]{
 }
 .inputWithIcon {
     position: relative; 
-    z-index: 5;
+    z-index: 10;
     padding-bottom: 50px;
 }
 .inputWithIcon i{ 

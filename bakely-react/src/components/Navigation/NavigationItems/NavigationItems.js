@@ -12,7 +12,6 @@ const navigationItems = (props) => {
     const [redirect, setRedirect] = useState(null);
 
     const handleLink = (chosenLink) => {
-    console.log("just Checking", chosenLink);
     let path = "/";
     switch (chosenLink) {
         // Bake only

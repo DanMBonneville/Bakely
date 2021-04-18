@@ -6,9 +6,7 @@
     left: 0;
     background-color: white;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding-left: 60px;
     box-sizing: border-box;
     font-family: 'Poppins';
     color: #FA541C;
@@ -50,20 +48,17 @@ input[type=text]{
     transition: 0.3s;
 } 
 
-.block {
+.toolBarIcon {
     position: relative; 
+    padding-right: 5px;
     z-index: 20;
-    display: block;
-    width: 60px;
-    height: 60%;
+    width: 100% ;
+    height: 100%;
     font-size: 20px;
-    cursor: pointer;
-    padding-right: 13px;
-    float: right;
-    outline: none;
-    border: 1px solid #ccc;  
-    border-radius: 60px;
-    background-color: #FA541C;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 i { 
     z-index: 22;

@@ -6,7 +6,7 @@ input[type=text]{
     border-radius: 60px;
     box-sizing: border-box;  
     outline: none;
-    z-index: 41;
+    z-index: 11;
 }  
 .input[type=text]:focus {
     color: white;

@@ -21,6 +21,9 @@ const searchBar = (props) => {
             />
             <SearchBar
                 className={attachedClasses.join(' ')}
+                style={{
+                    'height': '56px'
+                }}
                 value={value}
                 onChange={(newValue) => setValue( newValue )}
                 onRequestSearch={() => props.search(value)}

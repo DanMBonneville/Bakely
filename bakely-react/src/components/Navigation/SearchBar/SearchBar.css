@@ -1,7 +1,8 @@
 .SearchBar {
-    height: 56px;
+    height: 100px;
     width: 100%;
-    position: fixed;
+    font-size: x-large;
+    position: relative;
     left: 0;
     top: 0;
     background-color: #EAEAEA;

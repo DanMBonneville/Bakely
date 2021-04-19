@@ -5,7 +5,7 @@
     left: 0;
     top: 0;
     background-color: #EAEAEA;
-    z-index: 200;
+    z-index: 40;
     /* box-sizing: border-box; */
     transition: transform 0.3s ease-out;
 }
@@ -36,7 +36,7 @@
 
 .signIn {
     position: absolute; 
-    z-index: 5;
+    z-index: 41;
     display: block;
     width: 80%;
     border: 1px solid grey;

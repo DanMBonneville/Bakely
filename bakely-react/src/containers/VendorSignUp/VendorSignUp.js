@@ -56,7 +56,6 @@ class VendorSignUp extends Component {
 
     submitHandler = ( event ) => {
         event.preventDefault();
-        console.log(this.props.userData.role);
         if(this.props.userData.role === "customer"){
             this.props.setUserRole(this.props.user,"vendor");
         } else {
@@ -65,9 +64,6 @@ class VendorSignUp extends Component {
         this.setState({doRedirect: true});
     }
 
-    inputChangedHandler = (event, inputIdentifier) => {
-       console.log("input changed handler"); 
-    }
     render() {
         let authRedirect = null;
         if (this.state.doRedirect) {

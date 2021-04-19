@@ -17,6 +17,7 @@ const initialState = {
 		availability: '',
 		currentOrderRef: ''
 	},
+	searchValue: '',
 	foodItems: [],
 	recentOrders: [],
 	favorites: [],
@@ -27,9 +28,16 @@ const userReducer = (state = initialState, action) => {
 	switch ( action.type ) {
 		case actionTypes.SET_CURRENT_USER_DATA: return setCurrentUserData(state, action);
 		case actionTypes.UPDATE_ROLE: return updateRole(state, action);
+		case actionTypes.SET_SEARCH_VALUE: return setSearchValue(state, action);
 		default: return state;
 	}
 };
+
+const setSearchValue = (state, action) => {
+	return updateObject(state, {
+		searchValue: action.searchValue
+	})
+}
 
 const setCurrentUserData = (state, action) => {
 	return updateObject(state, {

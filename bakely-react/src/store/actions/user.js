@@ -4,6 +4,13 @@ import * as actionTypes from './actionTypes';
 export const loadingStart = () => { return { type: actionTypes.LOADING_START } };
 export const loadingEnd = () => { return { type: actionTypes.LOADING_END } };
 
+export const setSearchValue = (value) => { 
+    return {
+        type: actionTypes.SET_SEARCH_VALUE,
+        searchValue: value
+    }
+}
+
 export const updateRole = (role) => {
     return {
         type: actionTypes.UPDATE_ROLE,

@@ -9,17 +9,13 @@ import * as actions from '../../store/actions/index';
 
 class Checkout extends Component {
 
-    render () {
+    render() {
         return (
             <Container>
-                <Grid
-  container
-  direction="row"
-  justify="center"
->
-                <Grid item xs={2} md={2} lg={2} xl={2} sm={2} >
-                    <img onClick={() => this.props.createStripeSession(this.props.email, this.props.user.uid)} src={stripe_connect} width="90%" alt="Healthy living" style={{float: "center"}}></img>
-                </Grid> 
+                <Grid container direction="row" justify="center">
+                    <Grid item xs={2} md={2} lg={2} xl={2} sm={2} >
+                        <img onClick={() => this.props.createStripeSession(this.props.email, this.props.user.uid)} src={stripe_connect} width="90%" alt="Healthy living" style={{ float: "center" }}></img>
+                    </Grid>
                 </Grid>
             </Container>
         );

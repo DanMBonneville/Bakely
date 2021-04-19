@@ -8,7 +8,7 @@ const app = express();
 const logging = new Logging({
   projectId: process.env.GCLOUD_PROJECT,
 });
-
+const validator = require('express-validator');
 const { Stripe } = require('stripe');
 const stripe = new Stripe(functions.config().stripe.secret, {
 });
@@ -42,24 +42,23 @@ exports.createStripeCustomer = functions.auth.user().onCreate(async (user) => {
     admin.firestore().collection(`users/${data.customer.id}/charges`).doc(data.chargeId).set({...charge, status: data.transactionStatus});
   });
 exports.authorizeStripe = functions.https.onRequest(async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validator.validationResult(req);
       if (!errors.isEmpty()) {
           return res.status(422).json({ errors: errors.array() });
       }
-  
-      const { authorizationCode } = req.body;
+      const { code, state } = req.query;
       try {
-          const user = admin.firestore().collection('users').doc(req.user.uid).get();
-          if (user.exists) {
-              const resp = driverStripeAccount(authorizationCode);
+          const user = await admin.firestore().collection('users').doc(state.toString()).get();
+          if (user) {
+              const resp = await driverStripeAccount(code);
               if (resp.error) {
                   return res.status(400).json({ error: resp.error_description });
               }
               // add the stripe account Id to the user record (integrated business)
-              await user.ref.update({ stripeLink: resp.stripe_user_id });
+              user.ref.update({ stripeLink: resp.stripe_user_id, stripeAccessToken: resp.access_token });
               return res.redirect('http://localhost:3000/home');
           }
-          return res.status(400).json({ error: "User not found." });
+          return res.status(400).json({ error: "CSRF detected" });
       } catch (err) {
           console.error(err);
           return res.status(400).json({ error: err.message });
@@ -68,7 +67,7 @@ exports.authorizeStripe = functions.https.onRequest(async (req, res) => {
   
   exports.preAuthorizeCharge = functions.https.onRequest((req, resp) => {
     const data = req.body;
-    const percentageOfTransaction = 0.05; // percentage charge on a business for using the platform
+    const percentageOfTransaction = 0.20; // percentage charge on a business for using the platform
     const application_fee_amount = Math.round((data.amount * percentageOfTransaction) * 100);
     const cost = Math.round(data.amount * 100);
     const descriptor = 'Bakely';
@@ -165,17 +164,11 @@ exports.createStripePayment = functions.firestore
   });
   // confirm that the authorizationCode belongs to an account on our platform
   async function driverStripeAccount(authorizationCode) {
-    const options = {
-        method: 'POST',
-        uri: functions.config().stripe.secret,
-        body: {
-            code: authorizationCode,
-            grant_type: 'authorization_code'
-        },
-        json: true
-    }
-    
-    return await Request(options)
+    const resp = await stripe.oauth.token({
+      grant_type: 'authorization_code',
+      code: authorizationCode,
+    });
+    return resp;
   }
 
 // [END chargecustomer]

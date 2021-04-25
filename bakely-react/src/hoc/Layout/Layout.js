@@ -16,16 +16,12 @@ class Layout extends Component {
         showSearchBar: false,
         goToSearchResults: false
     }
-
     componentDidMount() {
         this.props.onAuthStateChanged();
         this.props.setAllFoodItems();
-    }
-
-    search(value) {
-        this.props.setSearchValue(value);
-        this.setState({ goToSearchResults: true });
-        this.closeSearchBar();
+        this.setState({
+            goToSearchResults: false
+        })
     }
 
     openSearchBar = () => { this.setState({ showSearchBar: true }) }
@@ -34,20 +30,16 @@ class Layout extends Component {
     closeSideDrawer = () => { this.setState({ showSideDrawer: false }) };
 
     render() {
-
-        const redirect = this.state.goToSearchResults ?
-            <Redirect to="searchResults" /> : null;
         return (
             <Auxiliary>
-                {redirect}
                 <Toolbar
                     openSideDrawer={this.openSideDrawer}
                     openSearchBar={this.openSearchBar}
                 />
                 <SearchBar
                     drawerToggleClicked={this.searchBarToggleHandler}
-                    search={(value) => this.search(value)}
                     open={this.state.showSearchBar}
+                    setSearchValue={(value) => this.props.setSearchValue(value)}
                     closed={this.closeSearchBar}
                 />
                 <SideDrawer

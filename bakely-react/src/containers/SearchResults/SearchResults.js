@@ -35,7 +35,7 @@ class SearchResults extends Component {
                 </Grid>
             </Grid>;
 
-
+        console.log("These are the searchResults: ", this.props.searchResults);
         return (
             <Auxiliary>
                 <div>

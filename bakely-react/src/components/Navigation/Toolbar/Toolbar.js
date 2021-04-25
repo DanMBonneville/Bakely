@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import Logo from '../../Logo/Logo';
 import classes from './Toolbar.css';
@@ -10,30 +10,22 @@ const toolbar = (props) => {
 
     const checkoutPath = '/checkout';
 
-    const [redirect, setRedirect] = useState(null);
-
     const openSearchBar = () => {
         props.openSearchBar();
     }
 
-    const handleLink = (path) => {
-        setRedirect(<Redirect to={path} />);
+    const openCheckOutPage = () => {
+        props.history.push(checkoutPath)
     }
 
     return (
         <header className={classes.Toolbar}>
-            {redirect}
             <Grid 
                 container
-                disableGutters={true}
-                justifyContent="center"
                 alignContent="center"
             >
                 <Grid
-                    item 
-                    xs={2}
-                    md={1}
-                    justify={'center'}
+                    item xs={2} md={1}
                 >
                     <HamburgerMenu
                         openSideDrawer={props.openSideDrawer}
@@ -53,7 +45,7 @@ const toolbar = (props) => {
                 <Grid item xs={2} md={1}>
                     <button 
                         className={classes.toolBarIcon} 
-                        onClick={() => handleLink(checkoutPath)}
+                        onClick={() => openCheckOutPage()}
                         style={{'backgroundColor': '#FA541C'}}
                     >
                         <i className="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -64,4 +56,4 @@ const toolbar = (props) => {
     )
 };
 
-export default toolbar;
+export default withRouter(toolbar);

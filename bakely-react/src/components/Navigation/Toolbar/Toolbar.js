@@ -25,15 +25,15 @@ const toolbar = (props) => {
             {redirect}
             <Grid 
                 container
-                disableGutters={true}
-                justifyContent="center"
+                disablegutters="true"
+                justifycontent="center"
                 alignContent="center"
             >
                 <Grid
                     item 
                     xs={2}
                     md={1}
-                    justify={'center'}
+                    justifycontent={'center'}
                 >
                     <HamburgerMenu
                         openSideDrawer={props.openSideDrawer}

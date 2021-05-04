@@ -23,6 +23,9 @@ const asyncVendorMenu = asyncComponent(()=> {
 const asyncCheckout = asyncComponent(()=> {
     return import("./containers/Checkout/Checkout");
 });
+const asyncPayments = asyncComponent(()=> {
+    return import("./containers/Payments/Payments");
+});
 
 class App extends Component {
     render() {
@@ -34,6 +37,7 @@ class App extends Component {
                 <Route path="/checkout" component={asyncCheckout} />
                 <Route path="/toggle-user-role" component={asyncUserRoleToggle} />
                 <Route path="/my_menu" component={asyncVendorMenu} />
+                <Route path="/payments" component={asyncPayments} />
                 <Route path="/" exact component={HomePage} />
                 <Redirect to="/" />
             </Switch>

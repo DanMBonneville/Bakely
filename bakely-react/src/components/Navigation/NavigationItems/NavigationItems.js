@@ -20,7 +20,7 @@ const navigationItems = (props) => {
         // Eat only
         case 'Home': path = "/";
             break;
-        case 'Payment': path = "/checkout";
+        case 'Payment': path = "/payments";
             break;
         // shared
         case 'Orders': path = "/";

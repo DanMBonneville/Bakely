@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 
@@ -22,31 +21,21 @@ class Layout extends Component {
         this.props.setAllFoodItems();
     }
 
-    search(value) {
-        this.props.setSearchValue(value);
-        this.setState({ goToSearchResults: true });
-        this.closeSearchBar();
-    }
-
     openSearchBar = () => { this.setState({ showSearchBar: true }) }
     closeSearchBar = () => { this.setState({ showSearchBar: false }) }
     openSideDrawer = () => { this.setState({ showSideDrawer: true }) }
     closeSideDrawer = () => { this.setState({ showSideDrawer: false }) };
 
     render() {
-
-        const redirect = this.state.goToSearchResults ?
-            <Redirect to="searchResults" /> : null;
         return (
             <Auxiliary>
-                {redirect}
                 <Toolbar
                     openSideDrawer={this.openSideDrawer}
                     openSearchBar={this.openSearchBar}
                 />
                 <SearchBar
                     drawerToggleClicked={this.searchBarToggleHandler}
-                    search={(value) => this.search(value)}
+                    setSearchValue={(value) => this.props.setSearchValue(value)}
                     open={this.state.showSearchBar}
                     closed={this.closeSearchBar}
                 />
@@ -80,4 +69,4 @@ const mapDispatchToProps = dispatch => {
     };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout));
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

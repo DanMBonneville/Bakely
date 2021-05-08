@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import React from 'react';
 
 import Logo from '../../Logo/Logo';
 import classes from './Toolbar.css';
@@ -9,31 +8,24 @@ import { Grid } from '@material-ui/core';
 const toolbar = (props) => {
 
     const checkoutPath = '/checkout';
-
-    const [redirect, setRedirect] = useState(null);
-
     const openSearchBar = () => {
         props.openSearchBar();
     }
 
     const handleLink = (path) => {
-        setRedirect(<Redirect to={path} />);
+        props.history.push(path); 
     }
 
     return (
         <header className={classes.Toolbar}>
-            {redirect}
             <Grid 
                 container
-                disableGutters={true}
-                justifyContent="center"
                 alignContent="center"
             >
                 <Grid
                     item 
                     xs={2}
                     md={1}
-                    justify={'center'}
                 >
                     <HamburgerMenu
                         openSideDrawer={props.openSideDrawer}

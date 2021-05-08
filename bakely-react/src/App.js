@@ -1,49 +1,54 @@
-import React, { Component } from 'react';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
+import React, { Component } from "react";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 
-import asyncComponent from './hoc/asyncComponent/asyncComponent';
+import asyncComponent from "./hoc/asyncComponent/asyncComponent";
 import Layout from "./hoc/Layout/Layout";
 import HomePage from "./containers/HomePage/HomePage";
 
-const asyncLogin = asyncComponent(()=> {
-    return import("./containers/Login/Login");
+const asyncLogin = asyncComponent(() => {
+  return import("./containers/Login/Login");
 });
-const asyncLogout = asyncComponent(()=> {
-    return import("./containers/Logout/Logout");
+const asyncLogout = asyncComponent(() => {
+  return import("./containers/Logout/Logout");
 });
-const asyncSearchResults = asyncComponent(()=> {
-    return import("./containers/SearchResults/SearchResults");
+const asyncSearchResults = asyncComponent(() => {
+  return import("./containers/SearchResults/SearchResults");
 });
-const asyncUserRoleToggle = asyncComponent(()=> {
-    return import("./containers/VendorSignUp/VendorSignUp");
+const asyncCheckout = asyncComponent(() => {
+  return import("./containers/Checkout/Checkout");
 });
-const asyncVendorMenu = asyncComponent(()=> {
-    return import("./containers/VendorMenu/VendorMenu");
+const asyncVendorMenu = asyncComponent(() => {
+  return import("./containers/VendorMenu/VendorMenu");
 });
-const asyncCheckout = asyncComponent(()=> {
-    return import("./containers/Checkout/Checkout");
+const asyncMenuItemProfile = asyncComponent(() => {
+  return import("./containers/Profiles/MenuItemProfile/MenuItemProfile");
+});
+const asyncVendorProfile = asyncComponent(() => {
+  return import("./containers/Profiles/VendorProfile/VendorProfile");
+});
+const asyncUserRoleToggle = asyncComponent(() => {
+  return import("./containers/VendorSignUp/VendorSignUp");
 });
 
 class App extends Component {
-    render() {
-        let routes = (
-            <Switch>
-                <Route path="/login" component={asyncLogin} />
-                <Route path="/logout" component={asyncLogout} />
-                <Route path="/searchResults" component={asyncSearchResults} />
-                <Route path="/checkout" component={asyncCheckout} />
-                <Route path="/toggle-user-role" component={asyncUserRoleToggle} />
-                <Route path="/my_menu" component={asyncVendorMenu} />
-                <Route path="/" exact component={HomePage} />
-                <Redirect to="/" />
-            </Switch>
-        );
-        return (
-            <Layout>
-                {routes}
-            </Layout>
-        );
-    }
+  render() {
+    return (
+      <Layout>
+        <Switch>
+          <Route path="/login" component={asyncLogin} />
+          <Route path="/logout" component={asyncLogout} />
+          <Route path="/searchResults" component={asyncSearchResults} />
+          <Route path="/checkout" component={asyncCheckout} />
+          <Route path="/my_menu" component={asyncVendorMenu} />
+          <Route path="/viewMenuItemProfile" component={asyncMenuItemProfile} />
+          <Route path="/viewVendorProfile" component={asyncVendorProfile} />
+          <Route path="/toggle-user-role" component={asyncUserRoleToggle} />
+          <Route path="/" exact component={HomePage} />  
+          <Redirect to="/" />
+        </Switch>
+      </Layout>
+    );
+  }
 }
 
 export default withRouter(App);

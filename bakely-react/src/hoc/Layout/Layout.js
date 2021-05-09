@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 
@@ -19,9 +18,6 @@ class Layout extends Component {
     componentDidMount() {
         this.props.onAuthStateChanged();
         this.props.setAllFoodItems();
-        this.setState({
-            goToSearchResults: false
-        })
     }
 
     openSearchBar = () => { this.setState({ showSearchBar: true }) }
@@ -38,6 +34,7 @@ class Layout extends Component {
                 />
                 <SearchBar
                     drawerToggleClicked={this.searchBarToggleHandler}
+                    setSearchValue={(value) => this.props.setSearchValue(value)}
                     open={this.state.showSearchBar}
                     setSearchValue={(value) => this.props.setSearchValue(value)}
                     closed={this.closeSearchBar}
@@ -72,4 +69,4 @@ const mapDispatchToProps = dispatch => {
     };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout));
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

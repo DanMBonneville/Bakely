@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import React from 'react';
 
 import Logo from '../../Logo/Logo';
 import classes from './Toolbar.css';
@@ -9,13 +8,12 @@ import { Grid } from '@material-ui/core';
 const toolbar = (props) => {
 
     const checkoutPath = '/checkout';
-
     const openSearchBar = () => {
         props.openSearchBar();
     }
 
-    const openCheckOutPage = () => {
-        props.history.push(checkoutPath)
+    const handleLink = (path) => {
+        props.history.push(path); 
     }
 
     return (
@@ -25,7 +23,9 @@ const toolbar = (props) => {
                 alignContent="center"
             >
                 <Grid
-                    item xs={2} md={1}
+                    item 
+                    xs={2}
+                    md={1}
                 >
                     <HamburgerMenu
                         openSideDrawer={props.openSideDrawer}
@@ -45,7 +45,7 @@ const toolbar = (props) => {
                 <Grid item xs={2} md={1}>
                     <button 
                         className={classes.toolBarIcon} 
-                        onClick={() => openCheckOutPage()}
+                        onClick={() => handleLink()}
                         style={{'backgroundColor': '#FA541C'}}
                     >
                         <i className="fa fa-shopping-cart" aria-hidden="true"></i>

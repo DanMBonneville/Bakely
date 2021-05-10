@@ -1,20 +1,22 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
-const { logging } = require("./functionLogging");
 const { Stripe } = require("stripe");
 const validator = require("express-validator");
 const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 const { reportError } = require("./functionLogging");
 
+const app = express();
+if (!admin.apps || !admin.apps.length) {
+  admin.initializeApp();
+}
+
+
 const stripe = new Stripe(
   functions.config().stripe.secret,
   {}
 );
-if (!admin.apps || !admin.apps.length) {
-  admin.initializeApp();
-}
+
 
 app
   .use(cors({ origin: true, credentials: true }))
@@ -32,7 +34,7 @@ app.post("/createNewSetupIntent/", async (req, res) => {
       return entry.data().customer_id;
     })
     .catch((e) => {
-      functions.logger.log("Error on fetch", e);
+      return functions.logger.log("Error on fetch", e);
     });
   const newIntent = await stripe.setupIntents.create({
     customer: customerId,
@@ -44,6 +46,7 @@ app.post("/createNewSetupIntent/", async (req, res) => {
     .update({ setup_secret: newIntent.client_secret })
     .catch((e) => {
       functions.logger.log("Error on set", e);
+      return res.json({ success: false });
     });
   return res.json({ success: true });
 });

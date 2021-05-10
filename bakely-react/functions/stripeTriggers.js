@@ -3,7 +3,7 @@ const { reportError } = require('./functionLogging');
 const admin = require('firebase-admin');
 const { Stripe } = require('stripe');
 const stripe = new Stripe(functions.config().stripe.secret, {});
-if(!admin.apps.length)
+if(!admin.apps || !admin.apps.length)
 {
   admin.initializeApp();
 }

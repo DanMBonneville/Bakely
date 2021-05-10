@@ -13,11 +13,8 @@ export const getClientSetupSecret = (uid)  => {
 };
 export const createNewSetupIntent = (uid) => {
     return dispatch => {
-        axios.post('https://us-central1-bakely-server.cloudfunctions.net/createNewSetupIntent',
-        { uid: uid }, {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }}).then(res => {
+        axios.post('https://us-central1-bakely-server.cloudfunctions.net/api/createNewSetupIntent/',
+        { uid: uid }).then(res => {
             if(res.success) {
                 return dispatch(getClientSetupSecret(uid));
             }

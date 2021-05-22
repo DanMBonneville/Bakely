@@ -70,7 +70,7 @@ class VendorMenu extends Component {
     const author =
       this.props.userData.firstName + " " + this.props.userData.lastName;
     this.props.foodItems.forEach((item) => {
-      if (this.props.userId === item.userId) {
+      if (this.props.userId === item.vendorId) {
         itemList.push(
           <MenuItemPreview
             key={item.foodId}

@@ -7,13 +7,14 @@ import IconButton from '@material-ui/core/IconButton';
 const MenuItemPreview = (props) => {
     // classes
     // add this to props next 
-    const {author, item, setSelectedItemId} = props;
+    const {vendor, item, setSelectedItemById} = props;
 
     const itemIsPassed = null != item;
     console.log("menu item profile info: ", item)
-    const name = author.firstName + ' ' + author.lastName;
+    const name = vendor.firstName + ' ' + vendor.lastName;
+    console.log("This is the name I guess: ", name);
     function handleClick() {
-        setSelectedItemId(item.foodId);
+        setSelectedItemById(item.foodId);
         props.history.push('/viewMenuItemProfile'); 
     }
     if (!itemIsPassed) {
@@ -30,7 +31,7 @@ const MenuItemPreview = (props) => {
                     //     root: classes.titleBar,
                     //     title: classes.title,
                     // }}
-                    subtitle={name}
+                    // subtitle={name}
                     actionIcon={
                         <IconButton aria-label={`info about ${item.foodName}`} >
                             {/* TODO: place Vendor Preview here */}

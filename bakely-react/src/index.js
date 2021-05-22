@@ -51,5 +51,8 @@ const app = (
     </Provider>
 );
 
+// TODO: Vendors have just been added to the store, so now we need to get all the vendors ion the search result page, 
+// and match by ID so that the vendors pic can be displayed and the individual vendors information can be passed onto the profile
+
 ReactDOM.render(app, document.getElementById('root'));
 //registerServiceWorker();

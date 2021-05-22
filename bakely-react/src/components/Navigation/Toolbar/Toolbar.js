@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { withRouter }  from 'react-router-dom';
 import Logo from '../../Logo/Logo';
 import classes from './Toolbar.css';
 import HamburgerMenu from '../SideDrawer/HamburgerMenu/HamburgerMenu';
@@ -7,7 +7,7 @@ import { Grid } from '@material-ui/core';
 
 const toolbar = (props) => {
 
-    const checkoutPath = '/checkout';
+    //const checkoutPath = '/checkout';
     const openSearchBar = () => {
         props.openSearchBar();
     }

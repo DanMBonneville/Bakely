@@ -21,12 +21,13 @@ export const CHECKOUT_CONFIRMED = "CHECKOUT_CONFIRMED";
 export const CANCEL_CHECKOUT = "CANCEL_CHECKOUT";
 
 //vendor
-export const GET_VENDORS = "GET_VENDORS";
+export const SET_ALL_VENDORS = "SET_ALL_VENDORS";
 //food
 export const ADD_MENU_ITEM = "ADD_MENU_ITEM";
 export const EDIT_MENU_ITEM = "EDIT_MENU_ITEM";
 export const REMOVE_MENU_ITEM = "REMOVE_MENU_ITEM";
 export const SET_FOOD_ITEMS = "SET_FOOD_ITEMS";
+export const SET_SELECTED_ITEM = 'SET_SELECTED_ITEM';
 export const CLEAR_FOOD_ITEMS = "CLEAR_FOOD_ITEMS";
 
 

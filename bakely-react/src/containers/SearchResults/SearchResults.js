@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MenuItemPreview from "../../components/CustomerComponenets/MenuItemPreview/MenuItemPreview";
+import * as actions from '../../store/actions/index';
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import GridList from "@material-ui/core/GridList";
@@ -28,29 +29,44 @@ const classes = makeStyles((theme) => ({
 //const classes = classesAction();
 
 class SearchResults extends Component {
+  state = {
+    seeAllFavorites: false,
+    seeAllRecents: false
+  }
   render() {
     const itemList = this.props.foodItems;
-    // Apply sorting here
+    // Apply sorting here maybe
     //
-    // let favorites = sortByUserFavorites;
-    // let newlyAdded = sortBy;
     let itemPreviewList = [];
+    let favorites = [];
+    let newlyAdded = [];
     itemList.forEach((item) => {
       console.log("This is the returned item data: ", item);
+      const vendor = this.props.vendors.find(ven => {
+        return item.vendorId === ven.vendorId
+      });
       itemPreviewList.push(
         <MenuItemPreview
-          author={this.props.userData}
+          vendor={vendor}
+          setSelectedItemById={(id) => this.props.setSelectedItemById(id)}
           item={item}
           // classes={TODO: passed stylings}
         />
       );
     });
+    favorites.push(itemPreviewList[0]);
+    favorites.push(itemPreviewList[1]);
+    newlyAdded.push(itemPreviewList[0]);
+    newlyAdded.push(itemPreviewList[1]);
+
+    //////// seperate here,
+    //create the item Profile
+    // create vendor profile
+    // create vendor preview, link it
 
     return (
       <Grid container spacing={1} justify={"center"}>
-        <Grid item xs={12}>
-          <p className={classes.title}>Local Favorites</p>
-        </Grid>
+        <p className={classes.title}>Local Favorites</p>
         <Grid item xs={12}>
           <GridList
             cellHeight={"auto"}
@@ -59,13 +75,11 @@ class SearchResults extends Component {
             className={classes.gridList}
           >
             <Grid container justify="center">
-              {itemPreviewList}
+              {favorites}
             </Grid>
           </GridList>
         </Grid>
-        <Grid item xs={12}>
-          <p className={classes.title}>Newly Added</p>
-        </Grid>
+        <p className={classes.title}>Newly Added</p>
         <Grid item xs={12}>
           <GridList
             cellHeight={"auto"}
@@ -74,7 +88,7 @@ class SearchResults extends Component {
             className={classes.gridList}
           >
             <Grid container justify="center">
-              {itemPreviewList}
+              {newlyAdded}
             </Grid>
           </GridList>
         </Grid>
@@ -88,11 +102,14 @@ const mapStateToProps = (state) => {
     searchResults: state.user.searchValue,
     userData: state.user.userData,
     foodItems: state.food.foodItems,
+    vendors: state.vendor.vendors
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    setSelectedItemById: (id) => dispatch(actions.setSelectedItemById(id))
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResults);

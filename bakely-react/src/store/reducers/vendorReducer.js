@@ -8,14 +8,15 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 	switch ( action.type ) {
-		case actionTypes.GET_VENDORS: return getVendors(state, action);
+		case actionTypes.SET_ALL_VENDORS: return setVendors(state, action);
 		default: return state;
 	}
 };
 
-const getVendors = (state, action) => {
-	return updateObject(state, { 
-		vendors: action.vendors 
+const setVendors = (state, action) => {
+	console.log("I am in the vendor reducer with this action: ", action);
+	return updateObject(state, {
+		vendors: action.vendors
 	})
 }
 

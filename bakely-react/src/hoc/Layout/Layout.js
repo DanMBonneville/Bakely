@@ -18,8 +18,8 @@ class Layout extends Component {
     componentDidMount() {
         this.props.onAuthStateChanged();
         this.props.setAllFoodItems();
+        this.props.setAllVendors();
     }
-
     openSearchBar = () => { this.setState({ showSearchBar: true }) }
     closeSearchBar = () => { this.setState({ showSearchBar: false }) }
     openSideDrawer = () => { this.setState({ showSideDrawer: true }) }
@@ -36,7 +36,6 @@ class Layout extends Component {
                     drawerToggleClicked={this.searchBarToggleHandler}
                     setSearchValue={(value) => this.props.setSearchValue(value)}
                     open={this.state.showSearchBar}
-                    setSearchValue={(value) => this.props.setSearchValue(value)}
                     closed={this.closeSearchBar}
                 />
                 <SideDrawer
@@ -65,6 +64,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onAuthStateChanged: () => dispatch(actions.authListener()),
         setAllFoodItems: () => dispatch(actions.setAllFoodItems()),
+        setAllVendors: () => dispatch(actions.setAllVendors()),
         setSearchValue: (value) => dispatch(actions.setSearchValue(value))
     };
 }

@@ -2,7 +2,8 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
 
 const initialState = {
-    foodItems: []
+    foodItems: [],
+    selectedFoodItem: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -11,6 +12,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.EDIT_MENU_ITEM: return editFoodItem(state, action);
         case actionTypes.CLEAR_FOOD_ITEMS: return clearFoodItems(state);
         case actionTypes.REMOVE_MENU_ITEM: return removeFoodItem(state, action);
+        case actionTypes.SET_SELECTED_ITEM: return setSelectedItem(state, action);
         default: return state;
     }
 };
@@ -56,6 +58,15 @@ const clearFoodItems = (state) => {
     return updateObject(state, { 
 		foodItems: []
 	})
+}
+
+const setSelectedItem = (state, action) => {
+    const selectedItem = state.foodItems.find(item => {
+        return item.foodId === action.selectedItemId;
+    });
+    return updateObject(state,  {
+        selectedFoodItem: selectedItem
+    });
 }
 
 export default reducer;

@@ -10,6 +10,13 @@ export const clearFoodItems = () => {
     }
 }
 
+export const setSelectedItemById = (id) => {
+    return {
+        type: actionTypes.SET_SELECTED_ITEM,
+        selectedItemId: id
+    }
+}
+
 export const addFoodItemToStore = (id, itemToAdd) => {
     return {
         type: actionTypes.ADD_MENU_ITEM,
@@ -63,7 +70,7 @@ export const addEditFoodItem = (foodItem) => {
     return dispatch => {
         dispatch(loadingStart);
         const image = foodItem.image;
-        const imageRef = `${image.name}${foodItem.userId}`;
+        const imageRef = `${image.name}${foodItem.vendorId}`;
         storage.ref("images").child(imageRef).getDownloadURL().then((url) => {
             dispatch(addOrEditItem(foodItem,url));
         }).catch(() => {

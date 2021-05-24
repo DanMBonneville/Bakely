@@ -33,7 +33,7 @@ export default function AddNewCard(props) {
         uid: props.uid,
         payment_method_id: result.setupIntent.payment_method
       }
-      this.props.storePaymentMethod(paymentProfile);
+      props.store_payment_method(paymentProfile);
     }
   };
 

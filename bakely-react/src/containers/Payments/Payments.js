@@ -4,7 +4,7 @@ import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import AddNewCard from '../../components/Payments/AddNewCard';
-
+import CardDetail from '../../components/Payments/CardDetail';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
@@ -20,16 +20,13 @@ class Payments extends Component {
         {
             return (        
                 <Container>
-                    <Grid container direction="row" justify="center">
-                        <Grid item xs={12} md={12} lg={12} xl={12} sm={12} >
-                            We see you don't have a payment method! Please add one. 
-                        </Grid>
-                    </Grid>
-                    <Grid container direction="row" justify="center" style={{paddingTop: "10px"}}>
-                        <Grid item xs={12} md={12} lg={12} xl={12} sm={12} >
-                        Note, this card will be come your default and will be re-used for all future transactions until you select a new default card.
-                        </Grid>
-                    </Grid>
+                    <CardDetail
+                    cardExists={this.props.cardExists}
+                    brand={this.props.brand}
+                    last4={this.props.last4}
+                    expirationYear={this.props.expirationYear}
+                    >
+                    </CardDetail>
                     <Grid container direction="row" style={{paddingTop: "10px"}}>
                             <Grid item xs={12} md={12} lg={12} xl={12} sm={12}>
                             <AddNewCard 
@@ -56,13 +53,20 @@ const mapStateToProps = state => {
         isAuthenticated: state.auth.user !== null,
         user: state.auth.user,
         paymentsloadingComplete: state.payments.paymentsloadingComplete,
-        client_secret: state.payments.client_secret
+        client_secret: state.payments.client_secret,
+        cardExists: state.payments.cardExists,
+        last4: state.payments.last4,
+        brand: state.payments.brand,
+        expirationYear: state.payments.expirationYear
     };
     
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        init: (uid) => {
+
+        },
         onCreateNewSetupIntent: (uid) => {
             dispatch(actions.createNewSetupIntent(uid));
         },

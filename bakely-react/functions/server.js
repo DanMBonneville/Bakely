@@ -23,6 +23,21 @@ app
   .use(express.json())
   .use(express.urlencoded({ extended: false }));
 
+app.post("/updateAdditionalPaymentDetails/", async (req, res) => {
+  const { paymentMethodId, uid } = req.body;
+  const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId);
+  await admin
+    .firestore()
+    .collection("payment_methods")
+    .doc(uid)
+    .update({ last_4: paymentMethod.last_4, brand: paymentMethod.card.brand, expiration_year: paymentMethod.card.exp_year  })
+    .catch((e) => {
+      functions.logger.log("Error on set", e);
+      return res.json({ success: false, error: e });
+    });
+  return res.json({ success: true });
+});
+
 app.post("/createNewSetupIntent/", async (req, res) => {
   const { uid } = req.body;
   const customerId = await admin
@@ -38,12 +53,14 @@ app.post("/createNewSetupIntent/", async (req, res) => {
     });
   const newIntent = await stripe.setupIntents.create({
     customer: customerId,
+    usage: "off_session",
+    payment_method_types: ['card']
   });
   await admin
     .firestore()
     .collection("stripe_customers")
     .doc(uid)
-    .update({ setup_secret: newIntent.client_secret })
+    .update({ setup_secret: newIntent.client_secret, setup_intent_id: newIntent.id  })
     .catch((e) => {
       functions.logger.log("Error on set", e);
       return res.json({ success: false });

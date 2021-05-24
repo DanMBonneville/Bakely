@@ -17,6 +17,7 @@ const initialState = {
 		availability: '',
 		currentOrderRef: ''
 	},
+	selectedItemId: '',
 	searchValue: '',
 	foodItems: [],
 	recentOrders: [],

@@ -85,11 +85,11 @@ const vendorAddEditMenuItem = (props) => {
         event.preventDefault();
         let formData = {
             'foodId': foodId,
+            'vendorId': props.userId,
             'foodName': foodName,
             'description': description,
             'price': price,
-            'image': image,
-            'userId': props.userId
+            'image': image
         };
         props.onAddEditMenuItem(formData);
     }

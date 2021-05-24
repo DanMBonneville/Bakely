@@ -20,5 +20,9 @@ export {
 export {
     addEditFoodItem,
     deleteFoodItem,
+    setSelectedItemById,
     setAllFoodItems
 } from './food';
+export {
+    setAllVendors
+} from './vendor';

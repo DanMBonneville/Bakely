@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { Redirect } from 'react-router-dom';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import classes from './NavigationItems.css';
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
@@ -8,9 +8,6 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
 const navigationItems = (props) => {
-
-    const [redirect, setRedirect] = useState(null);
-
     const handleLink = (chosenLink) => {
     let path = "/";
     switch (chosenLink) {
@@ -35,12 +32,11 @@ const navigationItems = (props) => {
             break;
         default: path = "/";
     }
-    setRedirect(<Redirect to={path} />);
+    props.history.push(path);
     }
 
     return (
         <Auxiliary>
-            {redirect}
             {props.isBakeOptions ?
                 <Container disableGutters onClick={props.close}>
                     <Grid container spacing={0}>
@@ -107,4 +103,4 @@ const navigationItems = (props) => {
     )
 };
 
-export default navigationItems;
+export default withRouter(navigationItems);

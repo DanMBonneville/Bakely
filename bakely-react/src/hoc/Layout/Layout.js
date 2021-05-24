@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 
@@ -19,11 +18,8 @@ class Layout extends Component {
     componentDidMount() {
         this.props.onAuthStateChanged();
         this.props.setAllFoodItems();
-        this.setState({
-            goToSearchResults: false
-        })
+        this.props.setAllVendors();
     }
-
     openSearchBar = () => { this.setState({ showSearchBar: true }) }
     closeSearchBar = () => { this.setState({ showSearchBar: false }) }
     openSideDrawer = () => { this.setState({ showSideDrawer: true }) }
@@ -38,8 +34,8 @@ class Layout extends Component {
                 />
                 <SearchBar
                     drawerToggleClicked={this.searchBarToggleHandler}
-                    open={this.state.showSearchBar}
                     setSearchValue={(value) => this.props.setSearchValue(value)}
+                    open={this.state.showSearchBar}
                     closed={this.closeSearchBar}
                 />
                 <SideDrawer
@@ -68,8 +64,9 @@ const mapDispatchToProps = dispatch => {
     return {
         onAuthStateChanged: () => dispatch(actions.authListener()),
         setAllFoodItems: () => dispatch(actions.setAllFoodItems()),
+        setAllVendors: () => dispatch(actions.setAllVendors()),
         setSearchValue: (value) => dispatch(actions.setSearchValue(value))
     };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout));
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

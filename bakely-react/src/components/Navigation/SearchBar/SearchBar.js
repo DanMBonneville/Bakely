@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
 import SearchBar from "material-ui-search-bar";
 import * as classes from './SearchBar.css';
 import Backdrop from '../../UI/Backdrop/Backdrop';
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 
 const searchBar = (props) => {
-
-    const [currentValue, setCurrentValue] = useState('');
-
-    function search(query) {
-        props.setSearchValue(query);
-        props.history.push('/searchResults');
-        props.closed();
-        setCurrentValue('');
+    const {setSearchValue, history, closed} = props;
+    const [value, setValue] = useState('');
+    function search(){
+        setSearchValue(value);
+        history.push('/searchResults');
+        closed();
     }
 
     let attachedClasses = [classes.SearchBar, classes.Close];
@@ -32,9 +30,9 @@ const searchBar = (props) => {
                 style={{
                     'height': '56px'
                 }}
-                value={currentValue}
-                onChange={(newValue) => setCurrentValue( newValue )}
-                onRequestSearch={() => search(currentValue)}
+                value={value}
+                onChange={(newValue) => setValue( newValue )}
+                onRequestSearch={() => search()}
             />
         </Auxiliary>
     );

@@ -5,11 +5,12 @@ import authReducer from './authReducer';
 import userReducer from './userReducer';
 import checkoutReducer from './checkoutReducer';
 import foodReducer from './foodReducer';
-
+import paymentReducer from './paymentReducer';
 export default combineReducers({
     vendor: vendorReducer,
     auth: authReducer,
     user: userReducer,
     checkout: checkoutReducer,
-    food: foodReducer
+    food: foodReducer,
+    payments: paymentReducer
 });

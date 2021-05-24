@@ -1,8 +1,4 @@
 export {
-    loadingStart,
-    loadingEnd,
-} from './general';
-export {
     login,
     logout,
     signUp,
@@ -13,6 +9,10 @@ export {
 export {
     createStripeSession
 } from './checkOut';
+export {
+    createNewSetupIntent,
+    storePaymentMethod
+} from './payments';
 export {
     setUserRole,
     setSearchValue

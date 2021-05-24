@@ -20,12 +20,15 @@ const toolbar = (props) => {
         <header className={classes.Toolbar}>
             <Grid 
                 container
+                disablegutters="true"
+                justifycontent="center"
                 alignContent="center"
             >
                 <Grid
                     item 
                     xs={2}
                     md={1}
+                    justifycontent={'center'}
                 >
                     <HamburgerMenu
                         openSideDrawer={props.openSideDrawer}

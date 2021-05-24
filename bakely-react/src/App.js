@@ -29,6 +29,9 @@ const asyncVendorProfile = asyncComponent(() => {
 const asyncUserRoleToggle = asyncComponent(() => {
   return import("./containers/VendorSignUp/VendorSignUp");
 });
+const asyncPayments = asyncComponent(()=> {
+    return import("./containers/Payments/Payments");
+});
 
 class App extends Component {
   render() {
@@ -43,6 +46,7 @@ class App extends Component {
           <Route path="/viewMenuItemProfile" component={asyncMenuItemProfile} />
           <Route path="/viewVendorProfile" component={asyncVendorProfile} />
           <Route path="/toggle-user-role" component={asyncUserRoleToggle} />
+          <Route path="/payments" component={asyncPayments} />
           <Route path="/" exact component={HomePage} />  
           <Redirect to="/" />
         </Switch>
